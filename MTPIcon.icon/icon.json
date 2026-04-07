@@ -1,0 +1,43 @@
+{
+  "fill" : {
+    "automatic-gradient" : "extended-srgb:0.34902,0.67843,0.76863,1.00000"
+  },
+  "groups" : [
+    {
+      "layers" : [
+        {
+          "blend-mode" : "normal",
+          "fill" : {
+            "solid" : "extended-gray:1.00000,1.00000"
+          },
+          "glass" : false,
+          "image-name" : "usb-c-icon-675689-512.png",
+          "name" : "usb-c-icon-675689-512",
+          "position" : {
+            "scale" : 2,
+            "translation-in-points" : [
+              -1,
+              123.8125
+            ]
+          }
+        }
+      ],
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "circles" : [
+      "watchOS"
+    ],
+    "squares" : [
+      "macOS"
+    ]
+  }
+}

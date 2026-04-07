@@ -1,0 +1,101 @@
+<p align="center">
+<img height="128" src="https://github.com/Neighbor-Z/SwiftMTP/blob/main/Materials/MTPIcon-macOS-Default-128x128@2x.png">
+</p>
+
+
+
+<h1 align="center">SwiftMTP</h1>
+
+[![Swift 5.9+](https://img.shields.io/badge/Swift-5.9%2B-orange.svg?style=flat)]()[![Platform: macOS 12.0+](https://img.shields.io/badge/Platform-macOS%2012.0%2B-blue.svg?style=flat)]()[![License: GPL](https://img.shields.io/badge/License- GPL-green.svg)]()
+
+**SwiftMTP** 是一个专为 macOS 打造的现代轻量级原生 MTP (Media Transfer Protocol) 文件管理器。基于 Swift 构建，旨在为 Android 设备或其他 MTP 设备提供流畅、稳定的文件传输体验。
+
+启发自 [OpenMTP](https://github.com/ganeshrvel/openmtp/)， SwiftMTP 复用了 kalam 后端，实现相同高效传输体验的同时保持简洁轻量。
+
+---
+
+## ✨ 功能特性
+
+- 🔌 **即插即用**：自动识别连接的 MTP 设备并管理多存储分区。
+- 📂 **原生浏览**：极速浏览设备目录，支持层级导航。
+- 📤 **双向传输**：支持文件的上传与下载，包括 **拖拽功能 (Drag-and-Drop)**。
+- 🛠️ **文件管理**：支持在设备上直接创建文件夹、删除文件。
+- 📊 **实时反馈**：提供清晰的传输进度条与状态提示。
+- 🌍 **多语支持**:   利用 `Localizable.xcstrings` 支持多种语言。
+
+---
+
+## 📸 界面预览
+
+![Browser UI Placeholder](https://github.com/Neighbor-Z/SwiftMTP/blob/main/Materials/zh_26.png)
+
+---
+
+
+
+|                | SwiftMTP     | OpenMTP                      | A from MAS | B from MAS                          | C from MAS |
+| :------------- | :----------- | ---------------------------- | :--------- | ----------------------------------- | ---------- |
+| **架构**       | 🟢 通用       | ⚠️分开打包                    | 🟢 通用     | 🔴 仅 Apple 芯片                     | 🟢 通用     |
+| **macOS 支持** | 12.0+        | 11.0+                        | 🟢 10.15+   | 12.0+                               | 🔴 14.6+    |
+| **体积**       | 🟢 < 20MB     | 🔴 360MB                      | 🟢 < 20MB   | 🟢 < 20MB                            | 🟢 < 20MB   |
+| **传输速度**   | 🟢 快         | 🟢 快                         | 🔴 慢       | 一般                                | 🔴 无法识别 |
+| **用户界面**   | 🟢 Swift 原生 | 🔴 网页前端                   | 接近原生   | 接近原生                            | 接近原生   |
+| **本地化**     | 🟢 整个 App   | 英语，其他语言的字符可以显示 | ⚠️仅英语    | 🔴 只显示拉丁字母，其他字符 '?' 乱码 | ⚠️仅英语    |
+| **拖拽功能**   | 🟢 支持       | 🟢 支持                       | -          | 🔴 不支持                            | -          |
+
+
+
+## 🛠️ 项目结构
+
+项目采用模块化设计，通过 C Shim 层实现 Swift 与底层驱动的通信：
+
+```text
+SwiftMTP/
+├──SwiftMTP/             # Swift 主程序
+│   ├── App/             # 应用入口 (SwiftMTPApp.swift)
+│   ├── Views/           # SwiftUI 视图组件
+│   ├── Models/          # 数据模型
+│   └── Services/        # 核心逻辑 (KalamMTPManager.swift)
+├──KalamShim/            # C 语言桥接层 (Bridging Swift & MTP Kernel)
+├──ffi/                  # Kalam 后端代码
+├──CKalam/               # 模块映射定义 (module.modulemap)
+└──lib/                  # 运行时依赖 (kalam.dylib, libusb.dylib)
+````
+
+-----
+
+## 🚀 快速开始
+
+### 前置条件
+
+  - **Xcode 15.0+**
+  - **macOS 12.0+**
+
+### 构建步骤
+
+1.  请先编译 kalam 后端，参阅 `ffi/kalam/native/README.md` 。这会得到必要的动态库 (`kalam.dylib` & `libusb.dylib` ) 和 `kalam.h` 放置于 `lib`
+2.  打开 `SwiftMTP.xcodeproj`
+3.  选择目标平台（macOS）
+4.  点击 **Run**
+
+-----
+
+## 已实现
+
+- [x] 拖拽传输功能
+- [x] 自动识别设备并连接
+- [x] 传输进度条与状态提示
+- [x] 多选项目并导出
+
+## To do
+
+- [ ] 多设备连接
+
+## 📄 开源协议
+
+本项目基于 [GPL](https://github.com/Neighbor-Z/SwiftMTP/blob/main/LICENSE) 开源。
+
+-----
+
+**渴望反馈！** 如果你发现了 Bug 或有新功能建议，请提交 [Issue](https://github.com/Neighbor-Z/SwiftMTP/issues) 或 Pull Request。
+

@@ -1,0 +1,4 @@
+module CKalam [system] {
+    header "../lib/kalam.h"
+    export *
+}
