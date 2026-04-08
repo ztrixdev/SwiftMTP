@@ -9,10 +9,14 @@ struct FileListView: View {
 
     @State private var isShowingNewFolderDialog = false
     @State private var showError = false
-    @State private var isShowingConfirm = false
+    @State private var isShowingReplaceAlert = false
     @State private var newFolderName = "Untitled Folder"
     @State private var sortState = FileListSortState(column: .name, ascending: true)
     @State private var urls: [URL] = []
+    @State private var pendingUploadURLs: [URL] = []
+    @State private var isShowingExportReplaceAlert = false
+    @State private var pendingExportDestinationURL: URL?
+    @State private var pendingExportFiles: [MTPFile] = []
     @State private var sheetController: NSWindowController?
 
     var body: some View {
@@ -40,9 +44,28 @@ struct FileListView: View {
         } message: {
             Text("path issue")
         }
-        .onChange(of: isShowingConfirm) { newValue in
-            if newValue {
+        .alert(String(localized: "Replace and merge the existing items?"), isPresented: $isShowingReplaceAlert) {
+            Button(String(localized: "Replace")) {
+                guard !pendingUploadURLs.isEmpty else { return }
+                urls = pendingUploadURLs
+                pendingUploadURLs.removeAll()
                 showImportSheet()
+            }
+            Button("Cancel", role: .cancel) {
+                pendingUploadURLs.removeAll()
+            }
+        }
+        .alert(String(localized: "Replace and merge the existing items?"), isPresented: $isShowingExportReplaceAlert) {
+            Button(String(localized: "Replace")) {
+                guard let destinationURL = pendingExportDestinationURL else { return }
+                guard !pendingExportFiles.isEmpty else { return }
+                manager.download(files: pendingExportFiles, destinationURL: destinationURL)
+                pendingExportFiles.removeAll()
+                pendingExportDestinationURL = nil
+            }
+            Button("Cancel", role: .cancel) {
+                pendingExportFiles.removeAll()
+                pendingExportDestinationURL = nil
             }
         }
     }
@@ -57,7 +80,6 @@ struct FileListView: View {
             onCancel: { [self] in
                 DispatchQueue.main.async {
                     self.closeImportSheet()
-                    self.isShowingConfirm = false
                 }
             },
             onConfirm: { [self] in
@@ -65,7 +87,6 @@ struct FileListView: View {
                 self.urls.removeAll()
                 DispatchQueue.main.async {
                     self.closeImportSheet()
-                    self.isShowingConfirm = false
                 }
             }
         )
@@ -96,6 +117,47 @@ struct FileListView: View {
         }
     }
 
+    private func handleImportRequest(_ droppedURLs: [URL]) {
+        if droppedURLs.isEmpty {
+            showError = true
+            return
+        }
+        if manager.hasConflictingItems(for: droppedURLs) {
+            pendingUploadURLs = droppedURLs
+            isShowingReplaceAlert = true
+            return
+        }
+        urls = droppedURLs
+        showImportSheet()
+    }
+
+    private func handleExportRequest(_ files: [MTPFile]) {
+        guard !files.isEmpty else { return }
+        let panel = NSOpenPanel()
+        panel.canChooseFiles = false
+        panel.canChooseDirectories = true
+        panel.prompt = String(localized: "Export Here")
+        if panel.runModal() == .OK, let url = panel.url {
+            if hasExportConflicts(files: files, destinationURL: url) {
+                pendingExportFiles = files
+                pendingExportDestinationURL = url
+                isShowingExportReplaceAlert = true
+                return
+            }
+            manager.download(files: files, destinationURL: url)
+        }
+    }
+
+    private func hasExportConflicts(files: [MTPFile], destinationURL: URL) -> Bool {
+        for file in files {
+            let targetURL = destinationURL.appendingPathComponent(file.name)
+            if FileManager.default.fileExists(atPath: targetURL.path) {
+                return true
+            }
+        }
+        return false
+    }
+
     private var fileList: some View {
         ZStack {
             FileListTableRepresentable(
@@ -111,15 +173,11 @@ struct FileListView: View {
                 onOpenSelected: { file in
                     onDoubleClick(file)
                 },
+                onExportSelected: { selectedFiles in
+                    handleExportRequest(selectedFiles)
+                },
                 onDropExternalFiles: { droppedURLs in
-                    if droppedURLs.isEmpty {
-                        showError = true
-                        return
-                    }
-                    urls = droppedURLs
-                    // Show sheet immediately; layout will be fixed in ImportDialogView
-//                    isShowingConfirm = true
-                    self.showImportSheet()
+                    handleImportRequest(droppedURLs)
                 }
             )
 
@@ -208,6 +266,7 @@ private struct FileListTableRepresentable: NSViewRepresentable {
     let onDoubleClick: (MTPFile) -> Void
     let onNewFolder: () -> Void
     let onOpenSelected: (MTPFile) -> Void
+    let onExportSelected: ([MTPFile]) -> Void
     let onDropExternalFiles: ([URL]) -> Void
 
     func makeCoordinator() -> Coordinator {
@@ -544,14 +603,7 @@ private struct FileListTableRepresentable: NSViewRepresentable {
         @objc private func handleExportSelected() {
             let selectedFiles = selectedContextFiles
             guard !selectedFiles.isEmpty else { return }
-
-            let panel = NSOpenPanel()
-            panel.canChooseFiles = false
-            panel.canChooseDirectories = true
-            panel.prompt = "Export Here"
-            if panel.runModal() == .OK, let url = panel.url {
-                parent.manager.download(files: selectedFiles, destinationURL: url)
-            }
+            parent.onExportSelected(selectedFiles)
         }
 
         private func selectedRows() -> [Int] {

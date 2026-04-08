@@ -9,6 +9,11 @@ struct MainView: View {
     @State private var newFolderName = ""
     @State private var isShowingDeleteConfirmation = false
     @State private var isShowingDeviceInfo = false
+    @State private var isShowingReplaceAlert = false
+    @State private var pendingImportURLs: [URL] = []
+    @State private var isShowingExportReplaceAlert = false
+    @State private var pendingExportDestinationURL: URL?
+    @State private var pendingExportFiles: [MTPFile] = []
 
     var selectedFiles: [MTPFile] {
         manager.sortedFiles.filter { selection.contains($0.id) }
@@ -32,10 +37,6 @@ struct MainView: View {
     var body: some View {
         ZStack {
             contentView
-            if let stats = manager.transferStats {
-                TransferOverlay(stats: stats)
-                    .transition(.opacity)
-            }
             if isShowingDeviceInfo, let device = manager.connectionState.device {
                 DeviceInfoOverlay(
                     device: device,
@@ -46,7 +47,20 @@ struct MainView: View {
             }
         }
         .animation(.easeInOut(duration: 0.18), value: manager.transferProgress != nil)
+        .animation(.easeInOut(duration: 0.18), value: manager.isTransferActive)
         .animation(.easeInOut(duration: 0.18), value: isShowingDeviceInfo)
+        .sheet(
+            isPresented: Binding(
+                get: { manager.isTransferActive },
+                set: { _ in }
+            )
+        ) {
+            TransferOverlay(
+                stats: manager.transferStats,
+                isPreparing: manager.isTransferActive && manager.transferStats == nil
+            )
+            .interactiveDismissDisabled(true)
+        }
         .toolbar { toolbarContent }
         .onChange(of: manager.connectionState) { newState in
             if case .disconnected = newState {
@@ -64,6 +78,29 @@ struct MainView: View {
             }
         } message: {
             Text("Enter a name for the new folder.")
+        }
+        .alert(String(localized: "Replace and merge the existing items?"), isPresented: $isShowingReplaceAlert) {
+            Button(String(localized: "Replace")) {
+                guard !pendingImportURLs.isEmpty else { return }
+                manager.upload(sourceURLs: pendingImportURLs)
+                pendingImportURLs.removeAll()
+            }
+            Button("Cancel", role: .cancel) {
+                pendingImportURLs.removeAll()
+            }
+        }
+        .alert(String(localized: "Replace and merge the existing items?"), isPresented: $isShowingExportReplaceAlert) {
+            Button(String(localized: "Replace")) {
+                guard let destinationURL = pendingExportDestinationURL else { return }
+                guard !pendingExportFiles.isEmpty else { return }
+                manager.download(files: pendingExportFiles, destinationURL: destinationURL)
+                pendingExportFiles.removeAll()
+                pendingExportDestinationURL = nil
+            }
+            Button("Cancel", role: .cancel) {
+                pendingExportFiles.removeAll()
+                pendingExportDestinationURL = nil
+            }
         }
         .confirmationDialog(
             deleteDialogTitle,
@@ -182,7 +219,7 @@ struct MainView: View {
     }
 
     private var statusText: String {
-        if manager.transferStats != nil {
+        if manager.isTransferActive {
             return String(localized: "Transferring…")
         }
         if manager.isLoading { return String(localized: "Loading…") }
@@ -242,13 +279,13 @@ struct MainView: View {
                 panel.allowsMultipleSelection = true
                 panel.prompt = String(localized: "Import")
                 if panel.runModal() == .OK {
-                    manager.upload(sourceURLs: panel.urls)
+                    handleImport(panel.urls)
                 }
             } label: {
                 Label(String(localized: "Import"), systemImage: "iphone.and.arrow.forward.inward")
             }
             .help(String(localized: "Import files from Mac to device"))
-            .disabled(!manager.connectionState.isConnected)
+            .disabled(!manager.connectionState.isConnected || manager.isTransferActive)
             
             // Export
             Button {
@@ -257,13 +294,13 @@ struct MainView: View {
                 panel.canChooseDirectories = true
                 panel.prompt = String(localized: "Export Here")
                 if panel.runModal() == .OK, let url = panel.url {
-                    manager.download(files: selectedFiles, destinationURL: url)
+                    handleExport(destinationURL: url, files: selectedFiles)
                 }
             } label: {
                 Label(String(localized: "Export"), systemImage: "iphone.and.arrow.forward.outward")
             }
             .help(String(localized: "Export selected files to Mac"))
-            .disabled(selectedFiles.isEmpty || !manager.connectionState.isConnected)
+            .disabled(selectedFiles.isEmpty || !manager.connectionState.isConnected || manager.isTransferActive)
 
             Spacer(minLength: 12)
 
@@ -274,7 +311,7 @@ struct MainView: View {
                 Label("New Folder", systemImage: "folder.badge.plus")
             }
             .help(String(localized: "Create new folder"))
-            .disabled(!manager.connectionState.isConnected)
+            .disabled(!manager.connectionState.isConnected || manager.isTransferActive)
 
             // Delete
             Button {
@@ -283,7 +320,7 @@ struct MainView: View {
                 Label("Delete", systemImage: "trash")
             }
             .help(String(localized: "Delete selected items"))
-            .disabled(selectedFiles.isEmpty || !manager.connectionState.isConnected)
+            .disabled(selectedFiles.isEmpty || !manager.connectionState.isConnected || manager.isTransferActive)
 
             Spacer(minLength: 12)
 
@@ -294,8 +331,39 @@ struct MainView: View {
                 Label(String(localized: "Device Info"), systemImage: "info.circle")
             }
             .help(String(localized: "Show device information"))
-            .disabled(!manager.connectionState.isConnected)
+            .disabled(!manager.connectionState.isConnected || manager.isTransferActive)
         }
+    }
+
+    private func handleImport(_ urls: [URL]) {
+        guard !urls.isEmpty else { return }
+        if manager.hasConflictingItems(for: urls) {
+            pendingImportURLs = urls
+            isShowingReplaceAlert = true
+            return
+        }
+        manager.upload(sourceURLs: urls)
+    }
+
+    private func handleExport(destinationURL: URL, files: [MTPFile]) {
+        guard !files.isEmpty else { return }
+        if hasExportConflicts(files: files, destinationURL: destinationURL) {
+            pendingExportFiles = files
+            pendingExportDestinationURL = destinationURL
+            isShowingExportReplaceAlert = true
+            return
+        }
+        manager.download(files: files, destinationURL: destinationURL)
+    }
+
+    private func hasExportConflicts(files: [MTPFile], destinationURL: URL) -> Bool {
+        for file in files {
+            let targetURL = destinationURL.appendingPathComponent(file.name)
+            if FileManager.default.fileExists(atPath: targetURL.path) {
+                return true
+            }
+        }
+        return false
     }
 }
 
@@ -387,55 +455,86 @@ private struct InfoRow: View {
 }
 
 private struct TransferOverlay: View {
-    let stats: TransferStatistics
+    let stats: TransferStatistics?
+    let isPreparing: Bool
+
+    private var currentFileName: String {
+        if isPreparing {
+            return String(localized: "Preparing transfer…")
+        }
+        return stats?.currentFileName ?? ""
+    }
+
+    private var filesProgressText: String {
+        isPreparing ? " " : (stats?.filesProgressString ?? "")
+    }
+
+    private var speedText: String {
+        isPreparing ? " " : (stats?.speedString ?? "")
+    }
+
+    private var totalSentText: String {
+        isPreparing ? "" : "\(stats?.totalSentSizeString ?? "")/\(stats?.totalSizeString ?? "") - "
+    }
+
+    private var remainingTimeText: String {
+        if isPreparing {
+            return " \(String(localized: "About 1 min"))"
+        }
+        return " \(stats?.remainingTimeString ?? "")"
+    }
+
+    private var progressText: String {
+        if isPreparing {
+            return "0%"
+        }
+        return String(format: "%.0f%%", (stats?.progressPercentage ?? 0) * 100)
+    }
 
     var body: some View {
-        ZStack {
-            Color.black.opacity(0.25)
-                .ignoresSafeArea()
-
-            VStack(alignment: .leading, spacing: 12) {
-                Text(stats.currentFileName)
-                    .font(.system(size: 13, weight: .medium))
-                    
-                ProgressView(value: stats.progressPercentage)
-                    .progressViewStyle(.linear)
-                    .frame(width: 360)
+        VStack(alignment: .leading, spacing: 12) {
+            Text(currentFileName)
+                .font(.system(size: 13, weight: .medium))
                 
-                HStack(spacing: 8) {
-                    Text(stats.filesProgressString)
-                        .font(.system(size: 11, weight: .semibold))
-                    Spacer()
-                    Text(stats.speedString)
-                        .font(.system(size: 10, design: .monospaced))
+            Group {
+                if isPreparing {
+                    ProgressView()
+                        .progressViewStyle(.linear)
+                } else {
+                    ProgressView(value: stats?.progressPercentage ?? 0)
+                        .progressViewStyle(.linear)
                 }
-                .foregroundStyle(.secondary)
-                .frame(width: 360)
-
-                HStack(spacing: 0) {            
-                    Text("\(stats.totalSentSizeString)/\(stats.totalSizeString) - ")
-                        .font(.system(size: 11))
-                    Text("Remaining:", tableName: "Localizable")
-                        .font(.system(size: 10, weight: .semibold))
-                    Text(" \(stats.remainingTimeString)")
-                        .font(.system(size: 10))
-                    Spacer()
-                    Text(String(format: "%.0f%%", stats.progressPercentage * 100))
-                        .font(.system(size: 10, design: .monospaced))
-                        .frame(alignment: .trailing)
-                }
-                .font(.system(size: 11))
-                .foregroundStyle(.secondary)
-                .frame(width: 360)
             }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 16)
-            .background(
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(Color(nsColor: .windowBackgroundColor))
-                    .shadow(radius: 12)
-            )
+            .frame(width: 360)
+            
+            HStack(spacing: 8) {
+                Text(filesProgressText)
+                    .font(.system(size: 11, weight: .semibold))
+                Spacer()
+                Text(speedText)
+                    .font(.system(size: 10, design: .monospaced))
+            }
+            .foregroundStyle(.secondary)
+            .frame(width: 360)
+
+            HStack(spacing: 0) {            
+                Text(totalSentText)
+                    .font(.system(size: 11))
+                Text("Remaining:", tableName: "Localizable")
+                    .font(.system(size: 10, weight: .semibold))
+                Text(remainingTimeText)
+                    .font(.system(size: 10))
+                Spacer()
+                Text(progressText)
+                    .font(.system(size: 10, design: .monospaced))
+                    .frame(alignment: .trailing)
+            }
+            .font(.system(size: 11))
+            .foregroundStyle(.secondary)
+            .frame(width: 360)
         }
+        .padding(.horizontal, 20)
+        .padding(.vertical, 16)
     }
 }
 
@@ -476,5 +575,5 @@ private struct TransferOverlay: View {
         )
         return TransferStatistics(progressData: mockData)
     }()
-    TransferOverlay(stats: mockProgress30)
+    TransferOverlay(stats: mockProgress30, isPreparing: false)
 }

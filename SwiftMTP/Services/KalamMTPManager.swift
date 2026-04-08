@@ -24,6 +24,17 @@ final class KalamMTPManager: ObservableObject {
             return $0.name.localizedStandardCompare($1.name) == .orderedAscending
         }
     }
+
+    func hasConflictingItems(for sourceURLs: [URL]) -> Bool {
+        guard !sourceURLs.isEmpty else { return false }
+        let existingNames = Set(files.map { $0.name })
+        for url in sourceURLs {
+            if existingNames.contains(url.lastPathComponent) {
+                return true
+            }
+        }
+        return false
+    }
     
     // MARK: – Kalam routing (C callbacks cannot capture Swift context)
     private enum Operation {
@@ -38,59 +49,10 @@ final class KalamMTPManager: ObservableObject {
         case disposing
     }
 
-    private enum TransferDirection {
-        case upload
-        case download
-
-        var operation: Operation {
-            switch self {
-            case .upload: return .uploading
-            case .download: return .downloading
-            }
-        }
-
-        var titleText: String {
-            switch self {
-            case .upload: return "Uploading…"
-            case .download: return "Downloading…"
-            }
-        }
-
-        var preparingText: String {
-            switch self {
-            case .upload: return "Preparing upload…"
-            case .download: return "Preparing download…"
-            }
-        }
-    }
-
-    private struct TransferRequest {
-        let id = UUID()
-        let direction: TransferDirection
-        let storageId: UInt32
-        let sources: [String]
-        let destination: String
-        let sourceURLsForSecurityScope: [URL]
-        let destinationURLForSecurityScope: URL?
-        let shouldReloadCurrentPathAfterCompletion: Bool
-        let completion: ((Error?) -> Void)?
-    }
-
-    private struct ActiveTransferSession {
-        let request: TransferRequest
-        var preparedPaths: Set<String> = []
-        var preparedTotalBytes: Int64 = 0
-        var totalFiles: Int64?
-        var filesSent: Int64?
-        var currentFileName: String?
-    }
-
     private var operation: Operation = .none
     private var transferCompletion: ((Error?) -> Void)?
     private var scopedSourceURLs: [URL] = []
     private var scopedDestinationURL: URL?
-    private var pendingTransferRequests: [TransferRequest] = []
-    private var activeTransferSession: ActiveTransferSession?
     private var cachedDeviceInfo: (name: String, manufacturer: String)? = nil
     
     // MARK: – Promise Downloads (for multi-select drag-drop)
@@ -159,6 +121,7 @@ final class KalamMTPManager: ObservableObject {
                 if ErrorStringLocalizer.isDeviceDisconnectedError(errorString) {
                     self.handleDeviceDisconnected()
                 } else {
+                    self.isTransferActive = false
                     self.transferProgress = nil
                     self.transferStats = nil
                     let localizedError = ErrorStringLocalizer.localize(errorString)
@@ -353,6 +316,7 @@ final class KalamMTPManager: ObservableObject {
                     if ErrorStringLocalizer.isDeviceDisconnectedError(errorString) {
                         self.handleDeviceDisconnected()
                     } else {
+                        self.isTransferActive = false
                         self.transferProgress = nil
                         self.transferStats = nil
                         let localizedError = ErrorStringLocalizer.localize(errorString)
@@ -367,6 +331,7 @@ final class KalamMTPManager: ObservableObject {
             self.finishTransferCompletion(errorString: nil)
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
+                self.isTransferActive = false
                 self.transferProgress = nil
                 self.transferStats = nil
                 self.loadFiles(at: self.currentPath)
@@ -378,6 +343,7 @@ final class KalamMTPManager: ObservableObject {
                 self.files = []
                 self.navigationStack = []
                 self.selectedStorage = nil
+                self.isTransferActive = false
                 self.transferProgress = nil
                 self.transferStats = nil
                 self.errorMessage = nil
@@ -567,6 +533,7 @@ final class KalamMTPManager: ObservableObject {
         let destination = destinationURL.path
         
         DispatchQueue.main.async { [weak self] in
+            self?.isTransferActive = true
             self?.transferProgress = 0
         }
         beginSecurityScopedAccess(destinationURL: destinationURL)
@@ -582,6 +549,7 @@ final class KalamMTPManager: ObservableObject {
         
         guard let jsonString = toJsonString(input) else {
             DispatchQueue.main.async { [weak self] in
+                self?.isTransferActive = false
                 self?.transferProgress = nil
             }
             endSecurityScopedAccess()
@@ -600,6 +568,7 @@ final class KalamMTPManager: ObservableObject {
         guard let storage = selectedStorage else { return }
         
         DispatchQueue.main.async { [weak self] in
+            self?.isTransferActive = true
             self?.transferProgress = 0
         }
         beginSecurityScopedAccess(sourceURLs: sourceURLs)
@@ -618,6 +587,7 @@ final class KalamMTPManager: ObservableObject {
         
         guard let jsonString = toJsonString(input) else {
             DispatchQueue.main.async { [weak self] in
+                self?.isTransferActive = false
                 self?.transferProgress = nil
             }
             endSecurityScopedAccess()
@@ -653,6 +623,7 @@ final class KalamMTPManager: ObservableObject {
         
         transferCompletion = completion
         DispatchQueue.main.async { [weak self] in
+            self?.isTransferActive = true
             self?.transferProgress = 0
         }
         
@@ -670,6 +641,7 @@ final class KalamMTPManager: ObservableObject {
         
         guard let jsonString = toJsonString(input) else {
             DispatchQueue.main.async { [weak self] in
+                self?.isTransferActive = false
                 self?.transferProgress = nil
             }
             finishTransferCompletion(errorString: "Failed to encode download payload.")
@@ -736,7 +708,9 @@ final class KalamMTPManager: ObservableObject {
         navigationStack = []
         selectedStorage = nil
         isLoading = false
+        isTransferActive = false
         transferProgress = nil
+        transferStats = nil
         finishTransferCompletion(errorString: "Device disconnected.")
         errorMessage = nil
     }
