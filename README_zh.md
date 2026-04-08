@@ -6,7 +6,11 @@
 
 <h1 align="center">SwiftMTP</h1>
 
-[![Swift 5.9+](https://img.shields.io/badge/Swift-5.9%2B-orange.svg?style=flat)]()[![Platform: macOS 12.0+](https://img.shields.io/badge/Platform-macOS%2012.0%2B-blue.svg?style=flat)]()[![License: GPL](https://img.shields.io/badge/License- GPL-green.svg)]()
+<p align="center">
+<a href="https://">网页</a> ·
+<a href="https://github.com/Neighbor-Z/SwiftMTP/releases">Releases</a>
+</p>
+[![Swift 5.9+](https://img.shields.io/badge/Swift-5.9%2B-orange.svg?style=flat)](https://github.com/Neighbor-Z/SwiftMTP/)[![Platform: macOS 12.0+](https://img.shields.io/badge/Platform-macOS%2012.0%2B-blue.svg?style=flat)](https://github.com/Neighbor-Z/SwiftMTP/releases/latest)[![License: GPL](https://img.shields.io/badge/License- GPL-green.svg)](https://github.com/Neighbor-Z/SwiftMTP/blob/main/LICENSE)
 
 **SwiftMTP** 是一个专为 macOS 打造的现代轻量级原生 MTP (Media Transfer Protocol) 文件管理器。基于 Swift 构建，旨在为 Android 设备或其他 MTP 设备提供流畅、稳定的文件传输体验。
 
@@ -40,7 +44,7 @@
 | **体积**       | 🟢 < 20MB     | 🔴 360MB                      | 🟢 < 20MB   | 🟢 < 20MB                            | 🟢 < 20MB   |
 | **传输速度**   | 🟢 快         | 🟢 快                         | 🔴 慢       | 一般                                | 🔴 无法识别 |
 | **用户界面**   | 🟢 Swift 原生 | 🔴 网页前端                   | 接近原生   | 接近原生                            | 接近原生   |
-| **本地化**     | 🟢 整个 App   | 英语，其他语言的字符可以显示 | ⚠️仅英语    | 🔴 只显示拉丁字母，其他字符 '?' 乱码 | ⚠️仅英语    |
+| **本地化**     | 🟢 多语       | 英语，其他语言的字符可以显示 | ⚠️仅英语    | 🔴 只显示拉丁字母，其他字符 '?' 乱码 | ⚠️仅英语    |
 | **拖拽功能**   | 🟢 支持       | 🟢 支持                       | -          | 🔴 不支持                            | -          |
 
 
@@ -66,12 +70,18 @@ SwiftMTP/
 
 ## 🚀 快速开始
 
-### 前置条件
+### 下载
+
+[发行版](https://github.com/Neighbor-Z/SwiftMTP/releases/latest)
+
+### 构建
+
+#### 条件
 
   - **Xcode 15.0+**
   - **macOS 12.0+**
 
-### 构建步骤
+#### 步骤
 
 1.  请先编译 kalam 后端，参阅 `ffi/kalam/native/README.md` 。这会得到必要的动态库 (`kalam.dylib` & `libusb.dylib` ) 和 `kalam.h` 放置于 `lib`
 2.  打开 `SwiftMTP.xcodeproj`
