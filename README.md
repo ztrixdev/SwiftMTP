@@ -7,9 +7,10 @@
 <h1 align="center">SwiftMTP</h1>
 
 <p align="center">
-<a href="https://">Website</a> ·
+<a href="https://neighbor-z.github.io/swiftmtp-website">Website</a> ·
 <a href="https://github.com/Neighbor-Z/SwiftMTP/releases">Releases</a>
 </p>
+
 [![Swift 5.9+](https://img.shields.io/badge/Swift-5.9%2B-orange.svg?style=flat)](https://github.com/Neighbor-Z/SwiftMTP/)[![Platform: macOS 12.0+](https://img.shields.io/badge/Platform-macOS%2012.0%2B-blue.svg?style=flat)](https://github.com/Neighbor-Z/SwiftMTP/releases/latest)[![License: GPL](https://img.shields.io/badge/License-GPL-green.svg)](https://github.com/Neighbor-Z/SwiftMTP/blob/main/LICENSE)
 
 **SwiftMTP** is a light-weight, modern, Swift-based utility for interacting with MTP (Media Transfer Protocol) devices on macOS. It allows users to browse, manage, and transfer files between a Mac and external devices like Android phones.
@@ -93,3 +94,4 @@ SwiftMTP/
 ---
 **Need help?** If you encounter any issues, please open an [Issue](https://github.com/Neighbor-Z/SwiftMTP/issues).
 
+**Support project**: [☕️ Buy Me a Coffee](https://buymeacoffee.com/neighbor_z)
