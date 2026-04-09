@@ -13,6 +13,8 @@
 		1A2B3C4D5E6F7A8000000011 /* lib/libusb.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F7A8000000111 /* lib/libusb.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		1A2B3C4D5E6F7A8000000012 /* Localizable.xcstrings in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F7A8000000130 /* Localizable.xcstrings */; };
 		1A2B3C4D5E6F7A8000000013 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F7A8000000131 /* IOKit.framework */; };
+		C705622C2F875E5F0055C8BE /* FavoriteItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C705622B2F875E5F0055C8BE /* FavoriteItem.swift */; };
+		C705622E2F875E6E0055C8BE /* FavoritesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C705622D2F875E6E0055C8BE /* FavoritesManager.swift */; };
 		C725E65B2F7CCDD0007937AB /* ErrorStringLocalizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C725E65A2F7CCDD0007937AB /* ErrorStringLocalizer.swift */; };
 		C7516A6B2F800866006B1603 /* USBProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7516A6A2F800866006B1603 /* USBProtocol.swift */; };
 		C7516A6E2F8008A5006B1603 /* MTPFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7516A6D2F8008A5006B1603 /* MTPFile.swift */; };
@@ -49,6 +51,8 @@
 		1A2B3C4D5E6F7A8000000120 /* SwiftMTP-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwiftMTP-Bridging-Header.h"; sourceTree = "<group>"; };
 		1A2B3C4D5E6F7A8000000130 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		1A2B3C4D5E6F7A8000000131 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		C705622B2F875E5F0055C8BE /* FavoriteItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FavoriteItem.swift; path = SwiftMTP/Models/FavoriteItem.swift; sourceTree = "<group>"; };
+		C705622D2F875E6E0055C8BE /* FavoritesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FavoritesManager.swift; path = SwiftMTP/Services/FavoritesManager.swift; sourceTree = "<group>"; };
 		C725E65A2F7CCDD0007937AB /* ErrorStringLocalizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ErrorStringLocalizer.swift; path = SwiftMTP/Services/ErrorStringLocalizer.swift; sourceTree = "<group>"; };
 		C74E682E2F78CF5100F8A2FE /* SwiftMTP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftMTP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7516A6A2F800866006B1603 /* USBProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = USBProtocol.swift; path = SwiftMTP/Models/USBProtocol.swift; sourceTree = "<group>"; };
@@ -124,6 +128,7 @@
 		1A2B3C4D5E6F7A8000000330 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				C705622D2F875E6E0055C8BE /* FavoritesManager.swift */,
 				C7516A702F8008D9006B1603 /* KalamMTPManager.swift */,
 				C7516A712F8008D9006B1603 /* USBMonitor.swift */,
 				C725E65A2F7CCDD0007937AB /* ErrorStringLocalizer.swift */,
@@ -134,6 +139,7 @@
 		1A2B3C4D5E6F7A8000000340 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				C705622B2F875E5F0055C8BE /* FavoriteItem.swift */,
 				C7516A6C2F8008A5006B1603 /* MTPDevice.swift */,
 				C7516A6D2F8008A5006B1603 /* MTPFile.swift */,
 				C7516A6A2F800866006B1603 /* USBProtocol.swift */,
@@ -258,7 +264,9 @@
 				C7516A722F8008D9006B1603 /* KalamMTPManager.swift in Sources */,
 				C7516A732F8008D9006B1603 /* USBMonitor.swift in Sources */,
 				1A2B3C4D5E6F7A8000000012 /* Localizable.xcstrings in Sources */,
+				C705622E2F875E6E0055C8BE /* FavoritesManager.swift in Sources */,
 				C7516A6E2F8008A5006B1603 /* MTPFile.swift in Sources */,
+				C705622C2F875E5F0055C8BE /* FavoriteItem.swift in Sources */,
 				C7516A6F2F8008A5006B1603 /* MTPDevice.swift in Sources */,
 				C725E65B2F7CCDD0007937AB /* ErrorStringLocalizer.swift in Sources */,
 			);
@@ -280,7 +288,7 @@
 				CODE_SIGN_ENTITLEMENTS = SwiftMTP/SwiftMTP.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 20;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -321,7 +329,7 @@
 				CODE_SIGN_ENTITLEMENTS = SwiftMTP/SwiftMTP.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 20;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_HARDENED_RUNTIME = YES;

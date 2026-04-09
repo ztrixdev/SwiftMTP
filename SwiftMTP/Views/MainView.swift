@@ -4,6 +4,7 @@ import AppKit
 
 struct MainView: View {
     @StateObject private var manager = KalamMTPManager()
+    @StateObject private var favoritesManager = FavoritesManager()
     @State private var selection: Set<MTPFile.ID> = []
     @State private var isShowingNewFolderDialog = false
     @State private var newFolderName = ""
@@ -14,6 +15,8 @@ struct MainView: View {
     @State private var isShowingExportReplaceAlert = false
     @State private var pendingExportDestinationURL: URL?
     @State private var pendingExportFiles: [MTPFile] = []
+    @State private var isShowingFolderNotFound = false
+    @State private var selectedFavoriteID: UUID? = nil
 
     var selectedFiles: [MTPFile] {
         manager.sortedFiles.filter { selection.contains($0.id) }
@@ -115,14 +118,27 @@ struct MainView: View {
         } message: {
             Text("This action cannot be undone.")
         }
+        .alert(String(localized: "Folder Not Found"), isPresented: $isShowingFolderNotFound) {
+            Button(String(localized: "OK"), role: .cancel) {}
+        } message: {
+            Text("The folder does not exist on this device.")
+        }
     }
 
     private var contentView: some View {
         Group {
             if #available(macOS 13.0, *) {
                 NavigationSplitView {
-                    SidebarView(manager: manager, selectedStorage: $manager.selectedStorage)
-                        .navigationSplitViewColumnWidth(min: 200, ideal: 220, max: 280)
+                    SidebarView(
+                        manager: manager,
+                        selectedStorage: $manager.selectedStorage,
+                        selectedFavoriteID: $selectedFavoriteID,
+                        favoritesManager: favoritesManager,
+                        onFavoriteSelected: { item in
+                            handleFavoriteTap(item)
+                        }
+                    )
+                    .navigationSplitViewColumnWidth(min: 200, ideal: 220, max: 280)
                 } detail: {
                     VStack(spacing: 0) {
                         // Path bar
@@ -136,6 +152,13 @@ struct MainView: View {
                             selection: $selection,
                             onDoubleClick: { file in
                                 if file.isDirectory { manager.navigate(to: file) }
+                            },
+                            onAddToFavorites: { file in
+                                let fullPath = file.path
+                                favoritesManager.addFavorite(name: file.name, path: fullPath)
+                            },
+                            isPathFavorited: { path in
+                                favoritesManager.contains(path: path)
                             }
                         )
 
@@ -145,7 +168,15 @@ struct MainView: View {
                 }
             } else {
                 VStack(spacing: 0) {
-                    SidebarView(manager: manager, selectedStorage: $manager.selectedStorage)
+                    SidebarView(
+                        manager: manager,
+                        selectedStorage: $manager.selectedStorage,
+                        selectedFavoriteID: $selectedFavoriteID,
+                        favoritesManager: favoritesManager,
+                        onFavoriteSelected: { item in
+                            handleFavoriteTap(item)
+                        }
+                    )
                     if manager.connectionState.isConnected {
                         pathBar
                     }
@@ -154,6 +185,13 @@ struct MainView: View {
                         selection: $selection,
                         onDoubleClick: { file in
                             if file.isDirectory { manager.navigate(to: file) }
+                        },
+                        onAddToFavorites: { file in
+                            let fullPath = file.path
+                            favoritesManager.addFavorite(name: file.name, path: fullPath)
+                        },
+                        isPathFavorited: { path in
+                            favoritesManager.contains(path: path)
                         }
                     )
                     statusBar
@@ -364,6 +402,36 @@ struct MainView: View {
             }
         }
         return false
+    }
+
+    /// Navigate to a favorite folder path. If the folder doesn't exist on the device,
+    /// the walk callback will return an error which triggers connectionState → .error.
+    /// We detect this pattern and show the "Folder Not Found" alert instead.
+    private func handleFavoriteTap(_ item: FavoriteItem) {
+        guard manager.connectionState.isConnected else { return }
+        guard manager.selectedStorage != nil else { return }
+
+        // Remember the target path so we can detect if it fails
+        let targetPath = item.path
+        manager.navigateToPath(targetPath)
+
+        // After a short delay, check if loading resulted in an error
+        // (e.g. the path doesn't exist on the device)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            if case .error = manager.connectionState {
+                // The walk failed — likely the folder doesn't exist.
+                // Reset to root and show the alert.
+                manager.navigationStack = ["/"]
+                manager.loadFiles(at: "/")
+                // Clear the error state after we handle it
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    if case .error = manager.connectionState {
+                        manager.errorMessage = nil
+                    }
+                }
+                isShowingFolderNotFound = true
+            }
+        }
     }
 }
 

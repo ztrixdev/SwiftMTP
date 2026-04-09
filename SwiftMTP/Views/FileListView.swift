@@ -6,6 +6,8 @@ struct FileListView: View {
     @ObservedObject var manager: KalamMTPManager
     @Binding var selection: Set<MTPFile.ID>
     var onDoubleClick: (MTPFile) -> Void
+    var onAddToFavorites: ((MTPFile) -> Void)?
+    var isPathFavorited: ((String) -> Bool)?
 
     @State private var isShowingNewFolderDialog = false
     @State private var showError = false
@@ -178,7 +180,9 @@ struct FileListView: View {
                 },
                 onDropExternalFiles: { droppedURLs in
                     handleImportRequest(droppedURLs)
-                }
+                },
+                onAddToFavorites: onAddToFavorites,
+                isPathFavorited: isPathFavorited
             )
 
             if sortedFiles.isEmpty {
@@ -268,6 +272,8 @@ private struct FileListTableRepresentable: NSViewRepresentable {
     let onOpenSelected: (MTPFile) -> Void
     let onExportSelected: ([MTPFile]) -> Void
     let onDropExternalFiles: ([URL]) -> Void
+    let onAddToFavorites: ((MTPFile) -> Void)?
+    let isPathFavorited: ((String) -> Bool)?
 
     func makeCoordinator() -> Coordinator {
         Coordinator(parent: self)
@@ -578,6 +584,24 @@ private struct FileListTableRepresentable: NSViewRepresentable {
                 let exportItem = NSMenuItem(title: String(localized: "Export"), action: #selector(handleExportSelected), keyEquivalent: "")
                 exportItem.target = self
                 menu.addItem(exportItem)
+
+                // Add to Favorites – only for a single selected folder
+                if selectedFiles.count == 1, let first = selectedFiles.first, first.isDirectory,
+                   parent.onAddToFavorites != nil {
+                    menu.addItem(NSMenuItem.separator())
+                    let addFavItem = NSMenuItem(
+                        title: String(localized: "Add to Favorites"),
+                        action: #selector(handleAddToFavorites),
+                        keyEquivalent: ""
+                    )
+                    addFavItem.target = self
+                    // Disable if already favorited
+                    if let isFav = parent.isPathFavorited, isFav(first.path) {
+                        addFavItem.action = nil
+                        addFavItem.title = String(localized: "Already in Favorites")
+                    }
+                    menu.addItem(addFavItem)
+                }
             }
 
             return menu
@@ -604,6 +628,11 @@ private struct FileListTableRepresentable: NSViewRepresentable {
             let selectedFiles = selectedContextFiles
             guard !selectedFiles.isEmpty else { return }
             parent.onExportSelected(selectedFiles)
+        }
+
+        @objc private func handleAddToFavorites() {
+            guard let first = selectedContextFiles.first, first.isDirectory else { return }
+            parent.onAddToFavorites?(first)
         }
 
         private func selectedRows() -> [Int] {

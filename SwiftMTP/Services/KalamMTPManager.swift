@@ -489,6 +489,21 @@ final class KalamMTPManager: ObservableObject {
         navigationStack = Array(navigationStack.prefix(index + 1))
         loadFiles(at: currentPath)
     }
+
+    /// Navigate directly to an absolute path (e.g. "/Pictures/Screenshots").
+    /// Builds the full breadcrumb navigation stack from "/" to the target.
+    func navigateToPath(_ path: String) {
+        guard selectedStorage != nil else { return }
+        var stack: [String] = ["/"]
+        let components = path.split(separator: "/").map(String.init)
+        var current = ""
+        for component in components {
+            current += "/\(component)"
+            stack.append(current)
+        }
+        navigationStack = stack
+        loadFiles(at: path)
+    }
     
     // MARK: – File Listing
     func loadFiles(at path: String) {
