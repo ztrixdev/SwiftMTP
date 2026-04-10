@@ -1,6 +1,8 @@
 import SwiftUI
 import AppKit
 import UniformTypeIdentifiers
+import Quartz
+import QuickLookUI
 
 struct FileListView: View {
     @ObservedObject var manager: KalamMTPManager
@@ -327,6 +329,11 @@ private struct FileListTableRepresentable: NSViewRepresentable {
         scrollView.documentView = tableView
 
         context.coordinator.tableView = tableView
+        tableView.quickLookController = context.coordinator
+        
+        tableView.onSpaceBarPressed = { [weak coordinator = context.coordinator] in
+            coordinator?.togglePreviewPanel()
+        }
         context.coordinator.applySortDescriptorIfNeeded()
         context.coordinator.applySelectionIfNeeded()
 
@@ -344,13 +351,18 @@ private struct FileListTableRepresentable: NSViewRepresentable {
         context.coordinator.applySelectionIfNeeded()
     }
 
-    final class Coordinator: NSObject, NSTableViewDataSource, NSTableViewDelegate, NSFilePromiseProviderDelegate {
+    final class Coordinator: NSObject, NSTableViewDataSource, NSTableViewDelegate, NSFilePromiseProviderDelegate, QLPreviewPanelDataSource, QLPreviewPanelDelegate {
         var parent: FileListTableRepresentable
         weak var tableView: NSTableView?
 
         private var isSyncingSelection = false
         private var draggedFiles: [MTPFile] = []  // Track files for multi-select drag
         private var isDraggingMultiple = false    // Flag for multi-file drag
+        
+        // Quick Look Overlay State
+        private var currentQLFile: MTPFile?
+        private var activeQLURL: URL?
+        private var overlayController: NSHostingController<QuickLookOverlayView>?
         
         private static let sharedPromiseQueue: OperationQueue = {
             let queue = OperationQueue()
@@ -489,6 +501,10 @@ private struct FileListTableRepresentable: NSViewRepresentable {
                 return parent.files[row].id
             }
             parent.selection = Set(selectedIDs)
+            
+            if QLPreviewPanel.sharedPreviewPanelExists() && QLPreviewPanel.shared().isVisible {
+                updateQuickLookForSelection()
+            }
         }
 
         func tableView(_ tableView: NSTableView, sortDescriptorsDidChange oldDescriptors: [NSSortDescriptor]) {
@@ -774,6 +790,179 @@ private struct FileListTableRepresentable: NSViewRepresentable {
                 return NSColor.secondaryLabelColor.withAlphaComponent(0.85)
             }
         }
+        
+        // MARK: - Quick Look Logic
+        
+        func togglePreviewPanel() {
+            if QLPreviewPanel.sharedPreviewPanelExists() && QLPreviewPanel.shared().isVisible {
+                QLPreviewPanel.shared().orderOut(nil)
+            } else {
+                guard let file = selectedFileForQuickLook() else { return }
+                currentQLFile = file
+                tableView?.window?.makeFirstResponder(tableView)
+                QLPreviewPanel.shared().makeKeyAndOrderFront(nil)
+            }
+        }
+        
+        private func selectedFileForQuickLook() -> MTPFile? {
+            guard let tableView else { return nil }
+            let selectedRows = tableView.selectedRowIndexes
+            guard selectedRows.count == 1, let row = selectedRows.first, row >= 0, row < parent.files.count else { return nil }
+            return parent.files[row]
+        }
+        
+        private func updateQuickLookForSelection() {
+            guard let file = selectedFileForQuickLook() else { return }
+            if currentQLFile?.id != file.id {
+                currentQLFile = file
+                QLPreviewPanel.shared().reloadData()
+            }
+        }
+        
+        private func preparePreviewItem(for file: MTPFile) -> URL? {
+            let tempDir = FileManager.default.temporaryDirectory.appendingPathComponent("SwiftMTP_QuickLook", isDirectory: true)
+            do {
+                if !FileManager.default.fileExists(atPath: tempDir.path) {
+                    try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+                }
+                
+                let fileURL = tempDir.appendingPathComponent(file.name)
+                
+                if file.isDirectory {
+                    if !FileManager.default.fileExists(atPath: fileURL.path) {
+                        try FileManager.default.createDirectory(at: fileURL, withIntermediateDirectories: true)
+                    }
+                    activeQLURL = fileURL
+                    mountOverlay(state: .folder(file))
+                    return fileURL
+                }
+                
+                let isCached = FileManager.default.fileExists(atPath: fileURL.path)
+                let attrs = try? FileManager.default.attributesOfItem(atPath: fileURL.path)
+                let cachedSize = attrs?[.size] as? Int64 ?? 0
+                
+                // If it is fully cached (assuming size > 0 implies something is there, exact size check can be tricky)
+                if isCached && cachedSize > 0 {
+                    removeOverlay()
+                    activeQLURL = fileURL
+                    return fileURL
+                }
+                
+                // Touch empty file to trick QL preview into opening
+                if !isCached {
+                    FileManager.default.createFile(atPath: fileURL.path, contents: nil, attributes: nil)
+                }
+                
+                activeQLURL = fileURL
+                
+                let sizeThreshold: Int64 = 10 * 1024 * 1024
+                if file.size <= sizeThreshold {
+                    mountOverlay(state: .loading)
+                    triggerSilentDownload(file: file, dest: tempDir)
+                } else {
+                    mountOverlay(state: .prompt(file))
+                }
+                
+                return fileURL
+            } catch {
+                print("QuickLook prepare error: \(error)")
+                return nil
+            }
+        }
+        
+        private func triggerSilentDownload(file: MTPFile, dest: URL) {
+            parent.manager.downloadAndPreview(file: file, to: dest) { [weak self] error in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    if self.currentQLFile?.id == file.id {
+                        self.removeOverlay()
+                        QLPreviewPanel.shared().refreshCurrentPreviewItem()
+                    }
+                }
+            }
+        }
+        
+        // MARK: Custom Native Overlay for Subviews
+        
+        private func mountOverlay(state: QuickLookOverlayState) {
+            guard let panel = QLPreviewPanel.shared() else { return }
+            guard let contentView = panel.contentView else { return }
+            
+            if overlayController == nil {
+                let view = QuickLookOverlayView(state: state, onLoadPreview: { [weak self] in
+                    guard let self = self, let file = self.currentQLFile else { return }
+                    self.mountOverlay(state: .loading)
+                    let tempDir = FileManager.default.temporaryDirectory.appendingPathComponent("SwiftMTP_QuickLook")
+                    self.triggerSilentDownload(file: file, dest: tempDir)
+                })
+                let controller = NSHostingController(rootView: view)
+                controller.view.translatesAutoresizingMaskIntoConstraints = false
+                
+                contentView.addSubview(controller.view)
+                NSLayoutConstraint.activate([
+                    controller.view.topAnchor.constraint(equalTo: contentView.topAnchor),
+                    controller.view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+                    controller.view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+                    controller.view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+                ])
+                overlayController = controller
+            } else {
+                let newView = QuickLookOverlayView(state: state, onLoadPreview: { [weak self] in
+                    guard let self = self, let file = self.currentQLFile else { return }
+                    self.mountOverlay(state: .loading)
+                    let tempDir = FileManager.default.temporaryDirectory.appendingPathComponent("SwiftMTP_QuickLook")
+                    self.triggerSilentDownload(file: file, dest: tempDir)
+                })
+                overlayController?.rootView = newView
+            }
+        }
+        
+        private func removeOverlay() {
+            overlayController?.view.removeFromSuperview()
+            overlayController = nil
+        }
+        
+        // MARK: - QLPreviewPanelDataSource
+        
+        func numberOfPreviewItems(in panel: QLPreviewPanel!) -> Int {
+            return currentQLFile != nil ? 1 : 0
+        }
+        
+        func previewPanel(_ panel: QLPreviewPanel!, previewItemAt index: Int) -> (any QLPreviewItem)! {
+            guard let currentFile = currentQLFile else { return nil }
+            return preparePreviewItem(for: currentFile) as QLPreviewItem?
+        }
+        
+        // MARK: - QLPreviewPanelDelegate
+        
+        func previewPanel(_ panel: QLPreviewPanel!, sourceFrameOnScreenFor item: (any QLPreviewItem)!) -> NSRect {
+            guard let tableView else { return .zero }
+            let selectedRow = tableView.selectedRow
+            guard selectedRow >= 0 else { return .zero }
+            let rowRect = tableView.rect(ofRow: selectedRow)
+            let windowRect = tableView.convert(rowRect, to: nil)
+            return tableView.window?.convertToScreen(windowRect) ?? .zero
+        }
+        
+        func previewPanel(_ panel: QLPreviewPanel!, handle event: NSEvent!) -> Bool {
+            if event.type == .keyDown {
+                if event.keyCode == 49 { 
+                    panel.orderOut(nil)
+                    return true
+                } else if event.keyCode == 123 || event.keyCode == 124 || event.keyCode == 125 || event.keyCode == 126 {
+                    tableView?.keyDown(with: event)
+                    return true
+                }
+            }
+            return false
+        }
+        
+        func windowWillClose(_ notification: Notification) {
+            if let panel = notification.object as? QLPreviewPanel, panel == QLPreviewPanel.shared() {
+                removeOverlay()
+                currentQLFile = nil
+            }
+        }
     }
 }
 
@@ -794,11 +983,35 @@ private struct ColumnSpec {
 
 private final class ContextMenuTableView: NSTableView {
     var menuProvider: ((Int) -> NSMenu?)?
+    var onSpaceBarPressed: (() -> Void)?
+    weak var quickLookController: (NSObject & QLPreviewPanelDataSource & QLPreviewPanelDelegate)?
 
     override func menu(for event: NSEvent) -> NSMenu? {
         let point = convert(event.locationInWindow, from: nil)
         let row = row(at: point)
         return menuProvider?(row)
+    }
+
+    override func keyDown(with event: NSEvent) {
+        if event.keyCode == 49 { // spacebar
+            onSpaceBarPressed?()
+        } else {
+            super.keyDown(with: event)
+        }
+    }
+    
+    override func acceptsPreviewPanelControl(_ panel: QLPreviewPanel!) -> Bool {
+        return quickLookController != nil
+    }
+    
+    override func beginPreviewPanelControl(_ panel: QLPreviewPanel!) {
+        panel.delegate = quickLookController
+        panel.dataSource = quickLookController
+    }
+    
+    override func endPreviewPanelControl(_ panel: QLPreviewPanel!) {
+        panel.delegate = nil
+        panel.dataSource = nil
     }
 }
 

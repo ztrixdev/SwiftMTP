@@ -16,6 +16,7 @@
 		C705622C2F875E5F0055C8BE /* FavoriteItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C705622B2F875E5F0055C8BE /* FavoriteItem.swift */; };
 		C705622E2F875E6E0055C8BE /* FavoritesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C705622D2F875E6E0055C8BE /* FavoritesManager.swift */; };
 		C725E65B2F7CCDD0007937AB /* ErrorStringLocalizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C725E65A2F7CCDD0007937AB /* ErrorStringLocalizer.swift */; };
+		C72F6C242F87DFF10015604B /* QuickLookOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72F6C232F87DFF10015604B /* QuickLookOverlayView.swift */; };
 		C7516A6B2F800866006B1603 /* USBProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7516A6A2F800866006B1603 /* USBProtocol.swift */; };
 		C7516A6E2F8008A5006B1603 /* MTPFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7516A6D2F8008A5006B1603 /* MTPFile.swift */; };
 		C7516A6F2F8008A5006B1603 /* MTPDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7516A6C2F8008A5006B1603 /* MTPDevice.swift */; };
@@ -54,6 +55,7 @@
 		C705622B2F875E5F0055C8BE /* FavoriteItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FavoriteItem.swift; path = SwiftMTP/Models/FavoriteItem.swift; sourceTree = "<group>"; };
 		C705622D2F875E6E0055C8BE /* FavoritesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FavoritesManager.swift; path = SwiftMTP/Services/FavoritesManager.swift; sourceTree = "<group>"; };
 		C725E65A2F7CCDD0007937AB /* ErrorStringLocalizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ErrorStringLocalizer.swift; path = SwiftMTP/Services/ErrorStringLocalizer.swift; sourceTree = "<group>"; };
+		C72F6C232F87DFF10015604B /* QuickLookOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = QuickLookOverlayView.swift; path = SwiftMTP/Views/QuickLookOverlayView.swift; sourceTree = "<group>"; };
 		C74E682E2F78CF5100F8A2FE /* SwiftMTP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftMTP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7516A6A2F800866006B1603 /* USBProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = USBProtocol.swift; path = SwiftMTP/Models/USBProtocol.swift; sourceTree = "<group>"; };
 		C7516A6C2F8008A5006B1603 /* MTPDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MTPDevice.swift; path = SwiftMTP/Models/MTPDevice.swift; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 		1A2B3C4D5E6F7A8000000320 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C72F6C232F87DFF10015604B /* QuickLookOverlayView.swift */,
 				C7516A782F800928006B1603 /* SidebarView.swift */,
 				C7516A792F800928006B1603 /* ToolbarViews.swift */,
 				C7516A742F800911006B1603 /* FileListView.swift */,
@@ -259,6 +262,7 @@
 				C7516A772F800911006B1603 /* FileListView.swift in Sources */,
 				C7FB2E5E2F7A6F6C0036FE3B /* TransferStatistics.swift in Sources */,
 				1A2B3C4D5E6F7A8000000009 /* KalamShim/KalamShim.c in Sources */,
+				C72F6C242F87DFF10015604B /* QuickLookOverlayView.swift in Sources */,
 				C7516A7A2F800928006B1603 /* SidebarView.swift in Sources */,
 				C7516A7B2F800928006B1603 /* ToolbarViews.swift in Sources */,
 				C7516A722F8008D9006B1603 /* KalamMTPManager.swift in Sources */,
@@ -288,7 +292,7 @@
 				CODE_SIGN_ENTITLEMENTS = SwiftMTP/SwiftMTP.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 22;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -329,7 +333,7 @@
 				CODE_SIGN_ENTITLEMENTS = SwiftMTP/SwiftMTP.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 22;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_HARDENED_RUNTIME = YES;

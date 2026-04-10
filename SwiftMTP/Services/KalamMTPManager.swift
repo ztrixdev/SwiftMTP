@@ -46,6 +46,7 @@ final class KalamMTPManager: ObservableObject {
         case makingDirectory
         case uploading
         case downloading
+        case silentDownloading
         case disposing
     }
 
@@ -306,6 +307,20 @@ final class KalamMTPManager: ObservableObject {
                 guard let self else { return }
                 self.loadFiles(at: self.currentPath)
             }
+            operation = .none
+            
+        case .silentDownloading:
+            if let errorString = parseEnvelopeErrorOnly(jsonString) {
+                self.finishTransferCompletion(errorString: errorString)
+                DispatchQueue.main.async {
+                    if ErrorStringLocalizer.isDeviceDisconnectedError(errorString) {
+                        self.handleDeviceDisconnected()
+                    }
+                }
+                operation = .none
+                return
+            }
+            self.finishTransferCompletion(errorString: nil)
             operation = .none
             
         case .downloading, .uploading:
@@ -664,6 +679,47 @@ final class KalamMTPManager: ObservableObject {
         }
         
         operation = .downloading
+        DispatchQueue.global(qos: .userInitiated).async {
+            jsonString.withCString { ptr in
+                KalamDownloadFiles(ptr, CallbackRouter.preprocess, CallbackRouter.progress, CallbackRouter.done)
+            }
+        }
+    }
+    
+    func downloadAndPreview(file: MTPFile, to destinationFolderURL: URL, completion: @escaping (Error?) -> Void) {
+        if operation != .none && operation != .walking {
+            completion(NSError(domain: "KalamMTPManager.Transfer", code: 1, userInfo: [
+                NSLocalizedDescriptionKey: "Another operation is running."
+            ]))
+            return
+        }
+        guard let storage = selectedStorage else {
+            completion(NSError(domain: "KalamMTPManager.Transfer", code: 2, userInfo: [
+                NSLocalizedDescriptionKey: "No storage selected."
+            ]))
+            return
+        }
+        
+        transferCompletion = completion
+        
+        let storageId = self.uint32FromStorageId(storage.id)
+        let sources = [file.path]
+        let destination = destinationFolderURL.path
+        let preprocessFiles = true
+        
+        let input: [String: Any] = [
+            "storageId": Int(storageId),
+            "sources": sources,
+            "destination": destination,
+            "preprocessFiles": preprocessFiles
+        ]
+        
+        guard let jsonString = toJsonString(input) else {
+            finishTransferCompletion(errorString: "Failed to encode download payload.")
+            return
+        }
+        
+        operation = .silentDownloading
         DispatchQueue.global(qos: .userInitiated).async {
             jsonString.withCString { ptr in
                 KalamDownloadFiles(ptr, CallbackRouter.preprocess, CallbackRouter.progress, CallbackRouter.done)
