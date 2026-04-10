@@ -855,6 +855,7 @@ private struct FileListTableRepresentable: NSViewRepresentable {
                 
                 activeQLURL = fileURL
                 
+                // Automatically load preview for files under 10MB
                 let sizeThreshold: Int64 = 10 * 1024 * 1024
                 if file.size <= sizeThreshold {
                     mountOverlay(state: .loading)

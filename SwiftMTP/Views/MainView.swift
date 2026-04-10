@@ -17,6 +17,8 @@ struct MainView: View {
     @State private var pendingExportFiles: [MTPFile] = []
     @State private var isShowingFolderNotFound = false
     @State private var selectedFavoriteID: UUID? = nil
+    @State private var isShowingGoToFolderDialog = false
+    @State private var customFolderPath = ""
 
     var selectedFiles: [MTPFile] {
         manager.sortedFiles.filter { selection.contains($0.id) }
@@ -123,6 +125,24 @@ struct MainView: View {
         } message: {
             Text("The folder does not exist on this device.")
         }
+        .alert(String(localized: "Go to Folder"), isPresented: $isShowingGoToFolderDialog) {
+            TextField(String(localized: "/path/to/folder"), text: $customFolderPath)
+            Button(String(localized: "Cancel"), role: .cancel) { customFolderPath = "" }
+            Button(String(localized: "Go")) {
+                let path = customFolderPath.trimmingCharacters(in: .whitespaces)
+                if !path.isEmpty {
+                    manager.navigateToPath(path)
+                }
+                customFolderPath = ""
+            }
+        } message: {
+            Text(String(localized: "Enter the absolute path on the device."))
+        }
+        .focusedSceneValue(\.isConnected, manager.connectionState.isConnected)
+        .focusedSceneValue(\.canGoBack, manager.canGoBack)
+        .focusedSceneValue(\.navigateToPathAction, { manager.navigateToPath($0) })
+        .focusedSceneValue(\.navigateBackAction, { manager.navigateBack() })
+        .focusedSceneValue(\.showFolderPromptAction, { isShowingGoToFolderDialog = true })
     }
 
     private var contentView: some View {
@@ -241,6 +261,22 @@ struct MainView: View {
                     .font(.system(size: 11))
                     .foregroundStyle(.secondary)
                 Spacer()
+                if let stats = manager.silentTransferStats {
+                    HStack(spacing: 8) {
+                        ProgressView(value: stats.progressPercentage)
+                            .progressViewStyle(.linear)
+                            .frame(width: 100)
+                        Text(stats.speedString)
+                            .font(.system(size: 10, design: .monospaced))
+                            .foregroundStyle(.secondary)
+                        Text(stats.remainingTimeString)
+                            .font(.system(size: 10, design: .monospaced))
+                            .foregroundStyle(.secondary)
+                        Text(String(format: "%.0f%%", stats.progressPercentage * 100))
+                            .font(.system(size: 11, design: .monospaced))
+                            .foregroundStyle(.secondary)
+                    }
+                }
             }
             .padding(.horizontal, 10)
             .padding(.vertical, 5)
@@ -257,6 +293,9 @@ struct MainView: View {
     }
 
     private var statusText: String {
+        if let _ = manager.silentTransferStats {
+            return String(localized: "Preparing preview...")
+        }
         if manager.isTransferActive {
             return String(localized: "Transferring…")
         }

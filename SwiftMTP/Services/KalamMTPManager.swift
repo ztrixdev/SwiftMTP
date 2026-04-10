@@ -12,6 +12,7 @@ final class KalamMTPManager: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var transferProgress: Double? = nil
     @Published var transferStats: TransferStatistics? = nil
+    @Published var silentTransferStats: TransferStatistics? = nil
     @Published var errorMessage: String? = nil
     @Published private(set) var isTransferActive: Bool = false
     
@@ -112,7 +113,7 @@ final class KalamMTPManager: ObservableObject {
     
     private func handleProgress(jsonPtr: UnsafeMutablePointer<CChar>?) {
         guard let jsonPtr else { return }
-        guard operation == .downloading || operation == .uploading else { return }
+        guard operation == .downloading || operation == .uploading || operation == .silentDownloading else { return }
         
         let jsonString = String(cString: jsonPtr)
         let (errorString, dataAny) = parseEnvelope(jsonString)
@@ -122,12 +123,16 @@ final class KalamMTPManager: ObservableObject {
                 if ErrorStringLocalizer.isDeviceDisconnectedError(errorString) {
                     self.handleDeviceDisconnected()
                 } else {
-                    self.isTransferActive = false
-                    self.transferProgress = nil
-                    self.transferStats = nil
-                    let localizedError = ErrorStringLocalizer.localize(errorString)
-                    self.connectionState = .error(localizedError)
-                    self.errorMessage = localizedError
+                    if self.operation != .silentDownloading {
+                        self.isTransferActive = false
+                        self.transferProgress = nil
+                        self.transferStats = nil
+                        let localizedError = ErrorStringLocalizer.localize(errorString)
+                        self.connectionState = .error(localizedError)
+                        self.errorMessage = localizedError
+                    } else {
+                        self.silentTransferStats = nil
+                    }
                 }
             }
             operation = .none
@@ -138,8 +143,13 @@ final class KalamMTPManager: ObservableObject {
         let stats = TransferStatistics(progressData: progressData)
         
         DispatchQueue.main.async { [weak self] in
-            self?.transferStats = stats
-            self?.transferProgress = stats.progressPercentage
+            guard let self else { return }
+            if self.operation == .silentDownloading {
+                self.silentTransferStats = stats
+            } else {
+                self.transferStats = stats
+                self.transferProgress = stats.progressPercentage
+            }
         }
     }
     
@@ -312,15 +322,19 @@ final class KalamMTPManager: ObservableObject {
         case .silentDownloading:
             if let errorString = parseEnvelopeErrorOnly(jsonString) {
                 self.finishTransferCompletion(errorString: errorString)
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [weak self] in
+                    self?.silentTransferStats = nil
                     if ErrorStringLocalizer.isDeviceDisconnectedError(errorString) {
-                        self.handleDeviceDisconnected()
+                        self?.handleDeviceDisconnected()
                     }
                 }
                 operation = .none
                 return
             }
             self.finishTransferCompletion(errorString: nil)
+            DispatchQueue.main.async { [weak self] in
+                self?.silentTransferStats = nil
+            }
             operation = .none
             
         case .downloading, .uploading:
@@ -548,8 +562,10 @@ final class KalamMTPManager: ObservableObject {
         }
         
         operation = .walking
-        jsonString.withCString { ptr in
-            KalamWalk(ptr, CallbackRouter.done)
+        DispatchQueue.global(qos: .userInitiated).async {
+            jsonString.withCString { ptr in
+                KalamWalk(ptr, CallbackRouter.done)
+            }
         }
     }
     

@@ -24,7 +24,7 @@ struct QuickLookOverlayView: View {
     let onLoadPreview: (() -> Void)?
     
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 12) {
             switch state {
             case .folder(let file):
                 fileInfoView(for: file)
@@ -35,7 +35,14 @@ struct QuickLookOverlayView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .controlSize(.large)
-                .padding(.top, 10)
+                .padding(.top, 5)
+                
+                Text(String(localized: "Loading a large file preview may take some time and cannot be canceled."))
+                    .font(.system(size: 11))
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 40)
+                    .padding(.top, 4)
             case .loading:
                 ProgressView()
                     .controlSize(.large)
@@ -52,14 +59,14 @@ struct QuickLookOverlayView: View {
     
     @ViewBuilder
     private func fileInfoView(for file: MTPFile) -> some View {
-        VStack(spacing: 16) {
+        HStack(spacing: 10) {
             Image(nsImage: getThumbnailIcon(for: file))
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 160, height: 160)
                 .shadow(color: Color.black.opacity(0.15), radius: 8, x: 0, y: 4)
             
-            VStack(spacing: 8) {
+            VStack(spacing: 6) {
                 Text(file.name)
                     .font(.system(size: 24, weight: .regular))
                     .multilineTextAlignment(.center)
