@@ -22,7 +22,7 @@ Inspired by [OpenMTP](https://github.com/ganeshrvel/openmtp/), SwiftMTP reuses t
 ## Features
 
 - **Device Management**: Easily connect/disconnect MTP devices and select specific storage devices.
-- **File Browsing**: Deeply navigate through device directories with a native macOS feel.
+- **File Browsing**: Deeply navigate through device directories with a native macOS feel with Quick Look preview supported.
 - **Bi-directional Transfer**: Import and export files with support for **Drag-and-Drop**.
 - **File Operations**: Create new folders and delete files directly on the device.
 - **Progress Tracking**: Real-time transfer progress bars and status indicators.
@@ -82,6 +82,9 @@ SwiftMTP/
 - [x] Automatic device connect detection
 - [x] Transfer progress bar and status indicators
 - [x] Multi selections and export
+- [x] "Go" menu
+- [x] Favorites
+- [x] Finder-like quick look preview (press spacebar)
 
 ## To do
 
@@ -92,6 +95,8 @@ SwiftMTP/
 [GPL](https://github.com/Neighbor-Z/SwiftMTP/blob/main/LICENSE)
 
 ---
+**About AI**: AI assistance involved; each code segment has undergone manual review and testing.
+
 **Need help?** If you encounter any issues, please open an [Issue](https://github.com/Neighbor-Z/SwiftMTP/issues).
 
 **Support project**: [☕️ Buy Me a Coffee](https://buymeacoffee.com/neighbor_z)
