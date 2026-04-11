@@ -15,7 +15,7 @@
 
 **SwiftMTP** 是一个专为 macOS 打造的现代轻量级原生 MTP (Media Transfer Protocol) 文件管理器。基于 Swift 构建，旨在为 Android 设备或其他 MTP 设备提供流畅、稳定的文件传输体验。
 
-启发自 [OpenMTP](https://github.com/ganeshrvel/openmtp/)， SwiftMTP 复用了 kalam 后端，实现相同高效传输体验的同时保持简洁轻量。
+启发自 [OpenMTP](https://github.com/ganeshrvel/openmtp/)， SwiftMTP 使用了优化的后端，实现相同高效传输体验的同时保持简洁轻量。
 
 ---
 
@@ -32,7 +32,7 @@
 
 ## 截图
 
-![Browser UI Placeholder](https://github.com/Neighbor-Z/SwiftMTP/blob/main/Materials/zh_26.png)
+![Browser UI Placeholder](https://github.com/Neighbor-Z/SwiftMTP/blob/main/Materials/screenshot.png)
 
 ---
 
@@ -84,7 +84,7 @@ SwiftMTP/
 
 #### 步骤
 
-1.  请先编译 kalam 后端，参阅 `ffi/kalam/native/README.md` 。这会得到必要的动态库 (`kalam.dylib` & `libusb.dylib` ) 和 `kalam.h` 放置于 `lib`
+1.  ~~请先编译 kalam 后端，参阅 `ffi/kalam/native/README.md` 。这会得到必要的动态库 (`kalam.dylib` & `libusb.dylib` ) 和 `kalam.h` 放置于 `lib`~~ 预编译的 dylib 已添加。也可以自行编译这些 dylib。
 2.  打开 `SwiftMTP.xcodeproj`
 3.  选择目标平台（macOS）
 4.  点击 **Run**
@@ -100,6 +100,8 @@ SwiftMTP/
 - [x] “前往”菜单
 - [x] 个人收藏
 - [x] 空格键快速预览
+- [x] 文件列表字体大小设置
+- [x] 粘贴导入
 
 ## To do
 

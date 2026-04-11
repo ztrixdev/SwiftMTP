@@ -15,7 +15,7 @@
 
 **SwiftMTP** is a light-weight, modern, Swift-based utility for interacting with MTP (Media Transfer Protocol) devices on macOS. It allows users to browse, manage, and transfer files between a Mac and external devices like Android phones.
 
-Inspired by [OpenMTP](https://github.com/ganeshrvel/openmtp/), SwiftMTP reuses the kalam backend to provide a consistently high-performance transfer experience while maintaining a compact footprint.
+Inspired by [OpenMTP](https://github.com/ganeshrvel/openmtp/), SwiftMTP uses the enhanced backend to provide a consistently high-performance transfer experience while maintaining a compact footprint.
 
 ---
 
@@ -69,7 +69,7 @@ SwiftMTP/
 * **macOS 12.0+**
 
 #### Build & Run
-1.  Please build Kalam backend first. Refer to `ffi/kalam/native/README.md`. This step will build necessary dynamic libraries (`kalam.dylib` & `libusb.dylib`) and will place them under `lib`.
+1.  ~~Please build Kalam backend first. Refer to `ffi/kalam/native/README.md`. This step will build necessary dynamic libraries (`kalam.dylib` & `libusb.dylib`) and will place them under `lib`.~~ Pre-compiled dylibs have been added. You can also compile them by yourself.
 2.  Open `SwiftMTP.xcodeproj` in Xcode.
 3.  Select your target platform (macOS).
 4.  Press Run.
@@ -85,6 +85,8 @@ SwiftMTP/
 - [x] "Go" menu
 - [x] Favorites
 - [x] Finder-like quick look preview (press spacebar)
+- [x] File list font size adjustment 
+- [x] Paste to import
 
 ## To do
 
