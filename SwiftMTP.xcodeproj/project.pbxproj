@@ -26,6 +26,8 @@
 		C7516A772F800911006B1603 /* FileListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7516A742F800911006B1603 /* FileListView.swift */; };
 		C7516A7A2F800928006B1603 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7516A782F800928006B1603 /* SidebarView.swift */; };
 		C7516A7B2F800928006B1603 /* ToolbarViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7516A792F800928006B1603 /* ToolbarViews.swift */; };
+		C7B754552F8A219B0075406B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B754542F8A219B0075406B /* SettingsView.swift */; };
+		C7B754572F8A21C70075406B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7B754562F8A21C70075406B /* Assets.xcassets */; };
 		C7E5F65E2F78FF56004B6939 /* MTPIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = C7A475DB2F78E957005EDC2E /* MTPIcon.icon */; };
 		C7FB2E5E2F7A6F6C0036FE3B /* TransferStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FB2E5D2F7A6F6C0036FE3B /* TransferStatistics.swift */; };
 /* End PBXBuildFile section */
@@ -67,6 +69,8 @@
 		C7516A782F800928006B1603 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SidebarView.swift; path = SwiftMTP/Views/SidebarView.swift; sourceTree = "<group>"; };
 		C7516A792F800928006B1603 /* ToolbarViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ToolbarViews.swift; path = SwiftMTP/Views/ToolbarViews.swift; sourceTree = "<group>"; };
 		C7A475DB2F78E957005EDC2E /* MTPIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = MTPIcon.icon; sourceTree = "<group>"; };
+		C7B754542F8A219B0075406B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = SwiftMTP/Views/SettingsView.swift; sourceTree = "<group>"; };
+		C7B754562F8A21C70075406B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C7FB2E5D2F7A6F6C0036FE3B /* TransferStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TransferStatistics.swift; path = SwiftMTP/Models/TransferStatistics.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -85,6 +89,7 @@
 		1A2B3C4D5E6F7A8000000200 = {
 			isa = PBXGroup;
 			children = (
+				C7B754562F8A21C70075406B /* Assets.xcassets */,
 				1A2B3C4D5E6F7A8000000300 /* SwiftMTP */,
 				1A2B3C4D5E6F7A8000000350 /* KalamShim */,
 				1A2B3C4D5E6F7A8000000310 /* lib */,
@@ -119,6 +124,7 @@
 		1A2B3C4D5E6F7A8000000320 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C7B754542F8A219B0075406B /* SettingsView.swift */,
 				C72F6C232F87DFF10015604B /* QuickLookOverlayView.swift */,
 				C7516A782F800928006B1603 /* SidebarView.swift */,
 				C7516A792F800928006B1603 /* ToolbarViews.swift */,
@@ -226,6 +232,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7B754572F8A21C70075406B /* Assets.xcassets in Resources */,
 				C7E5F65E2F78FF56004B6939 /* MTPIcon.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -273,6 +280,7 @@
 				C705622C2F875E5F0055C8BE /* FavoriteItem.swift in Sources */,
 				C7516A6F2F8008A5006B1603 /* MTPDevice.swift in Sources */,
 				C725E65B2F7CCDD0007937AB /* ErrorStringLocalizer.swift in Sources */,
+				C7B754552F8A219B0075406B /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,7 +300,7 @@
 				CODE_SIGN_ENTITLEMENTS = SwiftMTP/SwiftMTP.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 27;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -333,7 +341,7 @@
 				CODE_SIGN_ENTITLEMENTS = SwiftMTP/SwiftMTP.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 27;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_HARDENED_RUNTIME = YES;

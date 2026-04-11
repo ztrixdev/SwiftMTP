@@ -11,6 +11,8 @@ struct FileListView: View {
     var onAddToFavorites: ((MTPFile) -> Void)?
     var isPathFavorited: ((String) -> Bool)?
 
+    @AppStorage("fileListFontSize") private var fileListFontSize: Int = 12
+
     @State private var isShowingNewFolderDialog = false
     @State private var showError = false
     @State private var isShowingReplaceAlert = false
@@ -169,6 +171,7 @@ struct FileListView: View {
                 files: sortedFiles,
                 selection: $selection,
                 sortState: $sortState,
+                fontSize: fileListFontSize,
                 onDoubleClick: onDoubleClick,
                 onNewFolder: {
                     newFolderName = "Untitled Folder"
@@ -269,6 +272,8 @@ private struct FileListTableRepresentable: NSViewRepresentable {
     @Binding var selection: Set<MTPFile.ID>
     @Binding var sortState: FileListSortState
 
+    var fontSize: Int
+
     let onDoubleClick: (MTPFile) -> Void
     let onNewFolder: () -> Void
     let onOpenSelected: (MTPFile) -> Void
@@ -297,7 +302,7 @@ private struct FileListTableRepresentable: NSViewRepresentable {
         tableView.usesAlternatingRowBackgroundColors = true
         tableView.gridStyleMask = []
         tableView.intercellSpacing = NSSize(width: 4, height: 2)
-        tableView.rowHeight = 24
+        tableView.rowHeight = CGFloat(context.coordinator.parent.fontSize) * 2
         tableView.headerView = NSTableHeaderView()
         tableView.columnAutoresizingStyle = .noColumnAutoresizing
         tableView.selectionHighlightStyle = .regular
@@ -346,6 +351,9 @@ private struct FileListTableRepresentable: NSViewRepresentable {
         context.coordinator.parent = self
         context.coordinator.tableView = tableView
         tableView.usesAlternatingRowBackgroundColors = !files.isEmpty
+        if tableView.rowHeight != CGFloat(fontSize) * 2 {
+            tableView.rowHeight = CGFloat(fontSize) * 2
+        }
         context.coordinator.applySortDescriptorIfNeeded()
         tableView.reloadData()
         context.coordinator.applySelectionIfNeeded()
@@ -400,7 +408,7 @@ private struct FileListTableRepresentable: NSViewRepresentable {
                     identifier: "DateCell",
                     text: dateFormatter.string(from: file.dateModified),
                     alignment: .left,
-                    font: .systemFont(ofSize: 11),
+                    font: .systemFont(ofSize: CGFloat(parent.fontSize - 1)),
                     tableView: tableView
                 )
             case .size:
@@ -408,7 +416,7 @@ private struct FileListTableRepresentable: NSViewRepresentable {
                     identifier: "SizeCell",
                     text: file.displaySize,
                     alignment: .right,
-                    font: .monospacedDigitSystemFont(ofSize: 11, weight: .regular),
+                    font: .monospacedDigitSystemFont(ofSize: CGFloat(parent.fontSize - 1), weight: .regular),
                     tableView: tableView
                 )
             case .kind:
@@ -416,7 +424,7 @@ private struct FileListTableRepresentable: NSViewRepresentable {
                     identifier: "KindCell",
                     text: file.kind,
                     alignment: .left,
-                    font: .systemFont(ofSize: 11),
+                    font: .systemFont(ofSize: CGFloat(parent.fontSize - 1)),
                     tableView: tableView
                 )
             }
@@ -657,7 +665,7 @@ private struct FileListTableRepresentable: NSViewRepresentable {
         }
 
         private func makeNameCell(for file: MTPFile, tableView: NSTableView) -> NSView {
-            let identifier = NSUserInterfaceItemIdentifier("NameCell")
+            let identifier = NSUserInterfaceItemIdentifier("NameCell-\(parent.fontSize)")
             let cell = tableView.makeView(withIdentifier: identifier, owner: nil) as? NSTableCellView ?? {
                 let container = NSTableCellView()
                 container.identifier = identifier
@@ -668,7 +676,7 @@ private struct FileListTableRepresentable: NSViewRepresentable {
 
                 let label = NSTextField(labelWithString: "")
                 label.translatesAutoresizingMaskIntoConstraints = false
-                label.font = .systemFont(ofSize: 12)
+                label.font = .systemFont(ofSize: CGFloat(parent.fontSize))
                 label.lineBreakMode = .byTruncatingMiddle
                 label.maximumNumberOfLines = 1
 
@@ -676,12 +684,15 @@ private struct FileListTableRepresentable: NSViewRepresentable {
                 container.textField = label
                 container.addSubview(iconView)
                 container.addSubview(label)
+                
+                let iconWidth = CGFloat(parent.fontSize) * 1.5
+                let iconHeight = CGFloat(parent.fontSize) * 1.33
 
                 NSLayoutConstraint.activate([
                     iconView.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 6),
                     iconView.centerYAnchor.constraint(equalTo: container.centerYAnchor),
-                    iconView.widthAnchor.constraint(equalToConstant: 18),
-                    iconView.heightAnchor.constraint(equalToConstant: 16),
+                    iconView.widthAnchor.constraint(equalToConstant: iconWidth),
+                    iconView.heightAnchor.constraint(equalToConstant: iconHeight),
 
                     label.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 8),
                     label.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -6),
@@ -698,7 +709,7 @@ private struct FileListTableRepresentable: NSViewRepresentable {
         }
 
         private func makeTextCell(identifier: String, text: String, alignment: NSTextAlignment, font: NSFont, tableView: NSTableView) -> NSView {
-            let nsIdentifier = NSUserInterfaceItemIdentifier(identifier)
+            let nsIdentifier = NSUserInterfaceItemIdentifier("\(identifier)-\(parent.fontSize)")
             let cell = tableView.makeView(withIdentifier: nsIdentifier, owner: nil) as? NSTableCellView ?? {
                 let container = NSTableCellView()
                 container.identifier = nsIdentifier
