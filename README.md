@@ -69,7 +69,7 @@ SwiftMTP/
 * **macOS 12.0+**
 
 #### Build & Run
-1.  Please build Kalam backend first. Refer to `ffi/kalam/native/README.md`. This step will build necessary dynamic libraries (`kalam.dylib` & `libusb.dylib`) and will place them under `lib`.
+1.  Pre-compiled dylibs have been added. You can also compile them by yourself. ~~Please build Kalam backend first. Refer to `ffi/kalam/native/README.md`. This step will build necessary dynamic libraries (`kalam.dylib` & `libusb.dylib`) and will place them under `lib`.~~
 2.  Open `SwiftMTP.xcodeproj` in Xcode.
 3.  Select your target platform (macOS).
 4.  Press Run.
