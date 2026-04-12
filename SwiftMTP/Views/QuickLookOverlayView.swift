@@ -30,19 +30,6 @@ struct QuickLookOverlayView: View {
                 fileInfoView(for: file)
             case .prompt(let file):
                 fileInfoView(for: file)
-                Button(String(localized: "Load Preview")) {
-                    onLoadPreview?()
-                }
-                .buttonStyle(.borderedProminent)
-                .controlSize(.large)
-                .padding(.top, 5)
-                
-                Text(String(localized: "Loading a large file preview may take some time and cannot be canceled."))
-                    .font(.system(size: 11))
-                    .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 40)
-                    .padding(.top, 4)
             case .loading:
                 ProgressView()
                     .controlSize(.large)
@@ -59,20 +46,19 @@ struct QuickLookOverlayView: View {
     
     @ViewBuilder
     private func fileInfoView(for file: MTPFile) -> some View {
-        HStack(spacing: 10) {
+        HStack(spacing: 20) {
             Image(nsImage: getThumbnailIcon(for: file))
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 160, height: 160)
                 .shadow(color: Color.black.opacity(0.15), radius: 8, x: 0, y: 4)
             
-            VStack(spacing: 6) {
+            VStack(alignment: .leading, spacing: 6) {
                 Text(file.name)
                     .font(.system(size: 24, weight: .regular))
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 30)
+                    .multilineTextAlignment(.leading)
                 
-                VStack(spacing: 4) {
+                VStack(alignment: .leading, spacing: 4) {
                     if file.isDirectory {
                         Text(file.kind)
                     } else {
@@ -83,6 +69,23 @@ struct QuickLookOverlayView: View {
                     let _ = df.dateStyle = .medium
                     let _ = df.timeStyle = .short
                     Text(df.string(from: file.dateModified))
+                    
+                    if case .prompt = state {
+                        if !file.isDirectory {
+                            Button(String(localized: "Load Preview")) {
+                                onLoadPreview?()
+                            }
+                            .buttonStyle(.borderedProminent)
+                            .controlSize(.large)
+                            .padding(.top, 5)
+                            
+                            Text(String(localized: "Loading a large file preview may take some time and cannot be canceled."))
+                            .font(.system(size: 11))
+                            .foregroundStyle(.secondary)
+                            .multilineTextAlignment(.center)
+                            .padding(.top, 4)
+                        }
+                    }
                 }
                 .font(.system(size: 13))
                 .foregroundColor(.secondary)

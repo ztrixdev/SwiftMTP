@@ -894,44 +894,53 @@ private struct FileListTableRepresentable: NSViewRepresentable {
             }
         }
         
-        // MARK: Custom Native Overlay for Subviews
+        private static let overlayViewIdentifier = NSUserInterfaceItemIdentifier("SwiftMTP_QLOverlay")
         
         private func mountOverlay(state: QuickLookOverlayState) {
             guard let panel = QLPreviewPanel.shared() else { return }
             guard let contentView = panel.contentView else { return }
             
-            if overlayController == nil {
-                let view = QuickLookOverlayView(state: state, onLoadPreview: { [weak self] in
-                    guard let self = self, let file = self.currentQLFile else { return }
-                    self.mountOverlay(state: .loading)
-                    let tempDir = FileManager.default.temporaryDirectory.appendingPathComponent("SwiftMTP_QuickLook")
-                    self.triggerSilentDownload(file: file, dest: tempDir)
-                })
-                let controller = NSHostingController(rootView: view)
-                controller.view.translatesAutoresizingMaskIntoConstraints = false
-                
-                contentView.addSubview(controller.view)
-                NSLayoutConstraint.activate([
-                    controller.view.topAnchor.constraint(equalTo: contentView.topAnchor),
-                    controller.view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-                    controller.view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-                    controller.view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
-                ])
-                overlayController = controller
-            } else {
-                let newView = QuickLookOverlayView(state: state, onLoadPreview: { [weak self] in
-                    guard let self = self, let file = self.currentQLFile else { return }
-                    self.mountOverlay(state: .loading)
-                    let tempDir = FileManager.default.temporaryDirectory.appendingPathComponent("SwiftMTP_QuickLook")
-                    self.triggerSilentDownload(file: file, dest: tempDir)
-                })
-                overlayController?.rootView = newView
+            // Remove ALL existing overlay views (tracked + any orphans)
+            purgeOverlayViews(from: contentView)
+            overlayController = nil
+            
+            let onLoad: () -> Void = { [weak self] in
+                guard let self = self, let file = self.currentQLFile else { return }
+                self.mountOverlay(state: .loading)
+                let tempDir = FileManager.default.temporaryDirectory.appendingPathComponent("SwiftMTP_QuickLook")
+                self.triggerSilentDownload(file: file, dest: tempDir)
             }
+            
+            let controller = NSHostingController(rootView: QuickLookOverlayView(state: state, onLoadPreview: onLoad))
+            controller.view.translatesAutoresizingMaskIntoConstraints = false
+            controller.view.identifier = Self.overlayViewIdentifier
+            
+            contentView.addSubview(controller.view)
+            NSLayoutConstraint.activate([
+                controller.view.topAnchor.constraint(equalTo: contentView.topAnchor),
+                controller.view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+                controller.view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+                controller.view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+            ])
+            overlayController = controller
         }
         
         private func removeOverlay() {
-            overlayController?.view.removeFromSuperview()
+            // Purge from current contentView to catch orphans
+            if let contentView = QLPreviewPanel.shared()?.contentView {
+                purgeOverlayViews(from: contentView)
+            }
             overlayController = nil
+        }
+        
+        /// Remove all overlay views ever added, identified by tag.
+        /// This catches both the currently tracked overlay and any orphaned
+        /// views left behind by QL's internal view lifecycle.
+        private func purgeOverlayViews(from parent: NSView) {
+            for subview in parent.subviews where subview.identifier == Self.overlayViewIdentifier {
+                subview.isHidden = true
+                subview.removeFromSuperview()
+            }
         }
         
         // MARK: - QLPreviewPanelDataSource
