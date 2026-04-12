@@ -297,7 +297,9 @@ struct MainView: View {
             return String(localized: "Preparing preview...")
         }
         if manager.isTransferActive {
-            return String(localized: "Transferring…")
+            let stats = manager.transferStats
+            let filesProgressString = stats?.filesProgressString ?? ""
+            return String(localized: "Transferring…") + " " + filesProgressString
         }
         if manager.isLoading { return String(localized: "Loading…") }
         if case let .error(message) = manager.connectionState { return message }
@@ -586,7 +588,7 @@ private struct TransferOverlay: View {
 
     private var remainingTimeText: String {
         if isPreparing {
-            return " \(String(localized: "About 1 min"))"
+            return " \(String(localized: "--"))"
         }
         return " \(stats?.remainingTimeString ?? "")"
     }

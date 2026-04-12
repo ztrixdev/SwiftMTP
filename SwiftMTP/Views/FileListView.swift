@@ -293,9 +293,11 @@ private struct FileListTableRepresentable: NSViewRepresentable {
         scrollView.borderType = .noBorder
         scrollView.drawsBackground = false
         scrollView.autohidesScrollers = true
+        scrollView.contentInsets = NSEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
+        scrollView.automaticallyAdjustsContentInsets = false
 
         let tableView = ContextMenuTableView(frame: .zero)
-        tableView.focusRingType = .none
+        tableView.focusRingType = .default
         tableView.allowsMultipleSelection = true
         tableView.allowsEmptySelection = true
         tableView.allowsColumnReordering = false
@@ -339,6 +341,15 @@ private struct FileListTableRepresentable: NSViewRepresentable {
         tableView.onSpaceBarPressed = { [weak coordinator = context.coordinator] in
             coordinator?.togglePreviewPanel()
         }
+        tableView.onCopyAction = { [weak coordinator = context.coordinator] in
+            coordinator?.handleCopy()
+        }
+        tableView.onPasteAction = { [weak coordinator = context.coordinator] in
+            coordinator?.handlePaste()
+        }
+        tableView.canPaste = { [weak coordinator = context.coordinator] in
+            coordinator?.canPaste() ?? false
+        }
         context.coordinator.applySortDescriptorIfNeeded()
         context.coordinator.applySelectionIfNeeded()
 
@@ -357,6 +368,12 @@ private struct FileListTableRepresentable: NSViewRepresentable {
         context.coordinator.applySortDescriptorIfNeeded()
         tableView.reloadData()
         context.coordinator.applySelectionIfNeeded()
+        
+        DispatchQueue.main.async {
+            if let window = tableView.window, window.firstResponder != tableView {
+                window.makeFirstResponder(tableView)
+            }
+        }
     }
 
     final class Coordinator: NSObject, NSTableViewDataSource, NSTableViewDelegate, NSFilePromiseProviderDelegate, QLPreviewPanelDataSource, QLPreviewPanelDelegate {
@@ -658,6 +675,38 @@ private struct FileListTableRepresentable: NSViewRepresentable {
             guard let first = selectedContextFiles.first, first.isDirectory else { return }
             parent.onAddToFavorites?(first)
         }
+        
+        func handleCopy() {
+            // copy feature is not ready by far
+            guard let tableView = tableView else { return }
+            let selectedRows = tableView.selectedRowIndexes
+            guard !selectedRows.isEmpty else { return }
+
+            // Get Pasteboard Writers of all selected items
+            let writers = selectedRows.compactMap { row in
+                self.tableView(tableView, pasteboardWriterForRow: row)
+            }
+
+            if !writers.isEmpty {
+                // clear and write to clipboard
+                let pasteboard = NSPasteboard.general
+                pasteboard.clearContents()
+                pasteboard.writeObjects(writers)
+            }
+        }
+
+        /// Whether the system clipboard contains pasteable files.
+        func canPaste() -> Bool {
+            return !readFilesFromPasteboard().isEmpty
+        }
+
+        func handlePaste() {
+            let pastedURLs = readFilesFromPasteboard()
+            guard !pastedURLs.isEmpty else { return }
+            
+            // Handle paste with same logic as external drop
+            parent.onDropExternalFiles(pastedURLs)
+        }
 
         private func selectedRows() -> [Int] {
             guard let tableView else { return [] }
@@ -743,6 +792,39 @@ private struct FileListTableRepresentable: NSViewRepresentable {
             ]
             let objects = pasteboard.readObjects(forClasses: [NSURL.self], options: options) as? [NSURL] ?? []
             return objects.map { $0 as URL }
+        }
+        
+        private func readFilesFromPasteboard() -> [URL] {
+            let pasteboard = NSPasteboard.general
+            
+            // First, try to read file URLs directly
+            let options: [NSPasteboard.ReadingOptionKey: Any] = [
+                .urlReadingFileURLsOnly: true
+            ]
+            if let objects = pasteboard.readObjects(forClasses: [NSURL.self], options: options) as? [NSURL] {
+                let urls = objects.map { $0 as URL }
+                if !urls.isEmpty {
+                    return urls
+                }
+            }
+            
+            // If no file URLs, try to read as strings (file paths)
+            if let strings = pasteboard.readObjects(forClasses: [NSString.self], options: nil) as? [NSString] {
+                let urls = strings.compactMap { path -> URL? in
+                    let urlPath = path as String
+                    // Check if it's a valid file path
+                    if FileManager.default.fileExists(atPath: urlPath) {
+                        return URL(fileURLWithPath: urlPath)
+                    }
+                    // Also try to convert string to URL
+                    if let url = URL(string: urlPath), url.isFileURL {
+                        return url
+                    }
+                    return nil
+                }
+                return urls
+            }
+            return []
         }
 
         private func getThumbnailIcon(for file: MTPFile) -> NSImage {
@@ -1002,10 +1084,15 @@ private struct ColumnSpec {
     ]
 }
 
-private final class ContextMenuTableView: NSTableView {
+private final class ContextMenuTableView: NSTableView, NSMenuItemValidation {
     var menuProvider: ((Int) -> NSMenu?)?
     var onSpaceBarPressed: (() -> Void)?
+    var onCopyAction: (() -> Void)?
+    var onPasteAction: (() -> Void)?
+    var canPaste: (() -> Bool)?
     weak var quickLookController: (NSObject & QLPreviewPanelDataSource & QLPreviewPanelDelegate)?
+    
+    override var acceptsFirstResponder: Bool { true }
 
     override func menu(for event: NSEvent) -> NSMenu? {
         let point = convert(event.locationInWindow, from: nil)
@@ -1019,6 +1106,28 @@ private final class ContextMenuTableView: NSTableView {
         } else {
             super.keyDown(with: event)
         }
+    }
+    
+    @objc func copy(_ sender: Any?) {
+        onCopyAction?()
+    }
+
+    // MARK: - Paste support via responder chain (Edit menu + Cmd+V)
+
+    /// Standard paste: action — called by Edit > Paste menu item and Cmd+V shortcut
+    @objc func paste(_ sender: Any?) {
+        onPasteAction?()
+    }
+
+    /// Delegates validation to the Coordinator via the canPaste closure.
+    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+        if menuItem.action == #selector(copy(_:)) {
+            return numberOfSelectedRows > 0
+        }
+        if menuItem.action == #selector(paste(_:)) {
+            return canPaste?() ?? false
+        }
+        return true
     }
     
     override func acceptsPreviewPanelControl(_ panel: QLPreviewPanel!) -> Bool {

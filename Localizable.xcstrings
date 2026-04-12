@@ -2190,31 +2190,31 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Device setup failed"
+            "value" : "Device setup failed, please reconnect or restart device"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "La configuración del dispositivo falló"
+            "value" : "La configuración del dispositivo falló, vuelva a conectar o reinicie el dispositivo"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "デバイスのセットアップに失敗しました"
+            "value" : "デバイスの設定に失敗しました。再接続するか、デバイスを再起動してください。"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "设备配置失败"
+            "value" : "设备配置失败，请重连或重启设备"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "裝置設定失敗"
+            "value" : "裝置設定失敗，請重連或重啟裝置"
           }
         }
       }
