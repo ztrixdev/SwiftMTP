@@ -14,9 +14,12 @@ struct FileListView: View {
     @AppStorage("fileListFontSize") private var fileListFontSize: Int = 12
 
     @State private var isShowingNewFolderDialog = false
+    @State private var isShowingRenameDialog = false
     @State private var showError = false
     @State private var isShowingReplaceAlert = false
     @State private var newFolderName = "Untitled Folder"
+    @State private var fileToRename: MTPFile?
+    @State private var newFileName = ""
     @State private var sortState = FileListSortState(column: .name, ascending: true)
     @State private var urls: [URL] = []
     @State private var pendingUploadURLs: [URL] = []
@@ -36,14 +39,29 @@ struct FileListView: View {
                 fileList
             }
         }
-        .alert("New Folder", isPresented: $isShowingNewFolderDialog) {
-            TextField("Folder Name", text: $newFolderName)
+        .alert(String(localized: "New Folder"), isPresented: $isShowingNewFolderDialog) {
+            TextField(String(localized: "Folder name"), text: $newFolderName)
             Button("Create") {
                 manager.createFolder(named: newFolderName)
             }
             Button("Cancel", role: .cancel) {}
         } message: {
-            Text("Enter a name for this new folder.")
+            Text(String(localized: "Enter a name for the new folder."))
+        }
+        .alert(String(localized: "Rename"), isPresented: $isShowingRenameDialog) {
+            TextField(String(localized: "New Name"), text: $newFileName)
+            Button(String(localized: "Rename")) {
+                if let file = fileToRename {
+                    manager.renameFile(file, to: newFileName)
+                }
+            }
+            Button(String(localized: "Cancel"), role: .cancel) {
+                fileToRename = nil
+            }
+        } message: {
+            if let file = fileToRename {
+                Text(String(format: String(localized: "Enter a new name for \"%@\"."), file.name))
+            }
         }
         .alert("Error", isPresented: $showError) {
             Button(String(localized: "OK"), role: .cancel) {}
@@ -186,6 +204,11 @@ struct FileListView: View {
                 onDropExternalFiles: { droppedURLs in
                     handleImportRequest(droppedURLs)
                 },
+                onRename: { file in
+                    fileToRename = file
+                    newFileName = file.name
+                    isShowingRenameDialog = true
+                },
                 onAddToFavorites: onAddToFavorites,
                 isPathFavorited: isPathFavorited
             )
@@ -279,6 +302,7 @@ private struct FileListTableRepresentable: NSViewRepresentable {
     let onOpenSelected: (MTPFile) -> Void
     let onExportSelected: ([MTPFile]) -> Void
     let onDropExternalFiles: ([URL]) -> Void
+    let onRename: (MTPFile) -> Void
     let onAddToFavorites: ((MTPFile) -> Void)?
     let isPathFavorited: ((String) -> Bool)?
 
@@ -612,6 +636,13 @@ private struct FileListTableRepresentable: NSViewRepresentable {
             let newFolder = NSMenuItem(title: String(localized: "New Folder"), action: #selector(handleNewFolder), keyEquivalent: "")
             newFolder.target = self
             menu.addItem(newFolder)
+            
+            if selectedFiles.count == 1 {
+                let renameItem = NSMenuItem(title: String(localized: "Rename"), action: #selector(handleRename), keyEquivalent: "")
+                renameItem.target = self
+                menu.addItem(renameItem)
+            }
+            
             menu.addItem(NSMenuItem.separator())
 
             if !selectedFiles.isEmpty {
@@ -657,6 +688,11 @@ private struct FileListTableRepresentable: NSViewRepresentable {
 
         @objc private func handleNewFolder() {
             parent.onNewFolder()
+        }
+
+        @objc private func handleRename() {
+            guard let first = selectedContextFiles.first else { return }
+            parent.onRename(first)
         }
 
         @objc private func handleOpenSelected() {

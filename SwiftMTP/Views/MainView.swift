@@ -7,7 +7,9 @@ struct MainView: View {
     @StateObject private var favoritesManager = FavoritesManager()
     @State private var selection: Set<MTPFile.ID> = []
     @State private var isShowingNewFolderDialog = false
+    @State private var isShowingRenameDialog = false
     @State private var newFolderName = ""
+    @State private var newFileName = ""
     @State private var isShowingDeleteConfirmation = false
     @State private var isShowingDeviceInfo = false
     @State private var isShowingReplaceAlert = false
@@ -74,7 +76,7 @@ struct MainView: View {
         }
         .alert("New Folder", isPresented: $isShowingNewFolderDialog) {
             TextField("Folder name", text: $newFolderName)
-            Button("Cancel", role: .cancel) { newFolderName = "" }
+            Button("Cancel", role: .cancel) {} //newFolderName = "" if "" is applied sometimes the textfield cannot get the folder name
             Button("Create") {
                 if !newFolderName.trimmingCharacters(in: .whitespaces).isEmpty {
                     manager.createFolder(named: newFolderName.trimmingCharacters(in: .whitespaces))
@@ -83,6 +85,22 @@ struct MainView: View {
             }
         } message: {
             Text("Enter a name for the new folder.")
+        }
+        .alert(String(localized: "Rename"), isPresented: $isShowingRenameDialog) {
+            TextField(String(localized: "New Name"), text: $newFileName)
+            Button(String(localized: "Cancel"), role: .cancel) {
+                // newFileName = "" // if "" is applied sometimes the textfield cannot get the existing file name
+            }
+            Button(String(localized: "Rename")) {
+                if let file = selectedFiles.first, !newFileName.trimmingCharacters(in: .whitespaces).isEmpty {
+                    manager.renameFile(file, to: newFileName.trimmingCharacters(in: .whitespaces))
+                }
+                 newFileName = ""
+            }
+        } message: {
+            if let file = selectedFiles.first {
+                Text(String(format: String(localized: "Enter a new name for \"%@\"."), file.name))
+            }
         }
         .alert(String(localized: "Replace and merge the existing items?"), isPresented: $isShowingReplaceAlert) {
             Button(String(localized: "Replace")) {
@@ -138,11 +156,35 @@ struct MainView: View {
         } message: {
             Text(String(localized: "Enter the absolute path on the device."))
         }
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("SwiftMTPImportAction"))) { notification in
+            if let urls = notification.userInfo?["urls"] as? [URL] {
+                handleImport(urls)
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("SwiftMTPExportAction"))) { notification in
+            if let destinationURL = notification.userInfo?["destinationURL"] as? URL {
+                handleExport(destinationURL: destinationURL, files: selectedFiles)
+            }
+        }
         .focusedSceneValue(\.isConnected, manager.connectionState.isConnected)
         .focusedSceneValue(\.canGoBack, manager.canGoBack)
+        .focusedSceneValue(\.isTransferActive, manager.isTransferActive)
+        .focusedSceneValue(\.isSelectedFilesEmpty, selectedFiles.isEmpty)
+        .focusedSceneValue(\.isSingleFileSelected, selectedFiles.count == 1)
         .focusedSceneValue(\.navigateToPathAction, { manager.navigateToPath($0) })
         .focusedSceneValue(\.navigateBackAction, { manager.navigateBack() })
         .focusedSceneValue(\.showFolderPromptAction, { isShowingGoToFolderDialog = true })
+        .focusedSceneValue(\.showDeviceInfoAction, { isShowingDeviceInfo = true })
+        .focusedSceneValue(\.showNewFolderAction, { isShowingNewFolderDialog = true })
+        .focusedSceneValue(\.showRenameAction, {
+            if let first = selectedFiles.first {
+                newFileName = first.name
+                isShowingRenameDialog = true
+            }
+        })
+        .focusedSceneValue(\.showDeleteConfirmationAction, { isShowingDeleteConfirmation = true })
+        .focusedSceneValue(\.connectDeviceAction, { manager.connectDevice() })
+        .focusedSceneValue(\.disconnectDeviceAction, { manager.disconnect(); manager.selectedStorage = nil })
     }
 
     private var contentView: some View {
@@ -391,6 +433,18 @@ struct MainView: View {
             }
             .help(String(localized: "Create new folder"))
             .disabled(!manager.connectionState.isConnected || manager.isTransferActive)
+            
+            // Rename
+            Button {
+                if let first = selectedFiles.first {
+                    newFileName = first.name
+                    isShowingRenameDialog = true
+                }
+            } label: {
+                Label("Rename", systemImage: "character.cursor.ibeam")
+            }
+            .help(String(localized: "Rename"))
+            .disabled(!manager.connectionState.isConnected || manager.isTransferActive || selectedFiles.count != 1)
 
             // Delete
             Button {

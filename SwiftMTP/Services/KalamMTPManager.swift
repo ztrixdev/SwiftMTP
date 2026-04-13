@@ -45,6 +45,7 @@ final class KalamMTPManager: ObservableObject {
         case walking
         case deleting
         case makingDirectory
+        case renaming
         case uploading
         case downloading
         case silentDownloading
@@ -298,7 +299,7 @@ final class KalamMTPManager: ObservableObject {
             }
             operation = .none
             
-        case .deleting, .makingDirectory:
+        case .deleting, .makingDirectory, .renaming:
             if let errorString = parseEnvelopeErrorOnly(jsonString) {
                 DispatchQueue.main.async {
                     if ErrorStringLocalizer.isDeviceDisconnectedError(errorString) {
@@ -779,6 +780,27 @@ final class KalamMTPManager: ObservableObject {
         operation = .makingDirectory
         jsonString.withCString { ptr in
             KalamMakeDirectory(ptr, CallbackRouter.done)
+        }
+    }
+    
+    func renameFile(_ file: MTPFile, to newName: String) {
+        guard let storage = selectedStorage else { return }
+        let storageId = uint32FromStorageId(storage.id)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.isLoading = true
+        }
+        
+        let input: [String: Any] = [
+            "storageId": Int(storageId),
+            "fullPath": file.path,
+            "newFileName": newName
+        ]
+        
+        guard let jsonString = toJsonString(input) else { return }
+        operation = .renaming
+        jsonString.withCString { ptr in
+            KalamRenameFile(ptr, CallbackRouter.done)
         }
     }
     

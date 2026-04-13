@@ -2535,6 +2535,41 @@
         }
       }
     },
+    "Enter a new name for \"%@\"." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter a new name for \"%@\"."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingrese un nuevo nombre para \"%@\"."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「%1$@」の新しい名前を入力してください。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "为“%@”输入新名称。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "為「%@」輸入新名稱。"
+          }
+        }
+      }
+    },
     "Enter the absolute path on the device." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -3646,7 +3681,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Información y actualización"
+            "value" : "Info y actualización"
           }
         },
         "ja" : {
@@ -4271,6 +4306,41 @@
         }
       }
     },
+    "New Name" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New Name"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nuevo nombre"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新しい名前"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新名称"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新名稱"
+          }
+        }
+      }
+    },
     "No Device Connected" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -4859,7 +4929,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "重命名"
+            "value" : "重新命名"
           }
         },
         "zh-Hant" : {
