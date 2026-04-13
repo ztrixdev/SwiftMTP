@@ -24,7 +24,7 @@
 - **即插即用**：自动识别连接的 MTP 设备并管理多存储分区。
 - **原生浏览**：极速浏览设备目录，支持层级导航。
 - **双向传输**：支持文件的上传与下载，包括 **拖拽功能 (Drag-and-Drop)**。
-- **文件管理**：支持在设备上直接创建文件夹、删除文件。
+- **文件管理**：支持在设备上直接创建文件夹、重命名、删除文件。
 - **实时反馈**：提供清晰的传输进度条与状态提示。
 - **多语支持**:   利用 `Localizable.xcstrings` 支持多种语言。
 
@@ -32,7 +32,11 @@
 
 ## 截图
 
-![Browser UI Placeholder](https://github.com/Neighbor-Z/SwiftMTP/blob/main/Materials/screenshot.png)
+![Main UI](https://github.com/Neighbor-Z/SwiftMTP/blob/main/Materials/screenshot.png)
+
+| "文件"菜单和快捷键                | "前往"菜单和快捷键              |
+| ------------------------------------------------ | -------------------------------------------- |
+| ![File Menu](https://github.com/Neighbor-Z/SwiftMTP/blob/main/Materials/file_menu_in_Tahoe.png) | ![Go Menu](https://github.com/Neighbor-Z/SwiftMTP/blob/main/Materials/go_menu_in_Tahoe.png) |
 
 ---
 
@@ -97,7 +101,7 @@ SwiftMTP/
 - [x] 自动识别设备并连接
 - [x] 传输进度条与状态提示
 - [x] 多选项目并导出
-- [x] “前往”菜单
+- [x] “前往”和“文件”菜单
 - [x] 个人收藏
 - [x] 空格键快速预览
 - [x] 文件列表字体大小设置

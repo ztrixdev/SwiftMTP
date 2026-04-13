@@ -24,7 +24,7 @@ Inspired by [OpenMTP](https://github.com/ganeshrvel/openmtp/), SwiftMTP uses the
 - **Device Management**: Easily connect/disconnect MTP devices and select specific storage devices.
 - **File Browsing**: Deeply navigate through device directories with a native macOS feel with Quick Look preview supported.
 - **Bi-directional Transfer**: Import and export files with support for **Drag-and-Drop**.
-- **File Operations**: Create new folders and delete files directly on the device.
+- **File Operations**: Create new folders, rename and delete files directly on the device.
 - **Progress Tracking**: Real-time transfer progress bars and status indicators.
 - **Localization**: Multilingual support via `Localizable.xcstrings`.
 
@@ -33,6 +33,10 @@ Inspired by [OpenMTP](https://github.com/ganeshrvel/openmtp/), SwiftMTP uses the
 ## Screenshot
 
 ![Main UI](https://github.com/Neighbor-Z/SwiftMTP/blob/main/Materials/screenshot.png)
+
+| File menu with Keyboard Shortcuts                | Go menu with Keyboard Shortcuts              |
+| ------------------------------------------------ | -------------------------------------------- |
+| ![File Menu](https://github.com/Neighbor-Z/SwiftMTP/blob/main/Materials/file_menu_in_Tahoe.png) | ![Go Menu](https://github.com/Neighbor-Z/SwiftMTP/blob/main/Materials/go_menu_in_Tahoe.png) |
 
 ---
 
@@ -82,7 +86,7 @@ SwiftMTP/
 - [x] Automatic device connect detection
 - [x] Transfer progress bar and status indicators
 - [x] Multi selections and export
-- [x] "Go" menu
+- [x] "Go" and "File" menu
 - [x] Favorites
 - [x] Finder-like quick look preview (press spacebar)
 - [x] File list font size adjustment 
@@ -100,5 +104,7 @@ SwiftMTP/
 **About AI**: AI assistance involved; each code segment has undergone manual review and testing.
 
 **Need help?** If you encounter any issues, please open an [Issue](https://github.com/Neighbor-Z/SwiftMTP/issues).
+
+**Contributing**: SwiftMTP is always looking for contributions. Just simply fork this repo and make [pull requests](https://github.com/Neighbor-Z/SwiftMTP/pulls). You can also improve the translation or add your new language freely.
 
 **Support project**: [☕️ Buy Me a Coffee](https://buymeacoffee.com/neighbor_z)
