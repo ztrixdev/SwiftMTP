@@ -317,8 +317,6 @@ private struct FileListTableRepresentable: NSViewRepresentable {
         scrollView.borderType = .noBorder
         scrollView.drawsBackground = false
         scrollView.autohidesScrollers = true
-        scrollView.contentInsets = NSEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
-        scrollView.automaticallyAdjustsContentInsets = false
 
         let tableView = ContextMenuTableView(frame: .zero)
         tableView.focusRingType = .default

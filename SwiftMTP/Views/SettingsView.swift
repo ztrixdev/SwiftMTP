@@ -87,19 +87,12 @@ struct SettingsView: View {
                         .padding(.vertical, 4)
                         
                     HStack {
-                        if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
-                            let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "0"
-                            Text("v\(version) (\(build))")
-                                .foregroundStyle(.secondary)
-                        }
+                        Text("v\(UpdateChecker.composedAppVersion())")
+                            .foregroundStyle(.secondary)
                         
                         Spacer()
                         
-                        Button(String(localized: "Check for Updates...", comment: "Settings Update Button")) {
-                            // Update action placeholder
-                        }
-                        .disabled(true)
-                        .help(String(localized: "Check for Updates is NOT available yet."))
+                        UpdateButtonRow()
                     }
                 }
             }
@@ -110,5 +103,58 @@ struct SettingsView: View {
         }
         .frame(width: 400, height: 220)
         .navigationTitle(String(localized: "Settings"))
+    }
+}
+
+// MARK: - Update Button Row
+
+private struct UpdateButtonRow: View {
+    @StateObject private var checker = UpdateChecker.shared
+
+    var body: some View {
+        HStack(spacing: 6) {
+            // Left-side status indicator
+            Group {
+                switch checker.state {
+                case .checking:
+                    ProgressView()
+                        .controlSize(.small)
+                case .updateAvailable:
+                    Text(String(localized: "Update available", comment: "Update available status"))
+                        .foregroundStyle(.green)
+                        .font(.callout)
+                case .upToDate:
+                    Text(String(localized: "App is up to date.", comment: "App is up to date status"))
+                        .foregroundStyle(.secondary)
+                        .font(.callout)
+                case .failed:
+                    Text(String(localized: "Check failed", comment: "Update check failed status"))
+                        .foregroundStyle(.red)
+                        .font(.callout)
+                case .idle:
+                    EmptyView()
+                }
+            }
+
+            // Action button
+            switch checker.state {
+            case .updateAvailable(let version, let url):
+                Button(String(format: String(localized: "Download %@", comment: "Download update button"), version)) {
+                    NSWorkspace.shared.open(url)
+                }
+                .id("download-update-button")
+
+            case .checking:
+                Button(String(localized: "Check for Updates...", comment: "Settings Update Button")) {}
+                    .disabled(true)
+                    .id("check-updates-button-checking")
+
+            default:
+                Button(String(localized: "Check for Updates...", comment: "Settings Update Button")) {
+                    Task { await checker.checkForUpdates() }
+                }
+                .id("check-updates-button")
+            }
+        }
     }
 }
