@@ -26,6 +26,7 @@ Inspired by [OpenMTP](https://github.com/ganeshrvel/openmtp/), SwiftMTP uses the
 - **Bi-directional Transfer**: Import and export files with support for **Drag-and-Drop**.
 - **File Operations**: Create new folders, rename and delete files directly on the device.
 - **Progress Tracking**: Real-time transfer progress bars and status indicators.
+- **Safe and secure**: No ADB or USB debugging required.
 - **Localization**: Multilingual support via `Localizable.xcstrings`.
 
 ---
@@ -95,6 +96,16 @@ SwiftMTP/
 ## To do
 
 - [ ] Multiple connections at same time 
+
+## FAQ
+
+**I got "OpenSession after reset: LIBUSB_ERROR_NOT_FOUND"**
+
+This could be due to other software occupying MTP sessions or a device connection issue. Please ensure software like *Preview*, *Image Capture*, or *Android File Transfer* is not running. For *Android File Transfer*, even if it's not running in the foreground, there is an *Android File Transfer Agent* in the system background to detect USB MTP device connections in real time and automatically launch the main app. You can exit *Android File Transfer Agent* in *Activity Monitor*. After that, please reconnect or restart your device.
+
+**macOS cannot verify this app?**
+
+This is because the app was not released in the way Apple prefers. Apple requires developers to pay $99 annually for a so-called "security signature." Please go to System Settings > Privacy & Security, scroll down and allow the app to run.
 
 ## License
 
