@@ -105,7 +105,7 @@ This could be due to other software occupying MTP sessions or a device connectio
 
 **macOS cannot verify this app?**
 
-This is because the app was not released in the way Apple prefers. Apple requires developers to pay $99 annually for a so-called "security signature." Please go to System Settings > Privacy & Security, scroll down and allow the app to run.
+This is because the app was not released in the way Apple prefers. Apple requires developers to pay $99 annually for a so-called "security signature". Please go to System Settings > Privacy & Security, scroll down and allow the app to run.
 
 ## License
 

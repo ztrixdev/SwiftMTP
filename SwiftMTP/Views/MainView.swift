@@ -152,7 +152,7 @@ struct MainView: View {
             Button(String(localized: "Go")) {
                 let path = customFolderPath.trimmingCharacters(in: .whitespaces)
                 if !path.isEmpty {
-                    manager.navigateToPath(path)
+                    navigateAndHandleError(to: path)
                 }
                 customFolderPath = ""
             }
@@ -523,20 +523,18 @@ struct MainView: View {
         return false
     }
 
-    /// Navigate to a favorite folder path. If the folder doesn't exist on the device,
+    /// Navigates to a specific path. If the folder doesn't exist on the device,
     /// the walk callback will return an error which triggers connectionState → .error.
     /// We detect this pattern and show the "Folder Not Found" alert instead.
-    private func handleFavoriteTap(_ item: FavoriteItem) {
+    private func navigateAndHandleError(to path: String) {
         guard manager.connectionState.isConnected else { return }
         guard manager.selectedStorage != nil else { return }
 
-        // Remember the target path so we can detect if it fails
-        let targetPath = item.path
-        manager.navigateToPath(targetPath)
+        manager.navigateToPath(path)
 
         // After a short delay, check if loading resulted in an error
         // (e.g. the path doesn't exist on the device)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             if case .error = manager.connectionState {
                 // The walk failed — likely the folder doesn't exist.
                 // Reset to root and show the alert.
@@ -551,6 +549,10 @@ struct MainView: View {
                 isShowingFolderNotFound = true
             }
         }
+    }
+
+    private func handleFavoriteTap(_ item: FavoriteItem) {
+        navigateAndHandleError(to: item.path)
     }
 }
 

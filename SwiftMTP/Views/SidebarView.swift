@@ -157,7 +157,7 @@ struct SidebarView: View {
                 Button("Connect Device") {
                     manager.connectDevice()
                 }
-                .controlSize(.small)
+                .controlSize(.regular)
                 .buttonStyle(.bordered)
             }
         }

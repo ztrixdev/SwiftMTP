@@ -123,14 +123,17 @@ private struct UpdateButtonRow: View {
                     Text(String(localized: "Update available", comment: "Update available status"))
                         .foregroundStyle(.green)
                         .font(.callout)
+                        .help(String(localized: "Update available"))
                 case .upToDate:
                     Text(String(localized: "App is up to date.", comment: "App is up to date status"))
                         .foregroundStyle(.secondary)
                         .font(.callout)
+                        .help(String(localized: "App is up to date."))
                 case .failed:
                     Text(String(localized: "Check failed", comment: "Update check failed status"))
                         .foregroundStyle(.red)
                         .font(.callout)
+                        .help(String(localized: "Check failed"))
                 case .idle:
                     EmptyView()
                 }
