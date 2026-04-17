@@ -74,6 +74,9 @@ struct MainView: View {
                 selection = []
             }
         }
+        .onChange(of: manager.currentPath) { _ in
+            selection = []
+        }
         .alert("New Folder", isPresented: $isShowingNewFolderDialog) {
             TextField("Folder name", text: $newFolderName)
             Button("Cancel", role: .cancel) {} //newFolderName = "" if "" is applied sometimes the textfield cannot get the folder name
@@ -229,7 +232,7 @@ struct MainView: View {
                     }
                 }
             } else {
-                VStack(spacing: 0) {
+                NavigationView {
                     SidebarView(
                         manager: manager,
                         selectedStorage: $manager.selectedStorage,
@@ -239,24 +242,28 @@ struct MainView: View {
                             handleFavoriteTap(item)
                         }
                     )
-                    if manager.connectionState.isConnected {
-                        pathBar
-                    }
-                    FileListView(
-                        manager: manager,
-                        selection: $selection,
-                        onDoubleClick: { file in
-                            if file.isDirectory { manager.navigate(to: file) }
-                        },
-                        onAddToFavorites: { file in
-                            let fullPath = file.path
-                            favoritesManager.addFavorite(name: file.name, path: fullPath)
-                        },
-                        isPathFavorited: { path in
-                            favoritesManager.contains(path: path)
+                    .frame(minWidth: 200, idealWidth: 230, maxWidth: 280)
+                    
+                    VStack(spacing: 0) {
+                        if manager.connectionState.isConnected {
+                            pathBar
                         }
-                    )
-                    statusBar
+                        FileListView(
+                            manager: manager,
+                            selection: $selection,
+                            onDoubleClick: { file in
+                                if file.isDirectory { manager.navigate(to: file) }
+                            },
+                            onAddToFavorites: { file in
+                                let fullPath = file.path
+                                favoritesManager.addFavorite(name: file.name, path: fullPath)
+                            },
+                            isPathFavorited: { path in
+                                favoritesManager.contains(path: path)
+                            }
+                        )
+                        statusBar
+                    }
                 }
             }
         }
@@ -372,6 +379,15 @@ struct MainView: View {
     private var toolbarContent: some ToolbarContent {
         // Left: connection button
         ToolbarItemGroup(placement: .navigation) {
+            if #unavailable(macOS 13.0) {
+                Button {
+                    NSApp.keyWindow?.firstResponder?.tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
+                } label: {
+                    Label(String(localized: "Toggle Sidebar"), systemImage: "sidebar.left")
+                }
+                .help(String(localized: "Toggle Sidebar"))
+            }
+
             if manager.connectionState.isConnected {
                 Button {
                     manager.disconnect()
@@ -403,7 +419,11 @@ struct MainView: View {
                     handleImport(panel.urls)
                 }
             } label: {
-                Label(String(localized: "Import"), systemImage: "iphone.and.arrow.forward.inward")
+                if #available(macOS 13.0, *) {
+                    Label(String(localized: "Import"), systemImage: "iphone.and.arrow.forward.inward")
+                } else {
+                    Label(String(localized: "Import"), systemImage: "arrow.down.to.line")
+                }
             }
             .help(String(localized: "Import files from Mac to device"))
             .disabled(!manager.connectionState.isConnected || manager.isTransferActive)
@@ -418,7 +438,11 @@ struct MainView: View {
                     handleExport(destinationURL: url, files: selectedFiles)
                 }
             } label: {
-                Label(String(localized: "Export"), systemImage: "iphone.and.arrow.forward.outward")
+                if #available(macOS 13.0, *) {
+                    Label(String(localized: "Export"), systemImage: "iphone.and.arrow.forward.outward")
+                } else {
+                    Label(String(localized: "Export"), systemImage: "arrow.up.to.line")
+                }
             }
             .help(String(localized: "Export selected files to Mac"))
             .disabled(selectedFiles.isEmpty || !manager.connectionState.isConnected || manager.isTransferActive)
