@@ -29,6 +29,7 @@
 		C7AC001A2F9A00010055C8BE /* UpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AC00192F9A00010055C8BE /* UpdateChecker.swift */; };
 		C7B754552F8A219B0075406B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B754542F8A219B0075406B /* SettingsView.swift */; };
 		C7B754572F8A21C70075406B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7B754562F8A21C70075406B /* Assets.xcassets */; };
+		C7C4AFF32F83B37E0047364C /* MTPDeviceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C4AFF22F83B37E0047364C /* MTPDeviceInfo.swift */; };
 		C7E5F65E2F78FF56004B6939 /* MTPIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = C7A475DB2F78E957005EDC2E /* MTPIcon.icon */; };
 		C7FB2E5E2F7A6F6C0036FE3B /* TransferStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FB2E5D2F7A6F6C0036FE3B /* TransferStatistics.swift */; };
 /* End PBXBuildFile section */
@@ -73,6 +74,7 @@
 		C7AC00192F9A00010055C8BE /* UpdateChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UpdateChecker.swift; path = SwiftMTP/Services/UpdateChecker.swift; sourceTree = "<group>"; };
 		C7B754542F8A219B0075406B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = SwiftMTP/Views/SettingsView.swift; sourceTree = "<group>"; };
 		C7B754562F8A21C70075406B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C7C4AFF22F83B37E0047364C /* MTPDeviceInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MTPDeviceInfo.swift; path = SwiftMTP/Models/MTPDeviceInfo.swift; sourceTree = "<group>"; };
 		C7FB2E5D2F7A6F6C0036FE3B /* TransferStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TransferStatistics.swift; path = SwiftMTP/Models/TransferStatistics.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -152,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				C705622B2F875E5F0055C8BE /* FavoriteItem.swift */,
+				C7C4AFF22F83B37E0047364C /* MTPDeviceInfo.swift */,
 				C7516A6C2F8008A5006B1603 /* MTPDevice.swift */,
 				C7516A6D2F8008A5006B1603 /* MTPFile.swift */,
 				C7516A6A2F800866006B1603 /* USBProtocol.swift */,
@@ -282,6 +285,7 @@
 				C7516A6E2F8008A5006B1603 /* MTPFile.swift in Sources */,
 				C705622C2F875E5F0055C8BE /* FavoriteItem.swift in Sources */,
 				C7516A6F2F8008A5006B1603 /* MTPDevice.swift in Sources */,
+				C7C4AFF32F83B37E0047364C /* MTPDeviceInfo.swift in Sources */,
 				C725E65B2F7CCDD0007937AB /* ErrorStringLocalizer.swift in Sources */,
 				C7B754552F8A219B0075406B /* SettingsView.swift in Sources */,
 				C7AC001A2F9A00010055C8BE /* UpdateChecker.swift in Sources */,
@@ -304,11 +308,14 @@
 				CODE_SIGN_ENTITLEMENTS = SwiftMTP/SwiftMTP.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 50;
+				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_RESOURCE_ACCESS_USB = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SELECTED_FILES = readwrite;
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -316,7 +323,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ld_new",
@@ -327,6 +334,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = me.neighborz.swiftmtp;
 				PRODUCT_MODULE_NAME = SwiftMTP;
 				PRODUCT_NAME = SwiftMTP;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SwiftMTP-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
@@ -345,11 +353,14 @@
 				CODE_SIGN_ENTITLEMENTS = SwiftMTP/SwiftMTP.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 50;
+				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_RESOURCE_ACCESS_USB = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SELECTED_FILES = readwrite;
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -357,7 +368,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ld_classic",

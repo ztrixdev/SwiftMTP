@@ -21,7 +21,7 @@ extern const char *_GoStringPtr(_GoString_ s);
 /* Start of preamble from import "C" comments.  */
 
 
-#line 14 "kalam.go"
+#line 15 "kalam.go"
 	#include "stdint.h"
 	typedef void (* on_cb_result_t)(char*);
 
@@ -87,9 +87,10 @@ typedef struct { void *data; GoInt len; GoInt cap; } GoSlice;
 extern "C" {
 #endif
 
-extern void Initialize(on_cb_result_t* onDonePtr);
-extern void FetchDeviceInfo(on_cb_result_t* onDonePtr);
-extern void FetchStorages(on_cb_result_t* onDonePtr);
+extern void FetchAvailableDevices(on_cb_result_t* onDonePtr);
+extern void Initialize(char* initInputJson, on_cb_result_t* onDonePtr);
+extern void FetchDeviceInfo(char* deviceInputJson, on_cb_result_t* onDonePtr);
+extern void FetchStorages(char* deviceInputJson, on_cb_result_t* onDonePtr);
 extern void MakeDirectory(char* makeDirectoryInputJson, on_cb_result_t* onDonePtr);
 extern void FileExists(char* fileExistsInputJson, on_cb_result_t* onDonePtr);
 extern void DeleteFile(char* deleteFileInputJson, on_cb_result_t* onDonePtr);
@@ -97,7 +98,8 @@ extern void RenameFile(char* renameFileInputJson, on_cb_result_t* onDonePtr);
 extern void Walk(char* walkInputJson, on_cb_result_t* onDonePtr);
 extern void UploadFiles(char* uploadFilesInputJson, on_cb_result_t* onPreprocessPtr, on_cb_result_t* onProgressPtr, on_cb_result_t* onDonePtr);
 extern void DownloadFiles(char* downloadFilesInputJson, on_cb_result_t* onPreprocessPtr, on_cb_result_t* onProgressPtr, on_cb_result_t* onDonePtr);
-extern void Dispose(on_cb_result_t* onDonePtr);
+extern void CancelTransfer(char* cancelTransferInputJson, on_cb_result_t* onDonePtr);
+extern void Dispose(char* deviceInputJson, on_cb_result_t* onDonePtr);
 
 #ifdef __cplusplus
 }

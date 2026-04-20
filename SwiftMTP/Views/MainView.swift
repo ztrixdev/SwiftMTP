@@ -64,7 +64,8 @@ struct MainView: View {
         ) {
             TransferOverlay(
                 stats: manager.transferStats,
-                isPreparing: manager.isTransferActive && manager.transferStats == nil
+                isPreparing: manager.isTransferActive && manager.transferStats == nil,
+                onCancel: { manager.cancelTransfer() }
             )
             .interactiveDismissDisabled(true)
         }
@@ -187,7 +188,7 @@ struct MainView: View {
         })
         .focusedSceneValue(\.showDeleteConfirmationAction, { isShowingDeleteConfirmation = true })
         .focusedSceneValue(\.connectDeviceAction, { manager.connectDevice() })
-        .focusedSceneValue(\.disconnectDeviceAction, { manager.disconnect(); manager.selectedStorage = nil })
+        .focusedSceneValue(\.disconnectDeviceAction, { manager.disconnectDevice(); manager.selectedStorage = nil })
     }
 
     private var contentView: some View {
@@ -203,7 +204,7 @@ struct MainView: View {
                             handleFavoriteTap(item)
                         }
                     )
-                    .navigationSplitViewColumnWidth(min: 200, ideal: 220, max: 280)
+                    .navigationSplitViewColumnWidth(min: 200, ideal: 230, max: 280)
                 } detail: {
                     VStack(spacing: 0) {
                         // Path bar
@@ -390,7 +391,7 @@ struct MainView: View {
 
             if manager.connectionState.isConnected {
                 Button {
-                    manager.disconnect()
+                    manager.disconnectDevice()
                     manager.selectedStorage = nil
                 } label: {
                     Label("Disconnect", systemImage: "cable.connector.slash")
@@ -530,22 +531,25 @@ struct MainView: View {
         guard manager.connectionState.isConnected else { return }
         guard manager.selectedStorage != nil else { return }
 
+        // Remember the original state so we can restore it if navigation fails
+        let previousPath = manager.currentPath
+
         manager.navigateToPath(path)
 
         // After a short delay, check if loading resulted in an error
         // (e.g. the path doesn't exist on the device)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            let hasError = manager.errorMessage != nil || (manager.connectionState.device == nil)
+            var isErrorState = false
             if case .error = manager.connectionState {
+                isErrorState = true
+            }
+            if hasError || isErrorState {
                 // The walk failed — likely the folder doesn't exist.
-                // Reset to root and show the alert.
-                manager.navigationStack = ["/"]
-                manager.loadFiles(at: "/")
-                // Clear the error state after we handle it
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    if case .error = manager.connectionState {
-                        manager.errorMessage = nil
-                    }
-                }
+                // The MTP session gets broken upon accessing a missing directory.
+                // We must reconnect the device and navigate to the previous secure path.
+                manager.reconnectAndRestore(to: previousPath)
+                manager.errorMessage = nil
                 isShowingFolderNotFound = true
             }
         }
@@ -646,6 +650,7 @@ private struct InfoRow: View {
 private struct TransferOverlay: View {
     let stats: TransferStatistics?
     let isPreparing: Bool
+    var onCancel: (() -> Void)? = nil
 
     private var currentFileName: String {
         if isPreparing {
@@ -685,16 +690,30 @@ private struct TransferOverlay: View {
             Text(currentFileName)
                 .font(.system(size: 13, weight: .medium))
                 
-            Group {
-                if isPreparing {
-                    ProgressView()
-                        .progressViewStyle(.linear)
-                } else {
-                    ProgressView(value: stats?.progressPercentage ?? 0)
-                        .progressViewStyle(.linear)
+            HStack(spacing: 8) {
+                Group {
+                    if isPreparing {
+                        ProgressView()
+                            .progressViewStyle(.linear)
+                    } else {
+                        ProgressView(value: stats?.progressPercentage ?? 0)
+                            .progressViewStyle(.linear)
+                    }
+                }
+                .frame(width: 336)
+                
+                if let onCancel {
+                    Button {
+                        onCancel()
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.system(size: 12))
+                            .foregroundStyle(.secondary)
+                    }
+                    .buttonStyle(.plain)
+                    .help(String(localized: "Cancel Transfer"))
                 }
             }
-            .frame(width: 360)
             
             HStack(spacing: 8) {
                 Text(filesProgressText)
@@ -764,5 +783,19 @@ private struct TransferOverlay: View {
         )
         return TransferStatistics(progressData: mockData)
     }()
-    TransferOverlay(stats: mockProgress30, isPreparing: false)
+    TransferOverlay(stats: mockProgress30, isPreparing: false, onCancel: {})
+}
+
+#Preview("QuickLook Overlay - Prompt") {
+    QuickLookOverlayView(
+        state: .prompt(MTPFile.mock[6]),
+        onLoadPreview: {}
+    )
+}
+
+#Preview("QuickLook Overlay - Loading") {
+    QuickLookOverlayView(
+        state: .loading,
+        onLoadPreview: {}
+    )
 }

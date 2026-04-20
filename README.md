@@ -93,9 +93,8 @@ SwiftMTP/
 - [x] File list font size adjustment 
 - [x] Paste to import
 
-## To do
-
-- [ ] Multiple connections at same time 
+- [x] Multiple device connections (v1.1)
+- [x] Cancel a transfer (v1.1)
 
 ## FAQ
 

@@ -12,7 +12,10 @@ struct SidebarView: View {
 
     var body: some View {
         List {
-            if case .connected(let device) = manager.connectionState {
+            if manager.availableDevices.isEmpty {
+                noDeviceView
+            } else {
+                // MARK: – Favorites Section
                 Section(String(localized: "Favorites")) {
                     ForEach(favoritesManager.favorites) { item in
                         favoriteRow(item)
@@ -27,14 +30,13 @@ struct SidebarView: View {
                             ))
                     }
                 }
-                
-                Section(device.name) {
-                    ForEach(device.storages) { storage in
-                        storageRow(storage)
+
+                // MARK: – Devices Section
+                Section(String(localized: "Devices")) {
+                    ForEach(manager.availableDevices) { device in
+                        deviceSection(device)
                     }
                 }
-            } else {
-                noDeviceView
             }
         }
         .listStyle(.sidebar)
@@ -99,6 +101,64 @@ struct SidebarView: View {
         onFavoriteSelected(item)
     }
 
+    // MARK: – Device Section
+    @ViewBuilder
+    private func deviceSection(_ info: MTPDeviceInfo) -> some View {
+        let isConnected = isConnected(info)
+        let isConnecting = isConnecting(info)
+        
+        Group {
+            HStack {
+                Label(info.displayName, systemImage: "smartphone")
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(isConnected ? .primary : .secondary)
+                
+                Spacer()
+                
+                if isConnecting {
+                    ProgressView()
+                        .controlSize(.small)
+                } else if !isConnected {
+                    Button {
+                        manager.switchDevice(to: info.id)
+                    } label: {
+                        Image(systemName: "cable.connector.horizontal")
+                            .font(.system(size: 18, weight: .bold))
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 6)
+                            .background(Color.accentColor.opacity(0.1))
+                            .clipShape(Capsule())
+                    }
+                    .buttonStyle(.plain)
+                    .help(String(localized: "Connect Device"))
+                }
+            }
+            .padding(.vertical, 8)
+            .contentShape(Rectangle())
+            
+            if isConnected, case .connected(let connectedDevice) = manager.connectionState {
+                ForEach(connectedDevice.storages) { storage in
+                    storageRow(storage)
+                        .padding(.leading, 12)
+                }
+            }
+        }
+    }
+
+    private func isConnected(_ info: MTPDeviceInfo) -> Bool {
+        if case .connected = manager.connectionState, manager.deviceId == info.id {
+            return true
+        }
+        return false
+    }
+
+    private func isConnecting(_ info: MTPDeviceInfo) -> Bool {
+        if case .connecting = manager.connectionState, manager.deviceId == info.id {
+            return true
+        }
+        return false
+    }
+
     // MARK: – Storage Row
     private func storageRow(_ storage: MTPStorage) -> some View {
         Button {
@@ -149,20 +209,9 @@ struct SidebarView: View {
                 .font(.system(size: 11))
                 .foregroundStyle(.tertiary)
                 .multilineTextAlignment(.center)
-
-            if case .connecting = manager.connectionState {
-                ProgressView()
-                    .controlSize(.small)
-            } else {
-                Button("Connect Device") {
-                    manager.connectDevice()
-                }
-                .controlSize(.regular)
-                .buttonStyle(.bordered)
-            }
         }
         .frame(maxWidth: .infinity)
-        .padding(.vertical, 24)
+        .padding(.vertical, 32)
         .listRowBackground(Color.clear)
         //.listRowSeparator(.hidden)
     }

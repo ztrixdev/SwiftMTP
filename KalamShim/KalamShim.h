@@ -10,8 +10,9 @@ typedef void (*KalamOnCbResult)(char *);
 // Thin wrappers around `kalam.dylib` exports.
 // We use `KalamOnCbResult` (function pointer) instead of `on_cb_result_t*`
 // to keep the Swift callback interop straightforward.
-void KalamInitialize(KalamOnCbResult onDone);
-void KalamFetchStorages(KalamOnCbResult onDone);
+void KalamFetchAvailableDevices(KalamOnCbResult onDone);
+void KalamInitialize(const char *initInputJson, KalamOnCbResult onDone);
+void KalamFetchStorages(const char *deviceInputJson, KalamOnCbResult onDone);
 void KalamWalk(const char *walkInputJson, KalamOnCbResult onDone);
 void KalamMakeDirectory(const char *makeDirectoryInputJson, KalamOnCbResult onDone);
 void KalamFileExists(const char *fileExistsInputJson, KalamOnCbResult onDone);
@@ -29,7 +30,8 @@ void KalamDownloadFiles(
     KalamOnCbResult onProgress,
     KalamOnCbResult onDone
 );
-void KalamDispose(KalamOnCbResult onDone);
+void KalamCancelTransfer(const char *cancelTransferInputJson, KalamOnCbResult onDone);
+void KalamDispose(const char *deviceInputJson, KalamOnCbResult onDone);
 
 #ifdef __cplusplus
 } // extern "C"

@@ -12,6 +12,14 @@ struct ErrorStringLocalizer {
                errorString.contains("Device disconnected")
     }
     
+    /// Determines if the error is a transfer cancellation (user-initiated)
+    static func isTransferCancelledError(_ errorString: String) -> Bool {
+        let lowercased = errorString.lowercased()
+        return lowercased.contains("context canceled") ||
+               lowercased.contains("transfer cancelled by user") ||
+               lowercased.contains("cancelled")
+    }
+    
     /// Determines if the error is a permission/access denied error
     static func isPermissionError(_ errorString: String) -> Bool {
         return errorString.contains("permission") ||
@@ -47,6 +55,11 @@ struct ErrorStringLocalizer {
         // Check for device disconnection (highest priority)
         if isDeviceDisconnectedError(errorString) {
             return String(localized: "Device disconnected")
+        }
+
+        // Check for transfer cancellation
+        if isTransferCancelledError(errorString) {
+            return String(localized: "Transfer cancelled")
         }
         
         // Check for specific error patterns and return localized versions

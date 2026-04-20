@@ -2,12 +2,17 @@
 
 #include "../lib/kalam.h"
 
-void KalamInitialize(KalamOnCbResult onDone) {
-  Initialize((on_cb_result_t *)onDone);
+
+void KalamFetchAvailableDevices(KalamOnCbResult onDone) {
+  FetchAvailableDevices((on_cb_result_t *)onDone);
 }
 
-void KalamFetchStorages(KalamOnCbResult onDone) {
-  FetchStorages((on_cb_result_t *)onDone);
+void KalamInitialize(const char *initInputJson, KalamOnCbResult onDone) {
+  Initialize((char *)initInputJson, (on_cb_result_t *)onDone);
+}
+
+void KalamFetchStorages(const char *deviceInputJson, KalamOnCbResult onDone) {
+  FetchStorages((char *)deviceInputJson, (on_cb_result_t *)onDone);
 }
 
 void KalamWalk(const char *walkInputJson, KalamOnCbResult onDone) {
@@ -54,7 +59,11 @@ void KalamDownloadFiles(
                   (on_cb_result_t *)onDone);
 }
 
-void KalamDispose(KalamOnCbResult onDone) {
-  Dispose((on_cb_result_t *)onDone);
+void KalamCancelTransfer(const char *cancelTransferInputJson, KalamOnCbResult onDone) {
+  CancelTransfer((char *)cancelTransferInputJson, (on_cb_result_t *)onDone);
+}
+
+void KalamDispose(const char *deviceInputJson, KalamOnCbResult onDone) {
+  Dispose((char *)deviceInputJson, (on_cb_result_t *)onDone);
 }
 

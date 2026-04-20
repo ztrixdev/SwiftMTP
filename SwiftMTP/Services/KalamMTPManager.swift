@@ -14,7 +14,11 @@ final class KalamMTPManager: ObservableObject {
     @Published var transferStats: TransferStatistics? = nil
     @Published var silentTransferStats: TransferStatistics? = nil
     @Published var errorMessage: String? = nil
+    @Published var availableDevices: [MTPDeviceInfo] = []
     @Published private(set) var isTransferActive: Bool = false
+    
+    // NEW: Pass "" to let Go connect to the first available device, or specific ID for exact matches.
+    var deviceId: String = ""
     
     var currentPath: String { navigationStack.last ?? "/" }
     var canGoBack: Bool { navigationStack.count > 1 }
@@ -57,6 +61,9 @@ final class KalamMTPManager: ObservableObject {
     private var scopedSourceURLs: [URL] = []
     private var scopedDestinationURL: URL?
     private var cachedDeviceInfo: (name: String, manufacturer: String)? = nil
+    private var pendingDeviceId: String? = nil
+    private var pendingNavigationPath: String? = nil
+    private var deviceScanWorkItem: DispatchWorkItem?
     
     // MARK: – Promise Downloads (for multi-select drag-drop)
     private let promiseQueueLock = DispatchQueue(label: "com.openmtp.promise-queue", attributes: [])
@@ -79,12 +86,21 @@ final class KalamMTPManager: ObservableObject {
             CallbackRouter.manager?.handleDone(jsonPtr: jsonPtr)
         }
         
+        // Separate callback for device list - completely independent of operation state.
+        static let deviceListDone: KalamOnCbResult = { jsonPtr in
+            CallbackRouter.manager?.handleDeviceListDone(jsonPtr: jsonPtr)
+        }
+        
         static let preprocess: KalamOnCbResult = { jsonPtr in
             CallbackRouter.manager?.handlePreprocess(jsonPtr: jsonPtr)
         }
         
         static let progress: KalamOnCbResult = { jsonPtr in
             CallbackRouter.manager?.handleProgress(jsonPtr: jsonPtr)
+        }
+        
+        static let cancelDone: KalamOnCbResult = { jsonPtr in
+            CallbackRouter.manager?.handleCancelDone(jsonPtr: jsonPtr)
         }
     }
     
@@ -96,6 +112,9 @@ final class KalamMTPManager: ObservableObject {
             self?.handleUSBEvent(attached: attached)
         }
         self.usbMonitor?.startMonitoring()
+        
+        // Initial fetch
+        fetchAvailableDevices()
     }
     
     deinit {
@@ -119,6 +138,14 @@ final class KalamMTPManager: ObservableObject {
         let jsonString = String(cString: jsonPtr)
         let (errorString, dataAny) = parseEnvelope(jsonString)
         if let errorString {
+            // Cancel errors are handled by the done callback; ignore in progress.
+            if ErrorStringLocalizer.isTransferCancelledError(errorString) {
+                // Don't set operation = .none here. The done callback will
+                // handle the full cleanup including reconnection.
+                let localizedError = ErrorStringLocalizer.localize(errorString)
+                self.errorMessage = localizedError
+                return
+            }
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
                 if ErrorStringLocalizer.isDeviceDisconnectedError(errorString) {
@@ -154,6 +181,40 @@ final class KalamMTPManager: ObservableObject {
         }
     }
     
+    /// Independent handler for device list results. Does NOT interact with `operation`,
+    /// so it can safely execute while Walk/Upload/Download/etc. are in progress.
+    private func handleDeviceListDone(jsonPtr: UnsafeMutablePointer<CChar>?) {
+        guard let jsonPtr else { return }
+        let jsonString = String(cString: jsonPtr)
+        
+        if let errorString = parseEnvelopeErrorOnly(jsonString) {
+            print("KalamMTPManager: Error fetching available devices: \(errorString)")
+            return
+        }
+        
+        guard let dataAny = parseEnvelopeData(jsonString) else { return }
+        let d = dataFromAny(dataAny)
+        guard let devices = try? JSONDecoder().decode([MTPDeviceInfo].self, from: d) else {
+            print("KalamMTPManager: Failed to decode available devices payload")
+            DispatchQueue.main.async { [weak self] in
+                self?.availableDevices = []
+            }
+            return
+        }
+        
+        print("KalamMTPManager: Found \(devices.count) devices")
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            self.availableDevices = devices
+            
+            // Auto-connect logic: if disconnected and devices available, connect to the first one.
+            if case .disconnected = self.connectionState, self.operation != .initializing, let first = devices.first {
+                print("KalamMTPManager: Auto-connecting to \(first.id)")
+                self.switchDevice(to: first.id)
+            }
+        }
+    }
+    
     private func handleDone(jsonPtr: UnsafeMutablePointer<CChar>?) {
         guard let jsonPtr else { return }
         
@@ -182,7 +243,12 @@ final class KalamMTPManager: ObservableObject {
             }
             
             operation = .fetchingStorages
-            KalamFetchStorages(CallbackRouter.done)
+            let fetchStoragesInput: [String: Any] = ["deviceId": self.deviceId]
+            if let fetchJson = self.toJsonString(fetchStoragesInput) {
+                fetchJson.withCString { ptr in
+                    KalamFetchStorages(ptr, CallbackRouter.done)
+                }
+            }
             
         case .fetchingStorages:
             if let errorString = parseEnvelopeErrorOnly(jsonString) {
@@ -238,8 +304,13 @@ final class KalamMTPManager: ObservableObject {
             DispatchQueue.main.async {
                 self.connectionState = .connected(device)
                 self.selectedStorage = first
-                self.navigationStack = ["/"]
-                self.loadFiles(at: "/")
+                if let pendingPath = self.pendingNavigationPath {
+                    self.pendingNavigationPath = nil
+                    self.navigateToPath(pendingPath)
+                } else {
+                    self.navigationStack = ["/"]
+                    self.loadFiles(at: "/")
+                }
             }
             operation = .none // will be overwritten by loadFiles(_:).
             
@@ -345,6 +416,16 @@ final class KalamMTPManager: ObservableObject {
                 DispatchQueue.main.async {
                     if ErrorStringLocalizer.isDeviceDisconnectedError(errorString) {
                         self.handleDeviceDisconnected()
+                    } else if ErrorStringLocalizer.isTransferCancelledError(errorString) {
+                        // User-initiated cancel: the MTP session is corrupt after
+                        // cancellation (broken transaction IDs, stale USB data).
+                        // Dispose and reconnect to reset the session.
+                        self.isTransferActive = false
+                        self.transferProgress = nil
+                        self.transferStats = nil
+                        let localizedError = ErrorStringLocalizer.localize(errorString)
+                        self.errorMessage = localizedError
+                        self.reconnectAndRestore(to: self.currentPath)
                     } else {
                         self.isTransferActive = false
                         self.transferProgress = nil
@@ -381,6 +462,11 @@ final class KalamMTPManager: ObservableObject {
                 self.cachedDeviceInfo = nil
             }
             operation = .none
+            if let nextDeviceId = pendingDeviceId {
+                pendingDeviceId = nil
+                self.deviceId = nextDeviceId
+                self.connectDevice()
+            }
             
         case .none:
             break
@@ -389,28 +475,32 @@ final class KalamMTPManager: ObservableObject {
     
     // MARK: – Device Connection
     func connectDevice() {
-        connectionState = .connecting
-        files = []
-        navigationStack = []
-        selectedStorage = nil
-        errorMessage = nil
-        isLoading = false
-        operation = .initializing
+        DispatchQueue.main.async {
+            self.connectionState = .connecting
+            self.errorMessage = nil
+        }
         
-        KalamInitialize(CallbackRouter.done)
+        operation = .initializing
+        let input: [String: Any] = ["deviceId": self.deviceId]
+        if let jsonString = toJsonString(input) {
+            DispatchQueue.global(qos: .userInitiated).async {
+                jsonString.withCString { ptr in
+                    KalamInitialize(ptr, CallbackRouter.done)
+                }
+            }
+        }
     }
     
-    func disconnect() {
+    func disconnectDevice() {
         operation = .disposing
-        connectionState = .disconnected
-        files = []
-        navigationStack = []
-        selectedStorage = nil
-        isLoading = false
-        transferProgress = nil
-        finishTransferCompletion(errorString: "Disconnected")
-        errorMessage = nil
-        KalamDispose(CallbackRouter.done)
+        let input: [String: Any] = ["deviceId": self.deviceId]
+        if let jsonString = toJsonString(input) {
+            DispatchQueue.global(qos: .userInitiated).async {
+                jsonString.withCString { ptr in
+                    KalamDispose(ptr, CallbackRouter.done)
+                }
+            }
+        }
     }
     
     // MARK: – USB Hotplug & Retry Logic
@@ -420,38 +510,21 @@ final class KalamMTPManager: ObservableObject {
     
     /// Handles USB device attachment/detachment events
     private func handleUSBEvent(attached: Bool) {
-        print("KalamMTPManager: USB event - attached: \(attached), current operation: \(operation), ignoring: \(shouldIgnoreUSBEvents)")
-        
-        // Ignore USB events during transfer operations to prevent interruption
-        if shouldIgnoreUSBEvents {
-            print("KalamMTPManager: Ignoring USB event - user set flag")
-            return
+        DispatchQueue.main.async { [weak self] in
+            self?.errorMessage = nil
+            if case .error = self?.connectionState {
+                self?.connectionState = .disconnected
+            }
         }
         
-        if case .downloading = operation {
-            print("KalamMTPManager: Ignoring USB event - download in progress")
-            return
+        // Debounce USB events - many events fire rapidly during plug/unplug.
+        // This prevents rapid-fire scans that could overwhelm the USB bus.
+        deviceScanWorkItem?.cancel()
+        let workItem = DispatchWorkItem { [weak self] in
+            self?.fetchAvailableDevices()
         }
-        if case .uploading = operation {
-            print("KalamMTPManager: Ignoring USB event - upload in progress")
-            return
-        }
-        
-        if attached {
-            // Device attached: attempt connection
-            print("KalamMTPManager: Device attached, attempting connection...")
-            hotplugRetryCount = 0
-            retryTimer?.invalidate()
-            retryTimer = nil
-            attemptConnectWithRetry()
-        } else {
-            // Device detached: disconnect
-            print("KalamMTPManager: Device detached, disconnecting...")
-            retryTimer?.invalidate()
-            retryTimer = nil
-            hotplugRetryCount = 0
-            disconnect()
-        }
+        deviceScanWorkItem = workItem
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8, execute: workItem)
     }
     
     /// Attempts to connect with retry logic
@@ -548,6 +621,7 @@ final class KalamMTPManager: ObservableObject {
         let skipHiddenFiles = true
         
         let input: [String: Any] = [
+            "deviceId": self.deviceId,
             "storageId": Int(storageId),
             "fullPath": path,
             "recursive": false,
@@ -588,6 +662,7 @@ final class KalamMTPManager: ObservableObject {
         let preprocessFiles = true
         
         let input: [String: Any] = [
+            "deviceId": self.deviceId,
             "storageId": Int(storageId),
             "sources": sources,
             "destination": destination,
@@ -626,6 +701,7 @@ final class KalamMTPManager: ObservableObject {
         let preprocessFiles = true
         
         let input: [String: Any] = [
+            "deviceId": self.deviceId,
             "storageId": Int(storageId),
             "sources": sources,
             "destination": destination,
@@ -680,6 +756,7 @@ final class KalamMTPManager: ObservableObject {
         let preprocessFiles = true
         
         let input: [String: Any] = [
+            "deviceId": self.deviceId,
             "storageId": Int(storageId),
             "sources": sources,
             "destination": destination,
@@ -752,14 +829,17 @@ final class KalamMTPManager: ObservableObject {
         let filePaths = filesToDelete.map(\.path)
         
         let input: [String: Any] = [
+            "deviceId": self.deviceId,
             "storageId": Int(storageId),
             "files": filePaths
         ]
         
         guard let jsonString = toJsonString(input) else { return }
         operation = .deleting
-        jsonString.withCString { ptr in
-            KalamDeleteFile(ptr, CallbackRouter.done)
+        DispatchQueue.global(qos: .userInitiated).async {
+            jsonString.withCString { ptr in
+                KalamDeleteFile(ptr, CallbackRouter.done)
+            }
         }
     }
     
@@ -773,13 +853,16 @@ final class KalamMTPManager: ObservableObject {
         }
         
         let input: [String: Any] = [
+            "deviceId": self.deviceId,
             "storageId": Int(storageId),
             "fullPath": fullPath
         ]
         guard let jsonString = toJsonString(input) else { return }
         operation = .makingDirectory
-        jsonString.withCString { ptr in
-            KalamMakeDirectory(ptr, CallbackRouter.done)
+        DispatchQueue.global(qos: .userInitiated).async {
+            jsonString.withCString { ptr in
+                KalamMakeDirectory(ptr, CallbackRouter.done)
+            }
         }
     }
     
@@ -792,6 +875,7 @@ final class KalamMTPManager: ObservableObject {
         }
         
         let input: [String: Any] = [
+            "deviceId": self.deviceId,
             "storageId": Int(storageId),
             "fullPath": file.path,
             "newFileName": newName
@@ -799,8 +883,70 @@ final class KalamMTPManager: ObservableObject {
         
         guard let jsonString = toJsonString(input) else { return }
         operation = .renaming
-        jsonString.withCString { ptr in
-            KalamRenameFile(ptr, CallbackRouter.done)
+        DispatchQueue.global(qos: .userInitiated).async {
+            jsonString.withCString { ptr in
+                KalamRenameFile(ptr, CallbackRouter.done)
+            }
+        }
+    }
+    
+    // MARK: – Cancel Transfer
+    func cancelTransfer() {
+        guard isTransferActive else { return }
+        
+        let input: [String: Any] = ["deviceId": self.deviceId]
+        guard let jsonString = toJsonString(input) else { return }
+        
+        // Fire-and-forget: CancelTransfer uses its own callback that does NOT
+        // go through the operation state machine (similar to FetchAvailableDevices).
+        DispatchQueue.global(qos: .userInitiated).async {
+            jsonString.withCString { ptr in
+                KalamCancelTransfer(ptr, CallbackRouter.cancelDone)
+            }
+        }
+    }
+    
+    private func handleCancelDone(jsonPtr: UnsafeMutablePointer<CChar>?) {
+        guard let jsonPtr else { return }
+        let jsonString = String(cString: jsonPtr)
+        
+        if let errorString = parseEnvelopeErrorOnly(jsonString) {
+            print("KalamMTPManager: CancelTransfer error: \(errorString)")
+        } else {
+            print("KalamMTPManager: Transfer cancelled successfully")
+        }
+        // The actual transfer operation's done callback will fire separately
+        // with a cancellation error, which handleDone will process normally.
+        // We don't reset UI state here — let the transfer's own error handling do it.
+    }
+    
+    /// After a user-initiated cancel, the MTP session is left in a corrupt state
+    /// (broken transaction IDs, pending USB data, or invalid directory access). We must 
+    /// dispose and reconnect to reset the protocol state, then navigate to the target path.
+    func reconnectAndRestore(to targetPath: String) {
+        let savedPath = targetPath
+        let savedDeviceId = self.deviceId
+        
+        // Save the path to restore after reconnection
+        pendingNavigationPath = savedPath
+        
+        // Queue reconnection to the same device after dispose completes
+        pendingDeviceId = savedDeviceId
+        
+        // Show connecting state while we reset
+        connectionState = .connecting
+        
+        // Dispose the corrupt MTP session.
+        // handleDone(.disposing) will see pendingDeviceId and call connectDevice().
+        // handleDone(.fetchingStorages) will see pendingNavigationPath and navigate there.
+        operation = .disposing
+        let input: [String: Any] = ["deviceId": savedDeviceId]
+        if let jsonString = toJsonString(input) {
+            DispatchQueue.global(qos: .userInitiated).async {
+                jsonString.withCString { ptr in
+                    KalamDispose(ptr, CallbackRouter.done)
+                }
+            }
         }
     }
     
@@ -856,7 +1002,54 @@ final class KalamMTPManager: ObservableObject {
     
     private func fetchStorages() {
         operation = .fetchingStorages
-        KalamFetchStorages(CallbackRouter.done)
+        let input: [String: Any] = ["deviceId": self.deviceId]
+        if let jsonString = toJsonString(input) {
+            DispatchQueue.global(qos: .userInitiated).async {
+                jsonString.withCString { ptr in
+                    KalamFetchStorages(ptr, CallbackRouter.done)
+                }
+            }
+        }
+    }
+    
+    func fetchAvailableDevices() {
+        // NOTE: Does NOT set `operation` - device scanning is completely independent
+        // of the MTP operation state machine. This prevents clobbering in-flight
+        // operations (Walk, Upload, etc.) whose callbacks would be misrouted.
+        DispatchQueue.global(qos: .userInitiated).async {
+            KalamFetchAvailableDevices(CallbackRouter.deviceListDone)
+        }
+    }
+    
+    func switchDevice(to newDeviceId: String) {
+        guard !newDeviceId.isEmpty else { return }
+        
+        // If already connected to this device, do nothing.
+        if case .connected = connectionState, self.deviceId == newDeviceId {
+            return
+        }
+        if case .connecting = connectionState, self.deviceId == newDeviceId {
+            return
+        }
+        
+        // If we're already disposing, queue the next device and wait.
+        if case .disposing = operation {
+            pendingDeviceId = newDeviceId
+            return
+        }
+        
+        // Disconnect current device if needed, then connect after dispose completes.
+        switch connectionState {
+        case .connected, .connecting, .error:
+            pendingDeviceId = newDeviceId
+            disconnectDevice()
+            return
+        case .disconnected:
+            break
+        }
+        
+        self.deviceId = newDeviceId
+        self.connectDevice()
     }
     
     private func uint32FromStorageId(_ storageId: String) -> UInt32 {
