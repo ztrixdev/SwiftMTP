@@ -1,4 +1,7 @@
+# Warning: current ffi codes are only compatible with SwiftMTP 1.0.x
+
 ### Initial setup
+
 ```shell script
 xcode-select --install
 brew install pkg-config
