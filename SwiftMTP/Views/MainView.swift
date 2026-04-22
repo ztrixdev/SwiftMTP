@@ -160,6 +160,11 @@ struct MainView: View {
         } message: {
             Text(String(localized: "Enter the absolute path on the device."))
         }
+        .alert(String(localized: "Item Exists"), isPresented: $manager.isShowingNameConflictAlert) {
+            Button(String(localized: "OK"), role: .cancel) {}
+        } message: {
+            Text(String(localized: "A file or folder with the same name already exists."))
+        }
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("SwiftMTPImportAction"))) { notification in
             if let urls = notification.userInfo?["urls"] as? [URL] {
                 handleImport(urls)

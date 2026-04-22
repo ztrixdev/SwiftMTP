@@ -16,6 +16,7 @@ final class KalamMTPManager: ObservableObject {
     @Published var errorMessage: String? = nil
     @Published var availableDevices: [MTPDeviceInfo] = []
     @Published private(set) var isTransferActive: Bool = false
+    @Published var isShowingNameConflictAlert: Bool = false
     
     // NEW: Pass "" to let Go connect to the first available device, or specific ID for exact matches.
     var deviceId: String = ""
@@ -198,6 +199,7 @@ final class KalamMTPManager: ObservableObject {
             print("KalamMTPManager: Failed to decode available devices payload")
             DispatchQueue.main.async { [weak self] in
                 self?.availableDevices = []
+                self?.handleDeviceDisconnected()
             }
             return
         }
@@ -206,6 +208,30 @@ final class KalamMTPManager: ObservableObject {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             self.availableDevices = devices
+            
+            // Check if the currently connected device disappeared from the list.
+            // This handles physical USB disconnection when no MTP operation is in flight.
+            let isCurrentlyConnected: Bool = {
+                if case .connected = self.connectionState { return true }
+                if case .connecting = self.connectionState { return true }
+                return false
+            }()
+            
+            if isCurrentlyConnected && !self.deviceId.isEmpty {
+                let stillPresent = devices.contains(where: { $0.id == self.deviceId })
+                if !stillPresent {
+                    print("KalamMTPManager: Active device \(self.deviceId) no longer present — disconnecting")
+                    self.handleDeviceDisconnected()
+                    self.operation = .none
+                    
+                    // If there are remaining devices, auto-connect to the first one.
+                    if let nextDevice = devices.first {
+                        print("KalamMTPManager: Auto-connecting to remaining device \(nextDevice.id)")
+                        self.switchDevice(to: nextDevice.id)
+                    }
+                    return
+                }
+            }
             
             // Auto-connect logic: if disconnected and devices available, connect to the first one.
             if case .disconnected = self.connectionState, self.operation != .initializing, let first = devices.first {
@@ -845,6 +871,14 @@ final class KalamMTPManager: ObservableObject {
     
     func createFolder(named name: String) {
         guard let storage = selectedStorage else { return }
+        
+        if files.contains(where: { $0.name == name }) {
+            DispatchQueue.main.async { [weak self] in
+                self?.isShowingNameConflictAlert = true
+            }
+            return
+        }
+        
         let storageId = uint32FromStorageId(storage.id)
         let fullPath = currentPath == "/" ? "/\(name)" : "\(currentPath)/\(name)"
         
@@ -868,6 +902,14 @@ final class KalamMTPManager: ObservableObject {
     
     func renameFile(_ file: MTPFile, to newName: String) {
         guard let storage = selectedStorage else { return }
+        
+        if file.name != newName && files.contains(where: { $0.name == newName }) {
+            DispatchQueue.main.async { [weak self] in
+                self?.isShowingNameConflictAlert = true
+            }
+            return
+        }
+        
         let storageId = uint32FromStorageId(storage.id)
         
         DispatchQueue.main.async { [weak self] in
