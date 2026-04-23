@@ -2,22 +2,31 @@ import SwiftUI
 
 struct SettingsView: View {
     @AppStorage("fileListFontSize") private var fileListFontSize: Int = 12
+    @AppStorage("doubleClickToOpenFile") private var doubleClickToOpenFile: Bool = true
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         TabView {
             Form {
-                Picker(String(localized: "Font Size"), selection: $fileListFontSize) {
-                    ForEach(10...16, id: \.self) { size in
-                        Text("\(size)").tag(size)
+                VStack(alignment: .leading, spacing: 16) {
+                    Picker(String(localized: "Font Size"), selection: $fileListFontSize) {
+                        ForEach(10...16, id: \.self) { size in
+                            Text("\(size)").tag(size)
+                        }
+                    }
+                    .pickerStyle(.menu)
+                    .frame(maxWidth: 300)
+
+                    HStack {
+                        Text(String(localized: "List Action"))
+                        Toggle(String(localized: "Double-click to open files", comment: "Setting to open files on double click"), isOn: $doubleClickToOpenFile)
+                            .help(String(localized: "When enabled, double-clicking a file exports it to a local cache (if not already cached) and opens it with the default application.", comment: "Tooltip for double-click to open file setting"))
                     }
                 }
-                .pickerStyle(.menu)
-                .frame(maxWidth: 300)
             }
             .padding(20)
             .tabItem {
-                Label(String(localized: "Display", comment: "Tab showing display settings"), systemImage: "display")
+                Label(String(localized: "General", comment: "Tab showing general settings"), systemImage: "gear")
             }
             
             Form {

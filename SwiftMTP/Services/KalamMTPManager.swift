@@ -828,6 +828,7 @@ final class KalamMTPManager: ObservableObject {
         let preprocessFiles = true
         
         let input: [String: Any] = [
+            "deviceId": self.deviceId,
             "storageId": Int(storageId),
             "sources": sources,
             "destination": destination,

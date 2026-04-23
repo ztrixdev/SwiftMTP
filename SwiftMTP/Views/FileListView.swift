@@ -12,6 +12,7 @@ struct FileListView: View {
     var isPathFavorited: ((String) -> Bool)?
 
     @AppStorage("fileListFontSize") private var fileListFontSize: Int = 12
+    @AppStorage("doubleClickToOpenFile") private var doubleClickToOpenFile: Bool = true
 
     @State private var isShowingNewFolderDialog = false
     @State private var isShowingRenameDialog = false
@@ -190,6 +191,7 @@ struct FileListView: View {
                 selection: $selection,
                 sortState: $sortState,
                 fontSize: fileListFontSize,
+                doubleClickToOpenFile: doubleClickToOpenFile,
                 onDoubleClick: onDoubleClick,
                 onNewFolder: {
                     newFolderName = "Untitled Folder"
@@ -296,6 +298,7 @@ private struct FileListTableRepresentable: NSViewRepresentable {
     @Binding var sortState: FileListSortState
 
     var fontSize: Int
+    var doubleClickToOpenFile: Bool
 
     let onDoubleClick: (MTPFile) -> Void
     let onNewFolder: () -> Void
@@ -681,7 +684,45 @@ private struct FileListTableRepresentable: NSViewRepresentable {
             guard let tableView else { return }
             let row = tableView.clickedRow >= 0 ? tableView.clickedRow : tableView.selectedRow
             guard row >= 0, row < parent.files.count else { return }
-            parent.onDoubleClick(parent.files[row])
+            let file = parent.files[row]
+
+            // If "double-click to open files" is on and this is not a directory, open it locally.
+            if parent.doubleClickToOpenFile && !file.isDirectory {
+                openFileFromCacheOrDownload(file)
+            } else {
+                parent.onDoubleClick(file)
+            }
+        }
+
+        /// Open a device file: serve from local cache if available, otherwise silently
+        /// download to the QuickLook temp dir first, then open with the default app.
+        private func openFileFromCacheOrDownload(_ file: MTPFile) {
+            let tempDir = FileManager.default.temporaryDirectory
+                .appendingPathComponent("SwiftMTP_QuickLook", isDirectory: true)
+            let cachedURL = tempDir.appendingPathComponent(file.name)
+
+            // Check whether the file is fully cached (exists and non-empty).
+            let fm = FileManager.default
+            var isCached = false
+            if fm.fileExists(atPath: cachedURL.path) {
+                let attrs = try? fm.attributesOfItem(atPath: cachedURL.path)
+                let size = attrs?[.size] as? Int64 ?? 0
+                isCached = (size > 0)
+            }
+
+            if isCached {
+                NSWorkspace.shared.open(cachedURL)
+                return
+            }
+
+            // Not cached — ensure the temp directory exists, then download silently.
+            try? fm.createDirectory(at: tempDir, withIntermediateDirectories: true)
+            parent.manager.downloadAndPreview(file: file, to: tempDir) { error in
+                DispatchQueue.main.async {
+                    guard error == nil else { return }
+                    NSWorkspace.shared.open(cachedURL)
+                }
+            }
         }
 
         @objc private func handleNewFolder() {
