@@ -179,7 +179,8 @@ struct MainView: View {
         .focusedSceneValue(\.canGoBack, manager.canGoBack)
         .focusedSceneValue(\.isTransferActive, manager.isTransferActive)
         .focusedSceneValue(\.isSelectedFilesEmpty, selectedFiles.isEmpty)
-        .focusedSceneValue(\.isSingleFileSelected, selectedFiles.count == 1)
+        .focusedSceneValue(\.isSingleItemSelected, selectedFiles.count == 1)
+        .focusedSceneValue(\.isSingleFileSelected, selectedFiles.count == 1 && !selectedFiles[0].isDirectory)
         .focusedSceneValue(\.navigateToPathAction, { manager.navigateToPath($0) })
         .focusedSceneValue(\.navigateBackAction, { manager.navigateBack() })
         .focusedSceneValue(\.showFolderPromptAction, { isShowingGoToFolderDialog = true })
@@ -194,6 +195,12 @@ struct MainView: View {
         .focusedSceneValue(\.showDeleteConfirmationAction, { isShowingDeleteConfirmation = true })
         .focusedSceneValue(\.connectDeviceAction, { manager.connectDevice() })
         .focusedSceneValue(\.disconnectDeviceAction, { manager.disconnectDevice(); manager.selectedStorage = nil })
+        .focusedSceneValue(\.openFileAction, {
+            NotificationCenter.default.post(name: NSNotification.Name("SwiftMTPOpenFileAction"), object: nil)
+        })
+        .focusedSceneValue(\.quickLookAction, {
+            NotificationCenter.default.post(name: NSNotification.Name("SwiftMTPToggleQuickLook"), object: nil)
+        })
     }
 
     private var contentView: some View {

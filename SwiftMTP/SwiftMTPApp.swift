@@ -16,6 +16,9 @@ struct SwiftMTPApp: App {
     @FocusedValue(\.showDeleteConfirmationAction) var showDeleteConfirmationAction
     @FocusedValue(\.connectDeviceAction) var connectDeviceAction
     @FocusedValue(\.disconnectDeviceAction) var disconnectDeviceAction
+    @FocusedValue(\.isSingleItemSelected) var isSingleItemSelected
+    @FocusedValue(\.openFileAction) var openFileAction
+    @FocusedValue(\.quickLookAction) var quickLookAction
 
     var body: some Scene {
         WindowGroup {
@@ -27,8 +30,14 @@ struct SwiftMTPApp: App {
                 Button { showNewFolderAction?() } label: { Label("New Folder", systemImage: "folder.badge.plus") }
                     .keyboardShortcut("n", modifiers: [.command, .shift])
                     .disabled(isConnected != true || isTransferActive == true)
+                Button { openFileAction?() } label: { Label("Open", systemImage: "arrow.up.forward.app") }
+                    .keyboardShortcut("o", modifiers: [.command])
+                    .disabled(isConnected != true || isTransferActive == true || isSingleItemSelected != true)
                 Button { showRenameAction?() } label: { Label("Rename", systemImage: "character.cursor.ibeam") }
-                    .disabled(isConnected != true || isTransferActive == true || isSingleFileSelected != true)
+                    .disabled(isConnected != true || isTransferActive == true || isSingleItemSelected != true)
+                Button { quickLookAction?() } label: { Label("Quick Look", systemImage: "eye") }
+                    .keyboardShortcut("y", modifiers: [.command])
+                    .disabled(isConnected != true || isTransferActive == true || isSingleItemSelected != true)
                 Button { showDeleteConfirmationAction?() } label: { Label("Delete", systemImage: "trash") }
                     .keyboardShortcut(.delete, modifiers: [.command])
                     .disabled(isConnected != true || isTransferActive == true || isSelectedFilesEmpty == true)
@@ -170,6 +179,9 @@ struct ShowRenameActionFocusedKey: FocusedValueKey { typealias Value = () -> Voi
 struct ShowDeleteConfirmationActionFocusedKey: FocusedValueKey { typealias Value = () -> Void }
 struct ConnectDeviceActionFocusedKey: FocusedValueKey { typealias Value = () -> Void }
 struct DisconnectDeviceActionFocusedKey: FocusedValueKey { typealias Value = () -> Void }
+struct IsSingleItemSelectedFocusedKey: FocusedValueKey { typealias Value = Bool }
+struct OpenFileActionFocusedKey: FocusedValueKey { typealias Value = () -> Void }
+struct QuickLookActionFocusedKey: FocusedValueKey { typealias Value = () -> Void }
 
 extension FocusedValues {
     var isConnected: Bool? {
@@ -227,5 +239,17 @@ extension FocusedValues {
     var disconnectDeviceAction: (() -> Void)? {
         get { self[DisconnectDeviceActionFocusedKey.self] }
         set { self[DisconnectDeviceActionFocusedKey.self] = newValue }
+    }
+    var isSingleItemSelected: Bool? {
+        get { self[IsSingleItemSelectedFocusedKey.self] }
+        set { self[IsSingleItemSelectedFocusedKey.self] = newValue }
+    }
+    var openFileAction: (() -> Void)? {
+        get { self[OpenFileActionFocusedKey.self] }
+        set { self[OpenFileActionFocusedKey.self] = newValue }
+    }
+    var quickLookAction: (() -> Void)? {
+        get { self[QuickLookActionFocusedKey.self] }
+        set { self[QuickLookActionFocusedKey.self] = newValue }
     }
 }

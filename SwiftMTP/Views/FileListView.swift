@@ -430,6 +430,22 @@ private struct FileListTableRepresentable: NSViewRepresentable {
 
         init(parent: FileListTableRepresentable) {
             self.parent = parent
+            super.init()
+            
+            NotificationCenter.default.addObserver(self, selector: #selector(handleOpenActionFromNotification), name: NSNotification.Name("SwiftMTPOpenFileAction"), object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(handleQuickLookActionFromNotification), name: NSNotification.Name("SwiftMTPToggleQuickLook"), object: nil)
+        }
+
+        deinit {
+            NotificationCenter.default.removeObserver(self)
+        }
+
+        @objc private func handleOpenActionFromNotification() {
+            handleOpenSelected()
+        }
+
+        @objc private func handleQuickLookActionFromNotification() {
+            togglePreviewPanel()
         }
 
         func numberOfRows(in tableView: NSTableView) -> Int {
@@ -633,25 +649,21 @@ private struct FileListTableRepresentable: NSViewRepresentable {
             let selectedFiles = selectedContextFiles
             let menu = NSMenu()
 
-            // New Folder always available
-            let newFolder = NSMenuItem(title: String(localized: "New Folder"), action: #selector(handleNewFolder), keyEquivalent: "")
-            newFolder.target = self
-            menu.addItem(newFolder)
-            
-            if selectedFiles.count == 1 {
-                let renameItem = NSMenuItem(title: String(localized: "Rename"), action: #selector(handleRename), keyEquivalent: "")
-                renameItem.target = self
-                menu.addItem(renameItem)
-            }
-            
-            menu.addItem(NSMenuItem.separator())
-
             if !selectedFiles.isEmpty {
                 // Open only for a single selected folder
-                if selectedFiles.count == 1, let first = selectedFiles.first, first.isDirectory {
+                if selectedFiles.count == 1, let _ = selectedFiles.first {
                     let openItem = NSMenuItem(title: String(localized: "Open"), action: #selector(handleOpenSelected), keyEquivalent: "")
+                    // openItem.keyEquivalentModifierMask = [.command]
                     openItem.target = self
                     menu.addItem(openItem)
+
+                    let qlItem = NSMenuItem(title: String(localized: "Quick Look"), action: #selector(handleQuickLookActionFromNotification), keyEquivalent: "")
+                    qlItem.target = self
+                    menu.addItem(qlItem)
+                    
+                    let renameItem = NSMenuItem(title: String(localized: "Rename"), action: #selector(handleRename), keyEquivalent: "")
+                    renameItem.target = self
+                    menu.addItem(renameItem)
                 }
 
                 let exportItem = NSMenuItem(title: String(localized: "Export"), action: #selector(handleExportSelected), keyEquivalent: "")
@@ -667,6 +679,7 @@ private struct FileListTableRepresentable: NSViewRepresentable {
                         action: #selector(handleAddToFavorites),
                         keyEquivalent: ""
                     )
+                    // addFavItem.image = NSImage(systemSymbolName: "star", accessibilityDescription: nil)
                     addFavItem.target = self
                     // Disable if already favorited
                     if let isFav = parent.isPathFavorited, isFav(first.path) {
@@ -676,6 +689,13 @@ private struct FileListTableRepresentable: NSViewRepresentable {
                     menu.addItem(addFavItem)
                 }
             }
+            
+            menu.addItem(NSMenuItem.separator())
+            
+            // New Folder always available
+            let newFolder = NSMenuItem(title: String(localized: "New Folder"), action: #selector(handleNewFolder), keyEquivalent: "")
+            newFolder.target = self
+            menu.addItem(newFolder)
 
             return menu
         }
@@ -737,7 +757,13 @@ private struct FileListTableRepresentable: NSViewRepresentable {
         @objc private func handleOpenSelected() {
             guard let first = selectedRows().first else { return }
             guard first >= 0, first < parent.files.count else { return }
-            parent.onOpenSelected(parent.files[first])
+            let file = parent.files[first]
+            
+            if !file.isDirectory {
+                openFileFromCacheOrDownload(file)
+            } else {
+                parent.onOpenSelected(file)
+            }
         }
 
         @objc private func handleExportSelected() {
@@ -1152,7 +1178,7 @@ private struct ColumnSpec {
     let maxWidth: CGFloat
 
     static let defaultSpecs: [ColumnSpec] = [
-        ColumnSpec(id: .name, title: String(localized: "Name"), minWidth: 220, width: 320, maxWidth: 520),
+        ColumnSpec(id: .name, title: String(localized: "Name"), minWidth: 220, width: 300, maxWidth: 520),
         ColumnSpec(id: .dateModified, title: String(localized: "Date Modified"), minWidth: 150, width: 180, maxWidth: 240),
         ColumnSpec(id: .size, title: String(localized: "Size"), minWidth: 80, width: 100, maxWidth: 140),
         ColumnSpec(id: .kind, title: String(localized: "Kind"), minWidth: 120, width: 160, maxWidth: 220)
