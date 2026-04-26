@@ -120,7 +120,11 @@ SwiftMTP/
 
 **macOS 无法验证此 App ？**
 
-这是因为 App 没有以 Apple 希望的方式发布。Apple 要求开发者每年支付 99 USD 才能获得所谓的“安全签名”。请前往 系统设置-隐私与安全性，向下滚动至“安全性”部分并同意 App 运行。
+这是因为 App 没有以 Apple 希望的方式发布。Apple 要求开发者每年支付 99 USD 才能获得所谓的“安全签名”。请前往 系统设置-隐私与安全性，向下滚动至“安全性”部分并同意 App 运行。如果问题依旧存在，请打开“终端”执行下列命令，随后再重试打开 App。
+
+```bash
+sudo xattr -rd com.apple.quarantine /Applications/SwiftMTP.app
+```
 
 ## 开源协议
 
