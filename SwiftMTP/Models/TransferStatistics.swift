@@ -169,7 +169,7 @@ class TransferStatistics {
         let elapsed = elapsedTimeString
         let speed = speedString
         let remaining = remainingTimeString
-        let percentage = String(format: "%.1f%%", progressPercentage * 100)
+        let percentage = progressPercentage.formatted(.percent.precision(.fractionLength(1)))
         return "\(percentage) | \(elapsed) elapsed | \(remaining) remaining | \(speed)"
     }
     

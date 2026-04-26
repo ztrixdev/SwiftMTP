@@ -288,7 +288,7 @@ struct MainView: View {
             Button {
                 manager.navigateBack()
             } label: {
-                Image(systemName: "chevron.left")
+                Image(systemName: "chevron.backward")
                     .font(.system(size: 11, weight: .semibold))
             }
             .buttonStyle(.plain)
@@ -334,7 +334,7 @@ struct MainView: View {
                         Text(stats.remainingTimeString)
                             .font(.system(size: 10, design: .monospaced))
                             .foregroundStyle(.secondary)
-                        Text(String(format: "%.0f%%", stats.progressPercentage * 100))
+                        Text(stats.progressPercentage.formatted(.percent.precision(.fractionLength(0))))
                             .font(.system(size: 11, design: .monospaced))
                             .foregroundStyle(.secondary)
                     }
@@ -692,9 +692,9 @@ private struct TransferOverlay: View {
 
     private var progressText: String {
         if isPreparing {
-            return "0%"
+            return "\(0.formatted(.percent))"
         }
-        return String(format: "%.0f%%", (stats?.progressPercentage ?? 0) * 100)
+        return (stats?.progressPercentage ?? 0).formatted(.percent.precision(.fractionLength(0)))
     }
 
     var body: some View {
