@@ -74,6 +74,8 @@ struct SwiftMTPApp: App {
             }
             
             GoMenuCommands()
+            
+            SidebarCommands()
         }
         //.defaultSize(width: 900, height: 600)
         

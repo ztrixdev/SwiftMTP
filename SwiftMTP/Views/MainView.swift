@@ -218,31 +218,15 @@ struct MainView: View {
                     )
                     .navigationSplitViewColumnWidth(min: 200, ideal: 230, max: 280)
                 } detail: {
-                    VStack(spacing: 0) {
-                        // Path bar
-                        if manager.connectionState.isConnected {
-                            pathBar
-                        }
-
-                        // File list
-                        FileListView(
-                            manager: manager,
-                            selection: $selection,
-                            onDoubleClick: { file in
-                                if file.isDirectory { manager.navigate(to: file) }
-                            },
-                            onAddToFavorites: { file in
-                                let fullPath = file.path
-                                favoritesManager.addFavorite(name: file.name, path: fullPath)
-                            },
-                            isPathFavorited: { path in
-                                favoritesManager.contains(path: path)
+                    fileBrowserView
+                        .safeAreaInset(edge: .top, spacing: 0) {
+                            if manager.connectionState.isConnected {
+                                pathBar
                             }
-                        )
-
-                        // Status / transfer bar
-                        statusBar
-                    }
+                        }
+                        .safeAreaInset(edge: .bottom, spacing: 0) {
+                            statusBar
+                        }
                 }
             } else {
                 NavigationView {
@@ -261,25 +245,30 @@ struct MainView: View {
                         if manager.connectionState.isConnected {
                             pathBar
                         }
-                        FileListView(
-                            manager: manager,
-                            selection: $selection,
-                            onDoubleClick: { file in
-                                if file.isDirectory { manager.navigate(to: file) }
-                            },
-                            onAddToFavorites: { file in
-                                let fullPath = file.path
-                                favoritesManager.addFavorite(name: file.name, path: fullPath)
-                            },
-                            isPathFavorited: { path in
-                                favoritesManager.contains(path: path)
-                            }
-                        )
+                        fileBrowserView
                         statusBar
                     }
                 }
             }
         }
+    }
+    
+    @ViewBuilder
+    private var fileBrowserView: some View {
+        FileListView(
+            manager: manager,
+            selection: $selection,
+            onDoubleClick: { file in
+                if file.isDirectory { manager.navigate(to: file) }
+            },
+            onAddToFavorites: { file in
+                let fullPath = file.path
+                favoritesManager.addFavorite(name: file.name, path: fullPath)
+            },
+            isPathFavorited: { path in
+                favoritesManager.contains(path: path)
+            }
+        )
     }
 
     // MARK: – Path Bar
@@ -292,6 +281,14 @@ struct MainView: View {
                     .font(.system(size: 11, weight: .semibold))
             }
             .buttonStyle(.plain)
+            .help("Enclosing Folder")
+            .onHover { isHovering in
+                if isHovering {
+                    NSCursor.pointingHand.push()
+                } else {
+                    NSCursor.pop()
+                }
+            }
             .disabled(!manager.canGoBack)
 
             PathBarView(navigationStack: manager.navigationStack) { index in
@@ -396,7 +393,7 @@ struct MainView: View {
                 Button {
                     NSApp.keyWindow?.firstResponder?.tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
                 } label: {
-                    Label(String(localized: "Toggle Sidebar"), systemImage: "sidebar.left")
+                    Label(String(localized: "Toggle Sidebar"), systemImage: "sidebar.leading")
                 }
                 .help(String(localized: "Toggle Sidebar"))
             }

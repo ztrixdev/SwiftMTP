@@ -132,12 +132,9 @@ struct FileListView: View {
 
     private func closeImportSheet() {
         guard let sheetWindow = sheetController?.window else { return }
-//        guard let parentWindow = NSApplication.shared.keyWindow else { return }
-//        parentWindow.endSheet(sheetWindow)
         if let parentWindow = sheetWindow.sheetParent {
             parentWindow.endSheet(sheetWindow)
         } else {
-//            sheetWindow.close()
             return
         }
     }

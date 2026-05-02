@@ -9,7 +9,7 @@ struct PathBarView: View {
             HStack(spacing: 2) {
                 ForEach(Array(navigationStack.enumerated()), id: \.offset) { index, path in
                     if index > 0 {
-                        Image(systemName: "chevron.right")
+                        Image(systemName: "chevron.forward")
                             .font(.system(size: 10, weight: .semibold))
                             .foregroundStyle(.tertiary)
                     }
@@ -25,6 +25,13 @@ struct PathBarView: View {
                             .foregroundStyle(index == navigationStack.count - 1 ? .primary : .secondary)
                     }
                     .buttonStyle(.plain)
+                    .onHover { isHovering in
+                        if isHovering {
+                            NSCursor.pointingHand.push()
+                        } else {
+                            NSCursor.pop()
+                        }
+                    }
                 }
             }
             .padding(.horizontal, 8)
