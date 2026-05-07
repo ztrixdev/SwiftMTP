@@ -644,7 +644,7 @@ final class KalamMTPManager: ObservableObject {
         }
         
         let storageId = self.uint32FromStorageId(storage.id)
-        let skipHiddenFiles = true
+        let skipHiddenFiles = false
         
         let input: [String: Any] = [
             "deviceId": self.deviceId,
