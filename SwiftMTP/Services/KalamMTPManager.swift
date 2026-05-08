@@ -1214,9 +1214,10 @@ final class KalamMTPManager: ObservableObject {
     private func parseKalamDate(_ dateAdded: String) -> Date? {
         // Format matches `send_to_js/constants.go`:
         // "2006-01-02T15:04:05.000Z"
+        // Note: Backend sends local time despite the 'Z' suffix.
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        formatter.timeZone = TimeZone.current
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
         return formatter.date(from: dateAdded)
     }
