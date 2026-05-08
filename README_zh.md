@@ -19,6 +19,36 @@
 
 ---
 
+## AI 功能 (即将推出)
+
+### 概览
+
+SwiftMTP 现已由 **AI 强力驱动**，为您的 MTP 文件管理带来创新高效的智能体验：
+
+- **自然语言搜索**：像对话一样自然地查找文件。只需输入您要查找的内容，例如“上周的照片”或“2024 年的工作文档”。
+- **智能设备分析**：获取有关设备硬件状态、连接健康度以及潜在性能优化的深度见解。
+
+| Natural Language Search                                      | Device Info Analysis                                         |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![NLSearch](https://github.com/Neighbor-Z/SwiftMTP/blob/main/Materials/NLSearch.png) | ![DIA](https://github.com/Neighbor-Z/SwiftMTP/blob/main/Materials/Device_Info_Analysis.png) |
+
+### 细节
+
+SwiftMTP 目前支持 2 种实现智能的方式：Apple Foundation 模型和 AI API 接入。
+
+Apple Foundation 模型是 Apple 的一种设备端模型，它完全运行在本地。它具有固定的 4096 Tokens 的 Context 窗口，运行在 macOS 26 或更新版本且正确启用了 Apple Intelligence 的系统上。
+
+AI API 接入同时支持 OpenAI 和 Anthropic 两种格式的 API。在 API Endpoint 中需要填写完整的地址，包括 `v1/messages` 或类似字符串。在 Model Name 中显式指定需要使用的模型，建议使用 `flash` 或类似模型。
+
+### 隐私与安全
+
+- **启用提示：** 初次在 SwiftMTP 设置中将 AI 模式从 `None` 设为其他选项时，SwiftMTP 会弹出一个 Notice 告知使用 AI 功能的注意事项。必须完整阅读并同意所有事项才能激活 AI 相关的功能。
+- **本地推理：** 使用 Apple Foundation 模型进行的推理完全在设备端本地进行。
+- **手动触发：** 所有 AI 相关的功能都需要手动触发。
+- **仅元数据：** 在 API 模式下，项目的元数据（如名称、类型和修改日期等）以及设备的型号、USB 连接信息等将可能会按需发送给 AI 提供商用于建立 Context。您的文件内容**永远不会**被上传或共享。
+
+---
+
 ## 功能特性
 
 - **即插即用**：自动识别连接的 MTP 设备并管理多存储分区。
