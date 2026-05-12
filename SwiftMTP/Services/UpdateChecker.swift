@@ -64,7 +64,7 @@ final class UpdateChecker: ObservableObject {
         let info    = Bundle.main.infoDictionary
         let short   = info?["CFBundleShortVersionString"] as? String ?? "0.0"
         let build   = info?["CFBundleVersion"]            as? String ?? "0"
-        return "\(short).\(build)"
+        return "\(short)(\(build))"
     }
 
     /// Returns true when `newVer` is strictly greater than `currentVer`.

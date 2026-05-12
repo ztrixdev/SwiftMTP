@@ -336,7 +336,9 @@ private struct FileListTableRepresentable: NSViewRepresentable {
         tableView.doubleAction = #selector(Coordinator.handleDoubleClick(_:))
         tableView.delegate = context.coordinator
         tableView.dataSource = context.coordinator
-        tableView.registerForDraggedTypes([.fileURL])
+        tableView.registerForDraggedTypes(
+            NSFilePromiseReceiver.readableDraggedTypes.map { NSPasteboard.PasteboardType($0) } + [.fileURL]
+        )
         tableView.setDraggingSourceOperationMask(.copy, forLocal: false)
         tableView.setDraggingSourceOperationMask([], forLocal: true)
 
@@ -372,6 +374,9 @@ private struct FileListTableRepresentable: NSViewRepresentable {
         tableView.canPaste = { [weak coordinator = context.coordinator] in
             coordinator?.canPaste() ?? false
         }
+        tableView.onReturnPressed = { [weak coordinator = context.coordinator] in
+            coordinator?.handleRename()
+        }
         context.coordinator.applySortDescriptorIfNeeded()
         context.coordinator.applySelectionIfNeeded()
 
@@ -383,16 +388,38 @@ private struct FileListTableRepresentable: NSViewRepresentable {
 
         context.coordinator.parent = self
         context.coordinator.tableView = tableView
-        tableView.usesAlternatingRowBackgroundColors = !files.isEmpty
-        if tableView.rowHeight != CGFloat(fontSize) * 2 {
-            tableView.rowHeight = CGFloat(fontSize) * 2
+
+        let newAlternating = !files.isEmpty
+        if tableView.usesAlternatingRowBackgroundColors != newAlternating {
+            tableView.usesAlternatingRowBackgroundColors = newAlternating
         }
+
+        let targetRowHeight = CGFloat(fontSize) * 2
+        if tableView.rowHeight != targetRowHeight {
+            tableView.rowHeight = targetRowHeight
+        }
+
         context.coordinator.applySortDescriptorIfNeeded()
-        tableView.reloadData()
+
+        // Only reload the table when the underlying data actually changes,
+        // not on every layout pass (e.g. sidebar animation frames).
+        let fileIDs = files.map(\.id)
+        if context.coordinator.previousFileIDs != fileIDs
+            || context.coordinator.previousFontSize != fontSize {
+            context.coordinator.previousFileIDs = fileIDs
+            context.coordinator.previousFontSize = fontSize
+            tableView.reloadData()
+        }
+
         context.coordinator.applySelectionIfNeeded()
-        
+
         DispatchQueue.main.async {
             if let window = tableView.window, window.firstResponder != tableView {
+                // Don't steal focus from text fields (e.g. the search bar)
+                if let responder = window.firstResponder,
+                   responder is NSTextView || responder is NSTextField {
+                    return
+                }
                 window.makeFirstResponder(tableView)
             }
         }
@@ -401,6 +428,11 @@ private struct FileListTableRepresentable: NSViewRepresentable {
     final class Coordinator: NSObject, NSTableViewDataSource, NSTableViewDelegate, NSFilePromiseProviderDelegate, QLPreviewPanelDataSource, QLPreviewPanelDelegate {
         var parent: FileListTableRepresentable
         weak var tableView: NSTableView?
+
+        // Change-tracking to avoid redundant reloadData() during animations
+        var previousFileIDs: [MTPFile.ID] = []
+        var previousFontSize: Int = 0
+        var didDisableClips = false
 
         private var isSyncingSelection = false
         private var draggedFiles: [MTPFile] = []  // Track files for multi-select drag
@@ -746,7 +778,7 @@ private struct FileListTableRepresentable: NSViewRepresentable {
             parent.onNewFolder()
         }
 
-        @objc private func handleRename() {
+        @objc func handleRename() {
             guard let first = selectedContextFiles.first else { return }
             parent.onRename(first)
         }
@@ -1188,6 +1220,7 @@ private final class ContextMenuTableView: NSTableView, NSMenuItemValidation {
     var onCopyAction: (() -> Void)?
     var onPasteAction: (() -> Void)?
     var canPaste: (() -> Bool)?
+    var onReturnPressed: (() -> Void)?
     weak var quickLookController: (NSObject & QLPreviewPanelDataSource & QLPreviewPanelDelegate)?
     
     override var acceptsFirstResponder: Bool { true }
@@ -1199,9 +1232,14 @@ private final class ContextMenuTableView: NSTableView, NSMenuItemValidation {
     }
 
     override func keyDown(with event: NSEvent) {
-        if event.keyCode == 49 { // spacebar
+        switch event.keyCode {
+        case 49: // spacebar
             onSpaceBarPressed?()
-        } else {
+        case 36, 76: // return / numpad enter
+            if numberOfSelectedRows == 1 {
+                onReturnPressed?()
+            }
+        default:
             super.keyDown(with: event)
         }
     }
