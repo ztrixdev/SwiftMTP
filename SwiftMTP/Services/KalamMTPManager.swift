@@ -17,6 +17,7 @@ final class KalamMTPManager: ObservableObject {
     @Published var availableDevices: [MTPDeviceInfo] = []
     @Published private(set) var isTransferActive: Bool = false
     @Published var isShowingNameConflictAlert: Bool = false
+    @Published var lastDirectoryJson: String = ""
     
     // NEW: Pass "" to let Go connect to the first available device, or specific ID for exact matches.
     var deviceId: String = ""
@@ -354,6 +355,10 @@ final class KalamMTPManager: ObservableObject {
                 }
                 operation = .none
                 return
+            }
+
+            DispatchQueue.main.async {
+                self.lastDirectoryJson = jsonString
             }
             
             guard let filesAny = parseEnvelopeData(jsonString) else {

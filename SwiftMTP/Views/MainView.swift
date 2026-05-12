@@ -13,6 +13,8 @@ struct MainView: View {
     @State private var isShowingDeleteConfirmation = false
     @State private var isShowingDeviceInfo = false
     @State private var isShowingReplaceAlert = false
+    @State private var searchQuery: String = ""
+    @State private var unfilteredFiles: [MTPFile]? = nil
     @State private var pendingImportURLs: [URL] = []
     @State private var isShowingExportReplaceAlert = false
     @State private var pendingExportDestinationURL: URL?
@@ -21,6 +23,12 @@ struct MainView: View {
     @State private var selectedFavoriteID: UUID? = nil
     @State private var isShowingGoToFolderDialog = false
     @State private var customFolderPath = ""
+    @State private var isShowingAISearch = false
+    @StateObject private var aiNLSearch = AINaturalLanguageSearchManager()
+    
+    // AI Analysis State (Persists until app exit)
+    @State private var aiHelpResult: String?
+    @State private var isAIProcessing = false
 
     var selectedFiles: [MTPFile] {
         manager.sortedFiles.filter { selection.contains($0.id) }
@@ -48,6 +56,8 @@ struct MainView: View {
                 DeviceInfoOverlay(
                     device: device,
                     selectedStorage: manager.selectedStorage,
+                    aiHelpResult: $aiHelpResult,
+                    isAIProcessing: $isAIProcessing,
                     onDismiss: { isShowingDeviceInfo = false }
                 )
                 .transition(.opacity)
@@ -69,14 +79,41 @@ struct MainView: View {
             )
             .interactiveDismissDisabled(true)
         }
+        .popover(isPresented: $isShowingAISearch) {
+            ScrollView {
+                AISearchSuggestionView(
+                    aiNLSearch: aiNLSearch,
+                    searchQuery: searchQuery,
+                    context: manager.lastDirectoryJson,
+                    onResult: handleAINLSearchResult
+                )
+            }
+            .frame(width: 300, height: 80)
+            .padding()
+        }
         .toolbar { toolbarContent }
         .onChange(of: manager.connectionState) { newState in
             if case .disconnected = newState {
                 selection = []
             }
         }
+        .onChange(of: searchQuery) { query in
+            if query.isEmpty {
+                if let original = unfilteredFiles {
+                    manager.files = original
+                    unfilteredFiles = nil
+                }
+            } else {
+                if unfilteredFiles == nil {
+                    unfilteredFiles = manager.files
+                }
+                manager.files = unfilteredFiles!.filter { $0.name.localizedCaseInsensitiveContains(query) }
+            }
+        }
         .onChange(of: manager.currentPath) { _ in
             selection = []
+            searchQuery = ""
+            unfilteredFiles = nil
         }
         .alert("New Folder", isPresented: $isShowingNewFolderDialog) {
             TextField("Folder name", text: $newFolderName)
@@ -219,6 +256,14 @@ struct MainView: View {
                     .navigationSplitViewColumnWidth(min: 200, ideal: 230, max: 280)
                 } detail: {
                     fileBrowserView
+                        .searchable(text: $searchQuery, placement: .toolbar, prompt: Text("Search")) {
+                            Button {
+                                isShowingAISearch = true
+                            } label: {
+                                Label("Search with AI", systemImage: "sparkles")
+                            }
+                            .disabled(aiNLSearch.isProcessing)
+                        }
                         .safeAreaInset(edge: .top, spacing: 0) {
                             if manager.connectionState.isConnected {
                                 pathBar
@@ -246,6 +291,14 @@ struct MainView: View {
                             pathBar
                         }
                         fileBrowserView
+                            .searchable(text: $searchQuery, placement: .toolbar, prompt: Text("Search")) {
+                                Button {
+                                    isShowingAISearch = true
+                                } label: {
+                                    Label("Search with AI", systemImage: "sparkles")
+                                }
+                                .disabled(aiNLSearch.isProcessing)
+                            }
                         statusBar
                     }
                 }
@@ -567,12 +620,33 @@ struct MainView: View {
     private func handleFavoriteTap(_ item: FavoriteItem) {
         navigateAndHandleError(to: item.path)
     }
+
+    // MARK: – AI Natural Language Search Result Handler
+
+    /// Handles the result from the inline AI natural language search.
+    /// On success, filters the file list to only show matched names.
+    /// On error, the AINLSearchManager already sets `errorMessage` for display.
+    private func handleAINLSearchResult(_ result: AINLSearchResult) {
+        switch result {
+        case .matchedNames(let names):
+            let nameSet = Set(names)
+            if unfilteredFiles == nil {
+                unfilteredFiles = manager.files
+            }
+            manager.files = unfilteredFiles!.filter { nameSet.contains($0.name) }
+        case .error:
+            // Error is already displayed via aiNLSearch.errorMessage
+            break
+        }
+    }
 }
 
 // MARK: – Device Info Overlay
 private struct DeviceInfoOverlay: View {
     let device: MTPDevice
     let selectedStorage: MTPStorage?
+    @Binding var aiHelpResult: String?
+    @Binding var isAIProcessing: Bool
     let onDismiss: () -> Void
 
     var body: some View {
@@ -609,6 +683,33 @@ private struct DeviceInfoOverlay: View {
                     }
                 }
                 .padding(.vertical, 6)
+                
+                if let result = aiHelpResult {
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack {
+                            Image(systemName: "sparkles")
+                                .foregroundStyle(.purple)
+                            Text("AI Analysis")
+                                .font(.system(size: 11, weight: .bold))
+                                .foregroundStyle(.secondary)
+                        }
+                        Text(result)
+                            .font(.system(size: 12))
+                            .lineSpacing(4)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .textSelection(.enabled)
+                        Text("*AI can make mistakes. Please double check the facts.")
+                            .font(.system(size: 12))
+                            .foregroundStyle(.secondary)
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 12)
+                    .background(Color.purple.opacity(0.05))
+                    .cornerRadius(8)
+                    .frame(width: 320)
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 12)
+                }
 
                 Divider()
                     .padding(.horizontal, 20)
@@ -620,6 +721,28 @@ private struct DeviceInfoOverlay: View {
                         onDismiss()
                     }
                     .keyboardShortcut(.escape, modifiers: [])
+                    Button {
+                        isAIProcessing = true
+                        Task {
+                            let aiManager = AIManager()
+                            let query = "Manufacturer: \(device.manufacturer), Model: \(device.name), Current Protocol: \(device.usbLinkDescription)"
+                            let result = await aiManager.sendOneOffRequest(query: query)
+                            await MainActor.run {
+                                withAnimation {
+                                    aiHelpResult = result
+                                    isAIProcessing = false
+                                }
+                            }
+                        }
+                    } label: {
+                        if isAIProcessing {
+                            ProgressView().controlSize(.small)
+                                .frame(width: 50)
+                        } else {
+                            Text(String(localized: "AI Analysis"))
+                        }
+                    }
+                    .disabled(isAIProcessing)
                     Spacer()
                 }
                 .padding(.horizontal, 20)
@@ -630,6 +753,55 @@ private struct DeviceInfoOverlay: View {
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
                     .fill(Color(nsColor: .windowBackgroundColor))
                     .shadow(radius: 16, y: 4)
+            )
+        }
+    }
+}
+
+// MARK: - AI Search Suggestion View
+
+struct AISearchSuggestionView: View {
+    @ObservedObject var aiNLSearch: AINaturalLanguageSearchManager
+    let searchQuery: String
+    let context: String
+    let onResult: (AINLSearchResult) -> Void
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            if aiNLSearch.isProcessing {
+                HStack(spacing: 6) {
+                    ProgressView()
+                        .controlSize(.small)
+                    Text("Thinking…")
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                }
+            } else if aiNLSearch.isSuccess {
+                HStack(spacing: 6) {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundStyle(.green)
+                    Text("Done")
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                }
+            }
+
+            if let error = aiNLSearch.errorMessage {
+                HStack(spacing: 6) {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundStyle(.red)
+                    Text(error)
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                        .textSelection(.enabled)
+                }
+            }
+        }
+        .onAppear {
+            aiNLSearch.search(
+                query: searchQuery,
+                context: context,
+                completion: onResult
             )
         }
     }
@@ -807,4 +979,27 @@ private struct TransferOverlay: View {
         state: .loading,
         onLoadPreview: {}
     )
+}
+
+#Preview("AI Disclaimer") {
+    ZStack {
+        Color.gray.opacity(0.2).ignoresSafeArea()
+        AIDisclaimerView(
+            onAccept: {},
+            onCancel: {}
+        )
+        .background(Color(nsColor: .windowBackgroundColor))
+        .cornerRadius(12)
+        .shadow(radius: 10)
+    }
+}
+
+#Preview("AI Features Intro") {
+    ZStack {
+        Color.gray.opacity(0.2).ignoresSafeArea()
+        AIFeaturesIntroView()
+            .background(Color(nsColor: .windowBackgroundColor))
+            .cornerRadius(12)
+            .shadow(radius: 10)
+    }
 }

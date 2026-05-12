@@ -26,10 +26,12 @@
 		C7516A772F800911006B1603 /* FileListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7516A742F800911006B1603 /* FileListView.swift */; };
 		C7516A7A2F800928006B1603 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7516A782F800928006B1603 /* SidebarView.swift */; };
 		C7516A7B2F800928006B1603 /* ToolbarViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7516A792F800928006B1603 /* ToolbarViews.swift */; };
+		C75229252FACFB330044B6AB /* AIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75229242FACFB330044B6AB /* AIManager.swift */; };
 		C7AC001A2F9A00010055C8BE /* UpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AC00192F9A00010055C8BE /* UpdateChecker.swift */; };
 		C7B754552F8A219B0075406B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B754542F8A219B0075406B /* SettingsView.swift */; };
 		C7B754572F8A21C70075406B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7B754562F8A21C70075406B /* Assets.xcassets */; };
 		C7C4AFF32F83B37E0047364C /* MTPDeviceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C4AFF22F83B37E0047364C /* MTPDeviceInfo.swift */; };
+		C7C839F62FADC6F700A40C35 /* AINLSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C839F52FADC6F700A40C35 /* AINLSearch.swift */; };
 		C7E5F65E2F78FF56004B6939 /* MTPIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = C7A475DB2F78E957005EDC2E /* MTPIcon.icon */; };
 		C7FB2E5E2F7A6F6C0036FE3B /* TransferStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FB2E5D2F7A6F6C0036FE3B /* TransferStatistics.swift */; };
 /* End PBXBuildFile section */
@@ -70,11 +72,13 @@
 		C7516A752F800911006B1603 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainView.swift; path = SwiftMTP/Views/MainView.swift; sourceTree = "<group>"; };
 		C7516A782F800928006B1603 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SidebarView.swift; path = SwiftMTP/Views/SidebarView.swift; sourceTree = "<group>"; };
 		C7516A792F800928006B1603 /* ToolbarViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ToolbarViews.swift; path = SwiftMTP/Views/ToolbarViews.swift; sourceTree = "<group>"; };
+		C75229242FACFB330044B6AB /* AIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AIManager.swift; path = SwiftMTP/Services/AIManager.swift; sourceTree = "<group>"; };
 		C7A475DB2F78E957005EDC2E /* MTPIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = MTPIcon.icon; sourceTree = "<group>"; };
 		C7AC00192F9A00010055C8BE /* UpdateChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UpdateChecker.swift; path = SwiftMTP/Services/UpdateChecker.swift; sourceTree = "<group>"; };
 		C7B754542F8A219B0075406B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = SwiftMTP/Views/SettingsView.swift; sourceTree = "<group>"; };
 		C7B754562F8A21C70075406B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C7C4AFF22F83B37E0047364C /* MTPDeviceInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MTPDeviceInfo.swift; path = SwiftMTP/Models/MTPDeviceInfo.swift; sourceTree = "<group>"; };
+		C7C839F52FADC6F700A40C35 /* AINLSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AINLSearch.swift; path = SwiftMTP/Services/AINLSearch.swift; sourceTree = "<group>"; };
 		C7FB2E5D2F7A6F6C0036FE3B /* TransferStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TransferStatistics.swift; path = SwiftMTP/Models/TransferStatistics.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -141,6 +145,8 @@
 		1A2B3C4D5E6F7A8000000330 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				C7C839F52FADC6F700A40C35 /* AINLSearch.swift */,
+				C75229242FACFB330044B6AB /* AIManager.swift */,
 				C705622D2F875E6E0055C8BE /* FavoritesManager.swift */,
 				C7516A702F8008D9006B1603 /* KalamMTPManager.swift */,
 				C7516A712F8008D9006B1603 /* USBMonitor.swift */,
@@ -279,6 +285,8 @@
 				C7516A7A2F800928006B1603 /* SidebarView.swift in Sources */,
 				C7516A7B2F800928006B1603 /* ToolbarViews.swift in Sources */,
 				C7516A722F8008D9006B1603 /* KalamMTPManager.swift in Sources */,
+				C7C839F62FADC6F700A40C35 /* AINLSearch.swift in Sources */,
+				C75229252FACFB330044B6AB /* AIManager.swift in Sources */,
 				C7516A732F8008D9006B1603 /* USBMonitor.swift in Sources */,
 				1A2B3C4D5E6F7A8000000012 /* Localizable.xcstrings in Sources */,
 				C705622E2F875E6E0055C8BE /* FavoritesManager.swift in Sources */,
@@ -308,7 +316,7 @@
 				CODE_SIGN_ENTITLEMENTS = SwiftMTP/SwiftMTP.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 8;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_APP_SANDBOX = YES;
@@ -323,7 +331,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ld_new",
@@ -353,7 +361,7 @@
 				CODE_SIGN_ENTITLEMENTS = SwiftMTP/SwiftMTP.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 8;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_APP_SANDBOX = YES;
@@ -368,7 +376,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ld_classic",
