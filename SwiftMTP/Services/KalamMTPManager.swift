@@ -342,6 +342,13 @@ final class KalamMTPManager: ObservableObject {
             operation = .none // will be overwritten by loadFiles(_:).
             
         case .walking:
+            // Check if this walk was superseded by a newer directory request.
+            if let dict = try? JSONSerialization.jsonObject(with: Data(jsonString.utf8)) as? [String: Any],
+            let errorType = dict["errorType"] as? String,
+            errorType == "ErrorWalkCancelled" {
+                return
+            }
+            
             if let errorString = parseEnvelopeErrorOnly(jsonString) {
                 DispatchQueue.main.async {
                     if ErrorStringLocalizer.isDeviceDisconnectedError(errorString) {
