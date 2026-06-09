@@ -19,23 +19,6 @@ Inspired by [OpenMTP](https://github.com/ganeshrvel/openmtp/), SwiftMTP uses the
 
 ---
 
-## AI Features (New)
-
-### Overview
-
-SwiftMTP is now **supercharged by AI**, bringing an efficient and innovative intelligence experience to your MTP file management:
-
-- **Natural Language Search**: Find your files naturally like a conversation. Just type what you're looking for, e.g., "Photos of last week" or "Work documents from 2024".
-- **Device Info Analysis**: Get smart insights about your device hardware, connectivity status, and potential performance optimizations.
-
-| Natural Language Search                                      | Device Info Analysis                                         |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| ![NLSearch](https://github.com/Neighbor-Z/SwiftMTP/blob/main/Materials/NLSearch.png) | ![DIA](https://github.com/Neighbor-Z/SwiftMTP/blob/main/Materials/Device_Info_Analysis.png) |
-
-For details, privacy and security, please read [Details_and_Privacy.md](https://github.com/Neighbor-Z/SwiftMTP/blob/main/Details_and_Privacy.md)
-
----
-
 ## Features
 
 - **Device Management**: Easily connect/disconnect MTP devices and select specific storage devices.
@@ -45,6 +28,10 @@ For details, privacy and security, please read [Details_and_Privacy.md](https://
 - **Progress Tracking**: Real-time transfer progress bars and status indicators.
 - **Safe and secure**: No ADB or USB debugging required.
 - **Localization**: Multilingual support via `Localizable.xcstrings`.
+- **Natural Language Search**: Find your files naturally like a conversation. Just type what you're looking for, e.g., "Photos of last week" or "Work documents from 2024".
+- **Device Info Analysis**: Get smart insights about your device hardware, connectivity status, and potential performance optimizations.
+
+For AI details, privacy and security, please read [Details_and_Privacy.md](https://github.com/Neighbor-Z/SwiftMTP/blob/main/Details_and_Privacy.md)
 
 ---
 
@@ -55,6 +42,11 @@ For details, privacy and security, please read [Details_and_Privacy.md](https://
 | File menu with Keyboard Shortcuts                | Go menu with Keyboard Shortcuts              |
 | ------------------------------------------------ | -------------------------------------------- |
 | ![File Menu](https://github.com/Neighbor-Z/SwiftMTP/blob/main/Materials/file_menu_in_Tahoe.png) | ![Go Menu](https://github.com/Neighbor-Z/SwiftMTP/blob/main/Materials/go_menu_in_Tahoe.png) |
+
+| Natural Language Search                                      | Device Info Analysis                                         |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![NLSearch](https://github.com/Neighbor-Z/SwiftMTP/blob/main/Materials/NLSearch.png) | ![DIA](https://github.com/Neighbor-Z/SwiftMTP/blob/main/Materials/Device_Info_Analysis.png) |
+
 
 ---
 
@@ -79,9 +71,13 @@ SwiftMTP/
 
 ## Getting Started
 
-### Download
+### Install
 
-[Release](https://github.com/Neighbor-Z/SwiftMTP/releases/latest)
+Download [Release](https://github.com/Neighbor-Z/SwiftMTP/releases/latest) or install via homebrew:
+
+```bash
+brew tap neighbor-z/swiftmtp && brew install --cask swiftmtp
+```
 
 ### Build
 
@@ -91,7 +87,7 @@ SwiftMTP/
 * **macOS 12.0+**
 
 #### Build & Run
-1.  ~~Please build Kalam backend first. Refer to `ffi/kalam/native/README.md`. This step will build necessary dynamic libraries (`kalam.dylib` & `libusb.dylib`) and will place them under `lib`.~~ Pre-compiled dylibs have been added. You can also compile them by yourself.
+1.  ~~Please build backend first. Refer to `ffi/kalam/native/README.md`. This step will build necessary dynamic libraries (`kalam.dylib` & `libusb.dylib`) and will place them under `lib`.~~ Pre-compiled dylibs have been added. You can also compile them by yourself.
 2.  Open `SwiftMTP.xcodeproj` in Xcode.
 3.  Select your target platform (macOS).
 4.  Press Run.

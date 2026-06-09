@@ -107,9 +107,13 @@ SwiftMTP/
 
 ## 快速开始
 
-### 下载
+### 安装
 
-[发行版](https://github.com/Neighbor-Z/SwiftMTP/releases/latest)
+下载[发行版](https://github.com/Neighbor-Z/SwiftMTP/releases/latest)或通过 homebrew 安装：
+
+```bash
+brew tap neighbor-z/swiftmtp && brew install --cask swiftmtp
+```
 
 ### 构建
 
@@ -120,7 +124,7 @@ SwiftMTP/
 
 #### 步骤
 
-1.  ~~请先编译 kalam 后端，参阅 `ffi/kalam/native/README.md` 。这会得到必要的动态库 (`kalam.dylib` & `libusb.dylib` ) 和 `kalam.h` 放置于 `lib`~~ 预编译的 dylib 已添加。也可以自行编译这些 dylib。
+1.  ~~请先编译后端，参阅 `ffi/kalam/native/README.md` 。这会得到必要的动态库 (`kalam.dylib` & `libusb.dylib` ) 和 `kalam.h` 放置于 `lib`~~ 预编译的 dylib 已添加。也可以自行编译这些 dylib。
 2.  打开 `SwiftMTP.xcodeproj`
 3.  选择目标平台（macOS）
 4.  点击 **Run**
