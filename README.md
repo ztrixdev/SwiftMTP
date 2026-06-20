@@ -19,6 +19,14 @@ Inspired by [OpenMTP](https://github.com/ganeshrvel/openmtp/), SwiftMTP uses the
 
 ---
 
+## Upcoming Feature
+
+Introducing `swiftmtp-cli`. It is a powerful, lightweight macOS command-line interface designed to manage Media Transfer Protocol (MTP) devices with ease. Built natively in Swift and backed by the also upcoming brand new `Gomtp` backend, it allows users to easily use AI Agent to quickly interact with connected Android devices or cameras.
+
+![CLI](https://github.com/Neighbor-Z/SwiftMTP/blob/main/Materials/CLI.png)
+
+---
+
 ## Features
 
 - **Device Management**: Easily connect/disconnect MTP devices and select specific storage devices.
