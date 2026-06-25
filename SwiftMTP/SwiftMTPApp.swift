@@ -153,10 +153,6 @@ struct GoMenuCommands: Commands {
             Button { navigateToPathAction?("/Download") } label: { Label("Downloads", systemImage: "arrow.down.circle") }
                 .keyboardShortcut("l", modifiers: [.command, .option])
                 .disabled(isConnected != true)
-            Button { navigateToPathAction?("/Bluetooth") } label: { Label("Bluetooth", systemImage: "wave.3.right") }
-                .disabled(isConnected != true)
-            Button { navigateToPathAction?("/Pictures/Screenshots") } label: { Label("Screenshots", systemImage: "camera.viewfinder") }
-                .disabled(isConnected != true)
                 
             Divider()
             

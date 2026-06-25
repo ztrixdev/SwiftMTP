@@ -30,7 +30,7 @@ struct FavoriteItem: Identifiable, Codable, Equatable, Hashable {
             name: "Bluetooth",
             path: "/bluetooth",
             icon: "wave.3.right",
-            isBuiltIn: true
+            isBuiltIn: false
         ),
         FavoriteItem(
             id: UUID(uuidString: "00000000-0000-0000-0000-000000000003")!,
@@ -44,7 +44,7 @@ struct FavoriteItem: Identifiable, Codable, Equatable, Hashable {
             name: "Screenshots",
             path: "/Pictures/Screenshots",
             icon: "camera.viewfinder",
-            isBuiltIn: true
+            isBuiltIn: false
         ),
     ]
 }
