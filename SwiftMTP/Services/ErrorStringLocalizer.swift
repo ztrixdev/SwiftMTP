@@ -184,7 +184,7 @@ struct ErrorStringLocalizer {
     
     private static func localizeErrorType(_ errorType: String) -> String {
         switch errorType {
-        // --- Go Kalam backend error types (from send_to_js/enums.go) ---
+        // --- Gomtp backend error types (from send_to_js/enums.go) ---
         case "ErrorMtpDetectFailed":
             return String(localized: "MTP detection failed")
         case "ErrorMtpLockExists":

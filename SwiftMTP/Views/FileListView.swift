@@ -5,7 +5,7 @@ import Quartz
 import QuickLookUI
 
 struct FileListView: View {
-    @ObservedObject var manager: KalamMTPManager
+    @ObservedObject var manager: MTPManager
     @Binding var selection: Set<MTPFile.ID>
     var onDoubleClick: (MTPFile) -> Void
     var onAddToFavorites: ((MTPFile) -> Void)?
@@ -289,7 +289,7 @@ private struct FileListSortState: Equatable {
 }
 
 private struct FileListTableRepresentable: NSViewRepresentable {
-    let manager: KalamMTPManager
+    let manager: MTPManager
     let files: [MTPFile]
     @Binding var selection: Set<MTPFile.ID>
     @Binding var sortState: FileListSortState
@@ -988,7 +988,7 @@ private struct FileListTableRepresentable: NSViewRepresentable {
                 return url
             }
             // Some drag destinations provide the final promised-item URL instead of a writable directory.
-            // For Kalam import we need the parent directory as destination.
+            // For import we need the parent directory as destination.
             return url.deletingLastPathComponent()
         }
 

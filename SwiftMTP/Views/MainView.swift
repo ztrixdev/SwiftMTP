@@ -3,7 +3,7 @@ import Foundation
 import AppKit
 
 struct MainView: View {
-    @StateObject private var manager = KalamMTPManager()
+    @StateObject private var manager = MTPManager()
     @StateObject private var favoritesManager = FavoritesManager()
     @State private var selection: Set<MTPFile.ID> = []
     @State private var isShowingNewFolderDialog = false

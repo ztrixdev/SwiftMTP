@@ -8,25 +8,27 @@
 
 /* Begin PBXBuildFile section */
 		1A2B3C4D5E6F7A8000000001 /* SwiftMTP/SwiftMTPApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F7A8000000101 /* SwiftMTP/SwiftMTPApp.swift */; };
-		1A2B3C4D5E6F7A8000000009 /* KalamShim/KalamShim.c in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F7A8000000109 /* KalamShim/KalamShim.c */; };
-		1A2B3C4D5E6F7A8000000010 /* lib/kalam.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F7A8000000110 /* lib/kalam.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		1A2B3C4D5E6F7A8000000011 /* lib/libusb.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F7A8000000111 /* lib/libusb.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		1A2B3C4D5E6F7A8000000012 /* Localizable.xcstrings in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F7A8000000130 /* Localizable.xcstrings */; };
 		1A2B3C4D5E6F7A8000000013 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F7A8000000131 /* IOKit.framework */; };
 		C705622C2F875E5F0055C8BE /* FavoriteItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C705622B2F875E5F0055C8BE /* FavoriteItem.swift */; };
 		C705622E2F875E6E0055C8BE /* FavoritesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C705622D2F875E6E0055C8BE /* FavoritesManager.swift */; };
+		C717C1E32FDEE45400E667E9 /* GomtpShim.c in Sources */ = {isa = PBXBuildFile; fileRef = C7887B912FD52B81005B5BDD /* GomtpShim.c */; };
 		C725E65B2F7CCDD0007937AB /* ErrorStringLocalizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C725E65A2F7CCDD0007937AB /* ErrorStringLocalizer.swift */; };
 		C72F6C242F87DFF10015604B /* QuickLookOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72F6C232F87DFF10015604B /* QuickLookOverlayView.swift */; };
 		C7516A6B2F800866006B1603 /* USBProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7516A6A2F800866006B1603 /* USBProtocol.swift */; };
 		C7516A6E2F8008A5006B1603 /* MTPFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7516A6D2F8008A5006B1603 /* MTPFile.swift */; };
 		C7516A6F2F8008A5006B1603 /* MTPDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7516A6C2F8008A5006B1603 /* MTPDevice.swift */; };
-		C7516A722F8008D9006B1603 /* KalamMTPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7516A702F8008D9006B1603 /* KalamMTPManager.swift */; };
+		C7516A722F8008D9006B1603 /* MTPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7516A702F8008D9006B1603 /* MTPManager.swift */; };
 		C7516A732F8008D9006B1603 /* USBMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7516A712F8008D9006B1603 /* USBMonitor.swift */; };
 		C7516A762F800911006B1603 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7516A752F800911006B1603 /* MainView.swift */; };
 		C7516A772F800911006B1603 /* FileListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7516A742F800911006B1603 /* FileListView.swift */; };
 		C7516A7A2F800928006B1603 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7516A782F800928006B1603 /* SidebarView.swift */; };
 		C7516A7B2F800928006B1603 /* ToolbarViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7516A792F800928006B1603 /* ToolbarViews.swift */; };
 		C75229252FACFB330044B6AB /* AIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75229242FACFB330044B6AB /* AIManager.swift */; };
+		C7887B902FD52A96005B5BDD /* gomtp.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C7887B8F2FD52A96005B5BDD /* gomtp.dylib */; };
+		C7887B922FD52B81005B5BDD /* GomtpShim.c in Sources */ = {isa = PBXBuildFile; fileRef = C7887B912FD52B81005B5BDD /* GomtpShim.c */; };
+		C7887B932FD52B93005B5BDD /* gomtp.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = C7887B8F2FD52A96005B5BDD /* gomtp.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		C7AC001A2F9A00010055C8BE /* UpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AC00192F9A00010055C8BE /* UpdateChecker.swift */; };
 		C7B754552F8A219B0075406B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B754542F8A219B0075406B /* SettingsView.swift */; };
 		C7B754572F8A21C70075406B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7B754562F8A21C70075406B /* Assets.xcassets */; };
@@ -43,8 +45,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				1A2B3C4D5E6F7A8000000010 /* lib/kalam.dylib in CopyFiles */,
 				1A2B3C4D5E6F7A8000000011 /* lib/libusb.dylib in CopyFiles */,
+				C7887B932FD52B93005B5BDD /* gomtp.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,8 +54,6 @@
 
 /* Begin PBXFileReference section */
 		1A2B3C4D5E6F7A8000000101 /* SwiftMTP/SwiftMTPApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMTP/SwiftMTPApp.swift; sourceTree = "<group>"; };
-		1A2B3C4D5E6F7A8000000109 /* KalamShim/KalamShim.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = KalamShim/KalamShim.c; sourceTree = "<group>"; };
-		1A2B3C4D5E6F7A8000000110 /* lib/kalam.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = lib/kalam.dylib; sourceTree = "<group>"; };
 		1A2B3C4D5E6F7A8000000111 /* lib/libusb.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = lib/libusb.dylib; sourceTree = "<group>"; };
 		1A2B3C4D5E6F7A8000000120 /* SwiftMTP-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwiftMTP-Bridging-Header.h"; sourceTree = "<group>"; };
 		1A2B3C4D5E6F7A8000000130 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -66,13 +66,15 @@
 		C7516A6A2F800866006B1603 /* USBProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = USBProtocol.swift; path = SwiftMTP/Models/USBProtocol.swift; sourceTree = "<group>"; };
 		C7516A6C2F8008A5006B1603 /* MTPDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MTPDevice.swift; path = SwiftMTP/Models/MTPDevice.swift; sourceTree = "<group>"; };
 		C7516A6D2F8008A5006B1603 /* MTPFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MTPFile.swift; path = SwiftMTP/Models/MTPFile.swift; sourceTree = "<group>"; };
-		C7516A702F8008D9006B1603 /* KalamMTPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = KalamMTPManager.swift; path = SwiftMTP/Services/KalamMTPManager.swift; sourceTree = "<group>"; };
+		C7516A702F8008D9006B1603 /* MTPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MTPManager.swift; path = SwiftMTP/Services/MTPManager.swift; sourceTree = "<group>"; };
 		C7516A712F8008D9006B1603 /* USBMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = USBMonitor.swift; path = SwiftMTP/Services/USBMonitor.swift; sourceTree = "<group>"; };
 		C7516A742F800911006B1603 /* FileListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FileListView.swift; path = SwiftMTP/Views/FileListView.swift; sourceTree = "<group>"; };
 		C7516A752F800911006B1603 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainView.swift; path = SwiftMTP/Views/MainView.swift; sourceTree = "<group>"; };
 		C7516A782F800928006B1603 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SidebarView.swift; path = SwiftMTP/Views/SidebarView.swift; sourceTree = "<group>"; };
 		C7516A792F800928006B1603 /* ToolbarViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ToolbarViews.swift; path = SwiftMTP/Views/ToolbarViews.swift; sourceTree = "<group>"; };
 		C75229242FACFB330044B6AB /* AIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AIManager.swift; path = SwiftMTP/Services/AIManager.swift; sourceTree = "<group>"; };
+		C7887B8F2FD52A96005B5BDD /* gomtp.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = gomtp.dylib; path = lib/gomtp.dylib; sourceTree = "<group>"; };
+		C7887B912FD52B81005B5BDD /* GomtpShim.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = GomtpShim.c; path = GomtpShim/GomtpShim.c; sourceTree = "<group>"; };
 		C7A475DB2F78E957005EDC2E /* MTPIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = MTPIcon.icon; sourceTree = "<group>"; };
 		C7AC00192F9A00010055C8BE /* UpdateChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UpdateChecker.swift; path = SwiftMTP/Services/UpdateChecker.swift; sourceTree = "<group>"; };
 		C7B754542F8A219B0075406B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = SwiftMTP/Views/SettingsView.swift; sourceTree = "<group>"; };
@@ -87,7 +89,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7887B902FD52A96005B5BDD /* gomtp.dylib in Frameworks */,
 				1A2B3C4D5E6F7A8000000013 /* IOKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C717C1D72FDEDFBE00E667E9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,7 +109,7 @@
 			children = (
 				C7B754562F8A21C70075406B /* Assets.xcassets */,
 				1A2B3C4D5E6F7A8000000300 /* SwiftMTP */,
-				1A2B3C4D5E6F7A8000000350 /* KalamShim */,
+				1A2B3C4D5E6F7A8000000350 /* Shim */,
 				1A2B3C4D5E6F7A8000000310 /* lib */,
 				1A2B3C4D5E6F7A8000000120 /* SwiftMTP-Bridging-Header.h */,
 				1A2B3C4D5E6F7A8000000130 /* Localizable.xcstrings */,
@@ -123,7 +133,7 @@
 		1A2B3C4D5E6F7A8000000310 /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				1A2B3C4D5E6F7A8000000110 /* lib/kalam.dylib */,
+				C7887B8F2FD52A96005B5BDD /* gomtp.dylib */,
 				1A2B3C4D5E6F7A8000000111 /* lib/libusb.dylib */,
 			);
 			name = lib;
@@ -148,7 +158,7 @@
 				C7C839F52FADC6F700A40C35 /* AINLSearch.swift */,
 				C75229242FACFB330044B6AB /* AIManager.swift */,
 				C705622D2F875E6E0055C8BE /* FavoritesManager.swift */,
-				C7516A702F8008D9006B1603 /* KalamMTPManager.swift */,
+				C7516A702F8008D9006B1603 /* MTPManager.swift */,
 				C7516A712F8008D9006B1603 /* USBMonitor.swift */,
 				C725E65A2F7CCDD0007937AB /* ErrorStringLocalizer.swift */,
 				C7AC00192F9A00010055C8BE /* UpdateChecker.swift */,
@@ -169,12 +179,12 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
-		1A2B3C4D5E6F7A8000000350 /* KalamShim */ = {
+		1A2B3C4D5E6F7A8000000350 /* Shim */ = {
 			isa = PBXGroup;
 			children = (
-				1A2B3C4D5E6F7A8000000109 /* KalamShim/KalamShim.c */,
+				C7887B912FD52B81005B5BDD /* GomtpShim.c */,
 			);
-			name = KalamShim;
+			name = Shim;
 			sourceTree = "<group>";
 		};
 		C74E682D2F78CF5100F8A2FE /* Recovered References */ = {
@@ -258,7 +268,7 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/lib/kalam.dylib",
+				"$(SRCROOT)/lib/gomtp.dylib",
 				"$(SRCROOT)/lib/libusb.dylib",
 			);
 			outputPaths = (
@@ -266,7 +276,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "install_name_tool -id \"@rpath/kalam.dylib\" \"${SRCROOT}/lib/kalam.dylib\" 2>/dev/null || true\ninstall_name_tool -id \"@rpath/libusb.dylib\" \"${SRCROOT}/lib/libusb.dylib\" 2>/dev/null || true\ntouch \"${DERIVED_FILE_DIR}/fix-dylib-install-names.stamp\"\n";
+			shellScript = "install_name_tool -id \"@rpath/gomtp.dylib\" \"${SRCROOT}/lib/gomtp.dylib\" 2>/dev/null || true\ninstall_name_tool -id \"@rpath/libusb.dylib\" \"${SRCROOT}/lib/libusb.dylib\" 2>/dev/null || true\ntouch \"${DERIVED_FILE_DIR}/fix-dylib-install-names.stamp\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -280,11 +290,11 @@
 				C7516A762F800911006B1603 /* MainView.swift in Sources */,
 				C7516A772F800911006B1603 /* FileListView.swift in Sources */,
 				C7FB2E5E2F7A6F6C0036FE3B /* TransferStatistics.swift in Sources */,
-				1A2B3C4D5E6F7A8000000009 /* KalamShim/KalamShim.c in Sources */,
 				C72F6C242F87DFF10015604B /* QuickLookOverlayView.swift in Sources */,
+				C7887B922FD52B81005B5BDD /* GomtpShim.c in Sources */,
 				C7516A7A2F800928006B1603 /* SidebarView.swift in Sources */,
 				C7516A7B2F800928006B1603 /* ToolbarViews.swift in Sources */,
-				C7516A722F8008D9006B1603 /* KalamMTPManager.swift in Sources */,
+				C7516A722F8008D9006B1603 /* MTPManager.swift in Sources */,
 				C7C839F62FADC6F700A40C35 /* AINLSearch.swift in Sources */,
 				C75229252FACFB330044B6AB /* AIManager.swift in Sources */,
 				C7516A732F8008D9006B1603 /* USBMonitor.swift in Sources */,
@@ -297,6 +307,14 @@
 				C725E65B2F7CCDD0007937AB /* ErrorStringLocalizer.swift in Sources */,
 				C7B754552F8A219B0075406B /* SettingsView.swift in Sources */,
 				C7AC001A2F9A00010055C8BE /* UpdateChecker.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C717C1D62FDEDFBE00E667E9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C717C1E32FDEE45400E667E9 /* GomtpShim.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,7 +334,7 @@
 				CODE_SIGN_ENTITLEMENTS = SwiftMTP/SwiftMTP.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 18;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_APP_SANDBOX = YES;
@@ -330,12 +348,16 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/lib",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.2.3;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ld_new",
-					"$(SRCROOT)/lib/kalam.dylib",
+					"$(SRCROOT)/lib/gomtp.dylib",
 					"$(SRCROOT)/lib/libusb.dylib",
 					"-Wl,-w",
 				);
@@ -361,7 +383,7 @@
 				CODE_SIGN_ENTITLEMENTS = SwiftMTP/SwiftMTP.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 18;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_APP_SANDBOX = YES;
@@ -375,12 +397,16 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/lib",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.2.3;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ld_classic",
-					"$(SRCROOT)/lib/kalam.dylib",
+					"$(SRCROOT)/lib/gomtp.dylib",
 					"$(SRCROOT)/lib/libusb.dylib",
 					"-Wl,-w",
 				);

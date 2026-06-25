@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct SidebarView: View {
-    @ObservedObject var manager: KalamMTPManager
+    @ObservedObject var manager: MTPManager
     @Binding var selectedStorage: MTPStorage?
     @Binding var selectedFavoriteID: UUID?
     @ObservedObject var favoritesManager: FavoritesManager
