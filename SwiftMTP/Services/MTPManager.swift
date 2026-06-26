@@ -818,6 +818,63 @@ final class MTPManager: ObservableObject {
         }
     }
     
+    /// Download multiple files from device as a batch promise (for drag-to-Finder).
+    /// Sends all file paths in a single GomtpDownloadFiles call for proper "n of n" progress.
+    func downloadPromiseBatch(files: [MTPFile], to destinationFolderURL: URL, completion: @escaping (Error?) -> Void) {
+        if case .downloading = operation {
+            completion(NSError(domain: "MTPManager.Transfer", code: 1, userInfo: [
+                NSLocalizedDescriptionKey: "Another transfer is already running."
+            ]))
+            return
+        }
+        if case .uploading = operation {
+            completion(NSError(domain: "MTPManager.Transfer", code: 1, userInfo: [
+                NSLocalizedDescriptionKey: "Another transfer is already running."
+            ]))
+            return
+        }
+        guard let storage = selectedStorage else {
+            completion(NSError(domain: "MTPManager.Transfer", code: 2, userInfo: [
+                NSLocalizedDescriptionKey: "No storage selected."
+            ]))
+            return
+        }
+        
+        transferCompletion = completion
+        DispatchQueue.main.async { [weak self] in
+            self?.isTransferActive = true
+            self?.transferProgress = 0
+        }
+        
+        let storageId = self.uint32FromStorageId(storage.id)
+        let sources = files.map(\.path)
+        let destination = destinationFolderURL.path
+        
+        let input: [String: Any] = [
+            "deviceId": self.deviceId,
+            "storageId": Int(storageId),
+            "sources": sources,
+            "destination": destination,
+            "preprocessFiles": true
+        ]
+        
+        guard let jsonString = toJsonString(input) else {
+            DispatchQueue.main.async { [weak self] in
+                self?.isTransferActive = false
+                self?.transferProgress = nil
+            }
+            finishTransferCompletion(errorString: "Failed to encode download payload.")
+            return
+        }
+        
+        operation = .downloading
+        DispatchQueue.global(qos: .userInitiated).async {
+            jsonString.withCString { ptr in
+                GomtpDownloadFiles(ptr, CallbackRouter.preprocess, CallbackRouter.progress, CallbackRouter.done)
+            }
+        }
+    }
+    
     func downloadAndPreview(file: MTPFile, to destinationFolderURL: URL, completion: @escaping (Error?) -> Void) {
         if operation != .none && operation != .walking {
             completion(NSError(domain: "MTPManager.Transfer", code: 1, userInfo: [

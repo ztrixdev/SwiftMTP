@@ -435,8 +435,12 @@ private struct FileListTableRepresentable: NSViewRepresentable {
         var didDisableClips = false
 
         private var isSyncingSelection = false
-        private var draggedFiles: [MTPFile] = []  // Track files for multi-select drag
-        private var isDraggingMultiple = false    // Flag for multi-file drag
+        
+        // Batch promise drag state
+        private var promiseDragFiles: [MTPFile] = []
+        private var promiseBatchStarted = false
+        private var promiseBatchError: Error? = nil
+        private var promiseBatchSemaphore = DispatchSemaphore(value: 0)
         
         // Quick Look Overlay State
         private var currentQLFile: MTPFile?
@@ -519,37 +523,21 @@ private struct FileListTableRepresentable: NSViewRepresentable {
 
         func tableView(_ tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
             guard row >= 0, row < parent.files.count else { return nil }
-            
-            // Check if this is the first row of a multi-select drag
-            let selectedIndexes = tableView.selectedRowIndexes
-            if selectedIndexes.count > 1 && selectedIndexes.first == row {
-                // This is the start of a multi-select drag
-                let selectedFiles = selectedIndexes.compactMap { idx -> MTPFile? in
-                    guard idx >= 0, idx < parent.files.count else { return nil }
-                    return parent.files[idx]
-                }
-                draggedFiles = selectedFiles
-                isDraggingMultiple = true
-                
-                // Return a provider for the first file only
-                let firstFile = parent.files[row]
-                let type: UTType = firstFile.isDirectory ? .folder : (UTType(filenameExtension: firstFile.extension_) ?? .data)
-                let provider = NSFilePromiseProvider(fileType: type.identifier, delegate: self)
-                provider.userInfo = "multi" as NSString
-                return provider
-            } else if selectedIndexes.count == 1 {
-                // Single file drag
-                draggedFiles = [parent.files[row]]
-                isDraggingMultiple = false
-                
-                let file = parent.files[row]
-                let type: UTType = file.isDirectory ? .folder : (UTType(filenameExtension: file.extension_) ?? .data)
-                let provider = NSFilePromiseProvider(fileType: type.identifier, delegate: self)
-                provider.userInfo = file.id as NSString
-                return provider
+            let file = parent.files[row]
+            let type: UTType = file.isDirectory ? .folder : (UTType(filenameExtension: file.extension_) ?? .data)
+            let provider = NSFilePromiseProvider(fileType: type.identifier, delegate: self)
+            provider.userInfo = file.id as NSString
+            return provider
+        }
+
+        func tableView(_ tableView: NSTableView, draggingSession session: NSDraggingSession, willBeginAt screenPoint: NSPoint, forRowIndexes rowIndexes: IndexSet) {
+            promiseDragFiles = rowIndexes.compactMap { idx -> MTPFile? in
+                guard idx >= 0, idx < parent.files.count else { return nil }
+                return parent.files[idx]
             }
-            
-            return nil
+            promiseBatchStarted = false
+            promiseBatchError = nil
+            promiseBatchSemaphore = DispatchSemaphore(value: 0)
         }
 
         func filePromiseProvider(_ filePromiseProvider: NSFilePromiseProvider, fileNameForType fileType: String) -> String {
@@ -559,28 +547,17 @@ private struct FileListTableRepresentable: NSViewRepresentable {
         func filePromiseProvider(_ filePromiseProvider: NSFilePromiseProvider, writePromiseTo url: URL, completionHandler: @escaping (Error?) -> Void) {
             let destination = normalizedPromiseDestination(url)
             
-            // Handle multi-file drag
-            if isDraggingMultiple && !draggedFiles.isEmpty {
-                parent.manager.download(files: draggedFiles, destinationURL: destination)
-                completionHandler(nil)
-                // Reset the drag state after completion
-                isDraggingMultiple = false
-                draggedFiles = []
-                return
-            }
-            
-            // Handle single file drag
-            guard let file = promiseFile(for: filePromiseProvider) else {
-                completionHandler(NSError(domain: "FileListView.Promise", code: 1, userInfo: [
-                    NSLocalizedDescriptionKey: "Failed to resolve file for drag export."
-                ]))
-                return
-            }
-            parent.manager.downloadPromise(file: file, to: destination) { error in
-                completionHandler(error)
-                // Reset single file drag state
-                self.isDraggingMultiple = false
-                self.draggedFiles = []
+            if !promiseBatchStarted {
+                // First promise: trigger batch download of ALL dragged files
+                promiseBatchStarted = true
+                parent.manager.downloadPromiseBatch(files: promiseDragFiles, to: destination) { [weak self] error in
+                    self?.promiseBatchError = error
+                    self?.promiseBatchSemaphore.signal()
+                }
+                promiseBatchSemaphore.wait()
+                completionHandler(promiseBatchError)
+            } else {
+                completionHandler(promiseBatchError)
             }
         }
 
