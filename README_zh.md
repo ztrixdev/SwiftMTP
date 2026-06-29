@@ -15,24 +15,35 @@
 
 **SwiftMTP** 是一个专为 macOS 打造的现代轻量级原生 MTP (Media Transfer Protocol) 文件管理器。基于 Swift 构建，旨在为 Android 设备或其他 MTP 设备提供流畅、稳定的文件传输体验。
 
-启发自 [OpenMTP](https://github.com/ganeshrvel/openmtp/)， SwiftMTP 使用了优化的后端，实现相同高效传输体验的同时保持简洁轻量。
+启发自 OpenMTP， SwiftMTP 使用了优化的后端，实现相同高效传输体验的同时保持简洁轻量。
 
 ---
 
-## AI 功能 (新)
+## 新推出
 
-### 概览
+`swiftmtp-cli` 是一个功能强大、轻量级的 macOS 命令行工具，旨在轻松管理 MTP 设备。它用 Swift 原生构建，并由全新 `Gomtp` 后端提供支持，允许用户轻松使用 AI Agent 与连接的 Android 设备或相机快速交互。
 
-SwiftMTP 现已由 **AI 强力驱动**，为您的 MTP 文件管理带来创新高效的智能体验：
+![CLI](https://github.com/Neighbor-Z/SwiftMTP/blob/main/Materials/CLI.png)
 
+`swiftmtp-cli` 位于 `SwiftMTP.app/Contents/MacOS`。
+
+使用指南 `CLI_USAGE.md` 可通过“文件 - 导出 CLI 使用指南”菜单获得。
+
+---
+
+## 功能特性
+
+- **即插即用**：自动识别连接的 MTP 设备并管理多存储分区。
+- **原生浏览**：极速浏览设备目录，支持层级导航。
+- **双向传输**：支持文件的上传与下载，包括 **拖拽功能 (Drag-and-Drop)**。
+- **文件管理**：支持在设备上直接创建文件夹、重命名、删除文件。
+- **实时反馈**：提供清晰的传输进度条与状态提示。
+- **安全可靠**：不需要 ADB/USB 调试。
+- **多语支持**:   利用 `Localizable.xcstrings` 支持多种语言。
 - **自然语言搜索**：像对话一样自然地查找文件。只需输入您要查找的内容，例如“上周的照片”或“2024 年的工作文档”。
 - **智能设备分析**：获取有关设备硬件状态、连接健康度以及潜在性能优化的深度见解。
 
-| Natural Language Search                                      | Device Info Analysis                                         |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| ![NLSearch](https://github.com/Neighbor-Z/SwiftMTP/blob/main/Materials/NLSearch.png) | ![DIA](https://github.com/Neighbor-Z/SwiftMTP/blob/main/Materials/Device_Info_Analysis.png) |
-
-### 细节
+### AI 细节
 
 SwiftMTP 目前支持 2 种实现智能的方式：Apple Foundation 模型和 AI API 接入。
 
@@ -49,18 +60,6 @@ AI API 接入同时支持 OpenAI 和 Anthropic 两种格式的 API。在 API End
 
 ---
 
-## 功能特性
-
-- **即插即用**：自动识别连接的 MTP 设备并管理多存储分区。
-- **原生浏览**：极速浏览设备目录，支持层级导航。
-- **双向传输**：支持文件的上传与下载，包括 **拖拽功能 (Drag-and-Drop)**。
-- **文件管理**：支持在设备上直接创建文件夹、重命名、删除文件。
-- **实时反馈**：提供清晰的传输进度条与状态提示。
-- **安全可靠**：不需要 ADB/USB 调试。
-- **多语支持**:   利用 `Localizable.xcstrings` 支持多种语言。
-
----
-
 ## 截图
 
 ![Main UI](https://github.com/Neighbor-Z/SwiftMTP/blob/main/Materials/screenshot.png)
@@ -68,6 +67,11 @@ AI API 接入同时支持 OpenAI 和 Anthropic 两种格式的 API。在 API End
 | "文件"菜单和快捷键                | "前往"菜单和快捷键              |
 | ------------------------------------------------ | -------------------------------------------- |
 | ![File Menu](https://github.com/Neighbor-Z/SwiftMTP/blob/main/Materials/file_menu_in_Tahoe.png) | ![Go Menu](https://github.com/Neighbor-Z/SwiftMTP/blob/main/Materials/go_menu_in_Tahoe.png) |
+
+| 自然语言搜索                                      | 智能设备分析                                         |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![NLSearch](https://github.com/Neighbor-Z/SwiftMTP/blob/main/Materials/NLSearch.png) | ![DIA](https://github.com/Neighbor-Z/SwiftMTP/blob/main/Materials/Device_Info_Analysis.png) |
+
 
 ---
 
