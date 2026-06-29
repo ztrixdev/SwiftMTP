@@ -68,6 +68,10 @@ struct SwiftMTPApp: App {
                 
                 Divider()
                 
+                Button(String(localized: "Export CLI Usage Guide")) {
+                    exportCLIUsageAction()
+                }
+                
                 Button(String(localized: "Clear Preview Cache")) {
                     clearCacheAction()
                 }
@@ -106,6 +110,37 @@ struct SwiftMTPApp: App {
             // Post notification to trigger export in MainView
             let userInfo: [String: Any] = ["destinationURL": url]
             NotificationCenter.default.post(name: NSNotification.Name("SwiftMTPExportAction"), object: nil, userInfo: userInfo)
+        }
+    }
+
+    private func exportCLIUsageAction() {
+        let panel = NSSavePanel()
+        panel.nameFieldStringValue = "CLI_USAGE.md"
+        panel.prompt = String(localized: "Export")
+        
+        if panel.runModal() == .OK, let destinationURL = panel.url {
+            if let sourceURL = Bundle.main.url(forResource: "CLI_USAGE", withExtension: "md") {
+                do {
+                    if FileManager.default.fileExists(atPath: destinationURL.path) {
+                        try FileManager.default.removeItem(at: destinationURL)
+                    }
+                    try FileManager.default.copyItem(at: sourceURL, to: destinationURL)
+                } catch {
+                    let alert = NSAlert()
+                    alert.messageText = String(localized: "Export Failed")
+                    alert.informativeText = error.localizedDescription
+                    alert.alertStyle = .critical
+                    alert.addButton(withTitle: "OK")
+                    alert.runModal()
+                }
+            } else {
+                let alert = NSAlert()
+                alert.messageText = String(localized: "Export Failed")
+                alert.informativeText = String(localized: "Could not find CLI_USAGE.md in the application bundle.")
+                alert.alertStyle = .critical
+                alert.addButton(withTitle: "OK")
+                alert.runModal()
+            }
         }
     }
 

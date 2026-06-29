@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -30,6 +30,7 @@
 		C7887B922FD52B81005B5BDD /* GomtpShim.c in Sources */ = {isa = PBXBuildFile; fileRef = C7887B912FD52B81005B5BDD /* GomtpShim.c */; };
 		C7887B932FD52B93005B5BDD /* gomtp.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = C7887B8F2FD52A96005B5BDD /* gomtp.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		C7AC001A2F9A00010055C8BE /* UpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AC00192F9A00010055C8BE /* UpdateChecker.swift */; };
+		C7B582582FE91BC600AD4869 /* swiftmtp-cli in CopyFiles */ = {isa = PBXBuildFile; fileRef = C717C1DA2FDEDFBE00E667E9 /* swiftmtp-cli */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		C7B754552F8A219B0075406B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B754542F8A219B0075406B /* SettingsView.swift */; };
 		C7B754572F8A21C70075406B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7B754562F8A21C70075406B /* Assets.xcassets */; };
 		C7C4AFF32F83B37E0047364C /* MTPDeviceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C4AFF22F83B37E0047364C /* MTPDeviceInfo.swift */; };
@@ -37,6 +38,16 @@
 		C7E5F65E2F78FF56004B6939 /* MTPIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = C7A475DB2F78E957005EDC2E /* MTPIcon.icon */; };
 		C7FB2E5E2F7A6F6C0036FE3B /* TransferStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FB2E5D2F7A6F6C0036FE3B /* TransferStatistics.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C7B582552FE91A0A00AD4869 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1A2B3C4D5E6F7A8000000800 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C717C1D92FDEDFBE00E667E9;
+			remoteInfo = "swiftmtp-cli";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		1A2B3C4D5E6F7A8000000420 /* CopyFiles */ = {
@@ -50,6 +61,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C717C1D82FDEDFBE00E667E9 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		C7B582572FE91BAB00AD4869 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				C7B582582FE91BC600AD4869 /* swiftmtp-cli in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +90,7 @@
 		1A2B3C4D5E6F7A8000000131 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		C705622B2F875E5F0055C8BE /* FavoriteItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FavoriteItem.swift; path = SwiftMTP/Models/FavoriteItem.swift; sourceTree = "<group>"; };
 		C705622D2F875E6E0055C8BE /* FavoritesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FavoritesManager.swift; path = SwiftMTP/Services/FavoritesManager.swift; sourceTree = "<group>"; };
+		C717C1DA2FDEDFBE00E667E9 /* swiftmtp-cli */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "swiftmtp-cli"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C725E65A2F7CCDD0007937AB /* ErrorStringLocalizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ErrorStringLocalizer.swift; path = SwiftMTP/Services/ErrorStringLocalizer.swift; sourceTree = "<group>"; };
 		C72F6C232F87DFF10015604B /* QuickLookOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = QuickLookOverlayView.swift; path = SwiftMTP/Views/QuickLookOverlayView.swift; sourceTree = "<group>"; };
 		C74E682E2F78CF5100F8A2FE /* SwiftMTP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftMTP.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,6 +114,20 @@
 		C7C839F52FADC6F700A40C35 /* AINLSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AINLSearch.swift; path = SwiftMTP/Services/AINLSearch.swift; sourceTree = "<group>"; };
 		C7FB2E5D2F7A6F6C0036FE3B /* TransferStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TransferStatistics.swift; path = SwiftMTP/Models/TransferStatistics.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		C7E51F312FEEBE4600752533 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				CLI_USAGE.md,
+			);
+			target = 1A2B3C4D5E6F7A8000000500 /* SwiftMTP */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		C717C1DB2FDEDFBE00E667E9 /* swiftmtp-cli */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (C7E51F312FEEBE4600752533 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = "swiftmtp-cli"; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		1A2B3C4D5E6F7A8000000410 /* Frameworks */ = {
@@ -113,8 +158,10 @@
 				1A2B3C4D5E6F7A8000000310 /* lib */,
 				1A2B3C4D5E6F7A8000000120 /* SwiftMTP-Bridging-Header.h */,
 				1A2B3C4D5E6F7A8000000130 /* Localizable.xcstrings */,
+				C717C1DB2FDEDFBE00E667E9 /* swiftmtp-cli */,
 				C74E682D2F78CF5100F8A2FE /* Recovered References */,
 				C74E682E2F78CF5100F8A2FE /* SwiftMTP.app */,
+				C717C1DA2FDEDFBE00E667E9 /* swiftmtp-cli */,
 			);
 			sourceTree = "<group>";
 		};
@@ -206,16 +253,40 @@
 				1A2B3C4D5E6F7A8000000400 /* Sources */,
 				1A2B3C4D5E6F7A8000000410 /* Frameworks */,
 				1A2B3C4D5E6F7A8000000420 /* CopyFiles */,
+				C7B582572FE91BAB00AD4869 /* CopyFiles */,
 				C7E5F65D2F78FF4F004B6939 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				C7B582562FE91A0A00AD4869 /* PBXTargetDependency */,
 			);
 			name = SwiftMTP;
 			productName = SwiftMTP;
 			productReference = C74E682E2F78CF5100F8A2FE /* SwiftMTP.app */;
 			productType = "com.apple.product-type.application";
+		};
+		C717C1D92FDEDFBE00E667E9 /* swiftmtp-cli */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C717C1E02FDEDFBE00E667E9 /* Build configuration list for PBXNativeTarget "swiftmtp-cli" */;
+			buildPhases = (
+				C717C1D62FDEDFBE00E667E9 /* Sources */,
+				C717C1D72FDEDFBE00E667E9 /* Frameworks */,
+				C717C1D82FDEDFBE00E667E9 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				C717C1DB2FDEDFBE00E667E9 /* swiftmtp-cli */,
+			);
+			name = "swiftmtp-cli";
+			packageProductDependencies = (
+			);
+			productName = "swiftmtp-cli";
+			productReference = C717C1DA2FDEDFBE00E667E9 /* swiftmtp-cli */;
+			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
@@ -224,8 +295,13 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastSwiftUpdateCheck = 1530;
+				LastSwiftUpdateCheck = 2630;
 				LastUpgradeCheck = 2610;
+				TargetAttributes = {
+					C717C1D92FDEDFBE00E667E9 = {
+						CreatedOnToolsVersion = 26.3;
+					};
+				};
 			};
 			buildConfigurationList = 1A2B3C4D5E6F7A8000000900 /* Build configuration list for PBXProject "SwiftMTP" */;
 			compatibilityVersion = "Xcode 15.0";
@@ -244,6 +320,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				C717C1D92FDEDFBE00E667E9 /* swiftmtp-cli */,
 				1A2B3C4D5E6F7A8000000500 /* SwiftMTP */,
 			);
 		};
@@ -319,6 +396,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C7B582562FE91A0A00AD4869 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C717C1D92FDEDFBE00E667E9 /* swiftmtp-cli */;
+			targetProxy = C7B582552FE91A0A00AD4869 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		1A2B3C4D5E6F7A8000000610 /* Debug */ = {
@@ -486,6 +571,116 @@
 			};
 			name = Release;
 		};
+		C717C1DE2FDEDFBE00E667E9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/lib",
+					"@executable_path",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/lib",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"$(SRCROOT)/lib/gomtp.dylib",
+					"$(SRCROOT)/lib/libusb.dylib",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "SwiftMTP-Bridging-Header.h";
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		C717C1DF2FDEDFBE00E667E9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/lib",
+					"@executable_path",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/lib",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"$(SRCROOT)/lib/gomtp.dylib",
+					"$(SRCROOT)/lib/libusb.dylib",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_BRIDGING_HEADER = "SwiftMTP-Bridging-Header.h";
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -503,6 +698,15 @@
 			buildConfigurations = (
 				1A2B3C4D5E6F7A8000000910 /* Debug */,
 				1A2B3C4D5E6F7A8000000920 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C717C1E02FDEDFBE00E667E9 /* Build configuration list for PBXNativeTarget "swiftmtp-cli" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C717C1DE2FDEDFBE00E667E9 /* Debug */,
+				C717C1DF2FDEDFBE00E667E9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
