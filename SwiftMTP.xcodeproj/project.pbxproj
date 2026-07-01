@@ -314,6 +314,7 @@
 				"zh-Hans",
 				"zh-Hant",
 				Base,
+				ru,
 			);
 			mainGroup = 1A2B3C4D5E6F7A8000000200;
 			productRefGroup = 1A2B3C4D5E6F7A8000000200;

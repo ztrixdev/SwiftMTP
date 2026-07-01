@@ -22,6 +22,12 @@
             "value" : "フォルダはパス"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "/путь/к/папке"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -55,6 +61,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ ファイル"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ файл"
           }
         },
         "zh-Hans" : {
@@ -92,6 +104,12 @@
             "value" : "%@ / %@"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ свободно из %2$@"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -125,6 +143,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%d日前"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d дней назад"
           }
         },
         "zh-Hans" : {
@@ -162,6 +186,12 @@
             "value" : "%d時間前"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d часов назад"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -195,6 +225,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%d 件"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d предмет"
           }
         },
         "zh-Hans" : {
@@ -232,6 +268,12 @@
             "value" : "%d 件選択されています"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d предмет выбран"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -265,6 +307,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%d 件"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d предметов"
           }
         },
         "zh-Hans" : {
@@ -302,6 +350,12 @@
             "value" : "%d 件選択されています"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d предметов выбрано"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -335,6 +389,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%d分前"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d минут назад"
           }
         },
         "zh-Hans" : {
@@ -372,6 +432,12 @@
             "value" : "%d / %d ファイル"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1d из %2d файлов"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -405,6 +471,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%d秒前"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d секунд назад"
           }
         },
         "zh-Hans" : {
@@ -442,6 +514,12 @@
             "value" : "1日前"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "день назад"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -475,6 +553,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "1時間前"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "час назад"
           }
         },
         "zh-Hans" : {
@@ -512,6 +596,12 @@
             "value" : "1分前"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "минуту назад"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -545,6 +635,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "1秒前"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "секунду назад"
           }
         },
         "zh-Hans" : {
@@ -582,6 +678,12 @@
             "value" : "同じ名前のファイルまたはフォルダーが既に存在します。"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Файл или папка с таким названием уже существует."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -615,6 +717,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "macOS 用の最新の MTP デバイス管理ツールです。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Современный инструмент управления устройствами MTP для macOS"
           }
         },
         "zh-Hans" : {
@@ -652,6 +760,12 @@
             "value" : "約1分"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Около минуты"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -685,6 +799,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "正確性"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Точность"
           }
         },
         "zh-Hans" : {
@@ -722,6 +842,12 @@
             "value" : "お気に入りに追加"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавить в Избранное"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -755,6 +881,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "同意して有効にする"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Согласиться и включить"
           }
         },
         "zh-Hans" : {
@@ -792,6 +924,12 @@
             "value" : "AI"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ИИ"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -819,6 +957,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "AI分析"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Анализ от ИИ"
           }
         },
         "zh-Hans" : {
@@ -856,6 +1000,12 @@
             "value" : "AIは間違いを犯す可能性があります。重要なファイル操作を行う前に、必ず結果を確認してください。"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ИИ может допускать ошибки. Всегда проверяйте результаты прежде чем производить операции с файлами."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -889,6 +1039,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "AI機能に関するお知らせ"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заметка о ИИ-фукнциональности"
           }
         },
         "zh-Hans" : {
@@ -926,6 +1082,12 @@
             "value" : "AIが設定されていません。設定 → AI でAIプロバイダーを設定してください。"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ИИ не настроен. Пожалуйста, добавьте провайдера ИИ-услуг в Настройки -> ИИ"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -959,6 +1121,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "AIモード"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Режим ИИ"
           }
         },
         "zh-Hans" : {
@@ -997,6 +1165,12 @@
             "value" : "デバイスでストレージへのアクセスを許可してください"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Разрешите доступ к хранилищу на устройстве"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1030,6 +1204,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "お気に入りに追加済み"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Уже в Избранном"
           }
         },
         "zh-Hans" : {
@@ -1068,6 +1248,12 @@
             "value" : "予期しないエラーが発生しました"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Произошла неожиданная ошибка"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1101,6 +1287,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "API設定が不完全です。設定 → AI を確認してください。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Конфигурация API настроена не полностью. Пожалуйста, проверьте раздел ИИ в настройках."
           }
         },
         "zh-Hans" : {
@@ -1138,6 +1330,12 @@
             "value" : "APIコスト"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Стоимость API"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1171,6 +1369,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "APIエンドポイント"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API узел"
           }
         },
         "zh-Hans" : {
@@ -1208,6 +1412,12 @@
             "value" : "APIエンドポイントが見つかりません。URLを確認してください。"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось найти узел API, проверьте ссылку."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1241,6 +1451,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "API形式"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Формат API"
           }
         },
         "zh-Hans" : {
@@ -1278,6 +1494,12 @@
             "value" : "APIキー"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ключ API"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1308,6 +1530,12 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "APK"
+          }
+        },
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "APK"
@@ -1349,6 +1577,12 @@
             "value" : "最新版です。"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Приложение работает на последней версии."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1382,6 +1616,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Apple Foundation Model エラー:"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ошибка моделей Apple Foundation:"
           }
         },
         "zh-Hans" : {
@@ -1419,6 +1659,12 @@
             "value" : "Apple Foundation Model は空の応答を返しました。"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ответ от модели Apple Foundation пуст."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1452,6 +1698,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Apple Foundation Models"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Модели Apple Foundation"
           }
         },
         "zh-Hans" : {
@@ -1489,6 +1741,12 @@
             "value" : "Apple Foundation Models は利用できません。Xcode 26以降でビルドしてください。"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Модели Apple Foundation недоступны. Соберите проект с помощью Xcode 26+."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1522,6 +1780,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Apple Foundation Modelsは、Mac上でローカルにすべての情報を処理するデバイス内モデルです。Apple Intelligenceが有効なmacOS 26以降が必要です。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Модели Apple Foundation - локальные модели от Apple которые обрабатывают информацию прямо на вашем Mac. Для доступа нужна версия macOS 26 или позднее и работающий Apple Intellegence."
           }
         },
         "zh-Hans" : {
@@ -1559,6 +1823,12 @@
             "value" : "Apple Foundation Models には、Apple Intelligence が有効になっている macOS 26 以降が必要です。"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Для доступа к моделям Apple Foundation нужна версия macOS 26 или позднее и работающий Apple Intellegence."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1592,6 +1862,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Apple Intelligence がオンになっていません。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Intelligence выключено."
           }
         },
         "zh-Hans" : {
@@ -1629,6 +1905,12 @@
             "value" : "アーカイブ"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Архив"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1664,6 +1946,12 @@
             "value" : "オーディオ"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Аудиофайл"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1695,6 +1983,12 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bluetooth"
+          }
+        },
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bluetooth"
@@ -1735,6 +2029,12 @@
             "value" : "コーヒーをおごる"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Купи мне кофеек"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1768,6 +2068,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "計算中..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Считаю…"
           }
         },
         "zh-Hans" : {
@@ -1805,6 +2111,12 @@
             "value" : "中止する"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отмена"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1838,6 +2150,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "転送をキャンセル"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отмена передачи"
           }
         },
         "zh-Hans" : {
@@ -1876,6 +2194,12 @@
             "value" : "デバイスにアクセスできません"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не могу получить доступ к устройству"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1910,6 +2234,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ファイルにアクセスできません"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не могу получить доступ к файлу"
           }
         },
         "zh-Hans" : {
@@ -1948,6 +2278,12 @@
             "value" : "デバイス情報を読み取れません"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не могу прочесть данных об устройстве"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1982,6 +2318,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ストレージ情報を読み取れません"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не могу прочесть данных о хранилище"
           }
         },
         "zh-Hans" : {
@@ -2020,6 +2362,12 @@
             "value" : "確認に失敗しました"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Проверка провалена"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2053,6 +2401,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "アップデートの確認はまだ利用できません。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Проверка обновлений пока недоступна"
           }
         },
         "zh-Hans" : {
@@ -2091,6 +2445,12 @@
             "value" : "アップデートを確認..."
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Проверить обновления…"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2124,6 +2484,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "消去"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Очистить"
           }
         },
         "zh-Hans" : {
@@ -2161,6 +2527,12 @@
             "value" : "プレビューキャッシュを消去"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Очистить кэш предпросмотра"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2194,6 +2566,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "閉じる"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Закрыть"
           }
         },
         "zh-Hans" : {
@@ -2231,6 +2609,12 @@
             "value" : "インポートを確認しますか？"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подтвердить импортирование?"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2266,6 +2650,12 @@
             "value" : "USBケーブルでMTPデバイスを\n接続してください。"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подключите МТP устройство через кабель USB."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2299,6 +2689,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "デバイスを接続"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подключите устройство"
           }
         },
         "zh-Hans" : {
@@ -2337,6 +2733,12 @@
             "value" : "接続エラー"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ошибка подключения"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2370,6 +2772,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "コピー"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Копировать"
           }
         },
         "zh-Hans" : {
@@ -2407,6 +2815,12 @@
             "value" : "AIサーバーが見つかりませんでした。URLを確認してください。"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не могу найти сервер ИИ. Проверьте ссылку."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2440,6 +2854,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "作成"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создать"
           }
         },
         "zh-Hans" : {
@@ -2477,6 +2897,12 @@
             "value" : "新しいフォルダーを作成"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создать новую папку"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2510,6 +2936,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "現在のファイル:"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Текущий файл:"
           }
         },
         "zh-Hans" : {
@@ -2547,6 +2979,12 @@
             "value" : "現在のプレビューキャッシュサイズは%.2f MBです。消去してもよろしいですか？"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кэш предпросмотра сейчас занимает %.2f МБ. Вы уверены, что хотите очистить его?"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2580,6 +3018,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "データプライバシー"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Приватность данных"
           }
         },
         "zh-Hans" : {
@@ -2617,6 +3061,12 @@
             "value" : "作成日時"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дата создания"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2650,6 +3100,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "変更日"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дата изменения"
           }
         },
         "zh-Hans" : {
@@ -2687,6 +3143,12 @@
             "value" : "削除"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2702,6 +3164,7 @@
       }
     },
     "Delete \"%@\"?" : {
+      "comment" : " ",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2720,6 +3183,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "\"%@\" を削除しますか？"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить %@ ?"
           }
         },
         "zh-Hans" : {
@@ -2757,6 +3226,12 @@
             "value" : "%d 件削除しますか？"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить %d предмет?"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2790,6 +3265,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%d 件削除しますか？"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить %d предметов?"
           }
         },
         "zh-Hans" : {
@@ -2827,6 +3308,12 @@
             "value" : "選択した項目を削除"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить выбранные предметы"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2862,6 +3349,12 @@
             "value" : "開発中"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Разработка"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2895,6 +3388,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "デバイス"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Устройство"
           }
         },
         "zh-Hans" : {
@@ -2933,6 +3432,12 @@
             "value" : "デバイスが変更されました"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Устройство подменено"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2967,6 +3472,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "デバイスが切断されました"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Устройство отключено"
           }
         },
         "zh-Hans" : {
@@ -3004,6 +3515,12 @@
             "value" : "デバイス情報"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Инфа об устройстве"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3039,6 +3556,12 @@
             "value" : "デバイス情報分析"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Анализ информации об устройстве"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3072,6 +3595,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "デバイス情報"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Информация об устройстве"
           }
         },
         "zh-Hans" : {
@@ -3110,6 +3639,12 @@
             "value" : "デバイスがビジー状態です"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Устройство занято"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3143,6 +3678,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "デバイスモデル"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Модель устройства"
           }
         },
         "zh-Hans" : {
@@ -3181,6 +3722,12 @@
             "value" : "デバイスが見つかりません"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Устройство не найдено"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3215,6 +3762,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "デバイスの設定に失敗しました。再接続するか、デバイスを再起動してください。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось настроить устройство, переподключите или перезагрузите его что-ли…"
           }
         },
         "zh-Hans" : {
@@ -3252,6 +3805,12 @@
             "value" : "デバイス"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Устройства"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3285,6 +3844,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "無効"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отключено"
           }
         },
         "zh-Hans" : {
@@ -3322,6 +3887,12 @@
             "value" : "切断"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отключитть"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3355,6 +3926,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "デバイスを切断"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отключить устройство"
           }
         },
         "zh-Hans" : {
@@ -3392,6 +3969,12 @@
             "value" : "切断済み"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отключено"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3427,6 +4010,12 @@
             "value" : "表示"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дисплей"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3460,6 +4049,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "完了"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Завершено"
           }
         },
         "zh-Hans" : {
@@ -3498,6 +4093,12 @@
             "value" : "ダブルクリックでファイルを開く"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нажмите дважды чтобы открыть файлы"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3532,6 +4133,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ をダウンロード"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Загрузить %@"
           }
         },
         "zh-Hans" : {
@@ -3570,6 +4177,12 @@
             "value" : "ダウンロード"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Загрузки"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3603,6 +4216,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "経過時間:"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Примерно: "
           }
         },
         "zh-Hans" : {
@@ -3640,6 +4259,12 @@
             "value" : "詳細設定を有効にする"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Включить расширенные настройки"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3673,6 +4298,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "有効"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Включено"
           }
         },
         "zh-Hans" : {
@@ -3710,6 +4341,12 @@
             "value" : "内包しているフォルダ"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Содержащая папка"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3743,6 +4380,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "新しいフォルダー名を入力してください。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введите имя для новой папки."
           }
         },
         "zh-Hans" : {
@@ -3780,6 +4423,12 @@
             "value" : "「%1$@」の新しい名前を入力してください。"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введите новое имя для %@."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3813,6 +4462,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "デバイス上の絶対パスを入力してください。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введите абсолютный (полный) путь на устройстве."
           }
         },
         "zh-Hans" : {
@@ -3850,6 +4505,12 @@
             "value" : "エラー:"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Да блин, ошибка:"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3885,6 +4546,12 @@
             "value" : "エクスポート"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Экспорт"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3918,6 +4585,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "エクスポート CLI 使用ガイド"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Руководство по использованию CLI для экспорта"
           }
         },
         "zh-Hans" : {
@@ -3956,6 +4629,12 @@
             "value" : "エクスポートに失敗しました"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось экспортировать"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3989,6 +4668,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ここにエクスポート"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Экспортировать сюда"
           }
         },
         "zh-Hans" : {
@@ -4026,6 +4711,12 @@
             "value" : "選択したファイルをMacにエクスポート"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Экспортировать выбранные файлы на Mac"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4059,6 +4750,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "リクエストの構築に失敗しました。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось создать запрос."
           }
         },
         "zh-Hans" : {
@@ -4097,6 +4794,12 @@
             "value" : "フォルダを作成できませんでした"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось создать папку"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4131,6 +4834,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "削除に失敗しました"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось удалить"
           }
         },
         "zh-Hans" : {
@@ -4169,6 +4878,12 @@
             "value" : "ディレクトリの一覧取得に失敗しました"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось получить список папок"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4202,6 +4917,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "AIの応答の解析に失敗しました"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось прочитать ответ от ИИ"
           }
         },
         "zh-Hans" : {
@@ -4240,6 +4961,12 @@
             "value" : "ディレクトリの読み取りに失敗しました"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось прочитать содержимое папки"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4274,6 +5001,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "名前の変更に失敗しました"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось переименовать"
           }
         },
         "zh-Hans" : {
@@ -4312,6 +5045,12 @@
             "value" : "ファイルの送信に失敗しました"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось отправить файл"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4347,6 +5086,12 @@
             "value" : "お気に入り"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Избранное"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4380,6 +5125,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ファイル"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Файл"
           }
         },
         "zh-Hans" : {
@@ -4418,6 +5169,12 @@
             "value" : "ファイルは既に存在します"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Файл уже существует"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4452,6 +5209,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ファイルが見つかりません"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Файл не найден"
           }
         },
         "zh-Hans" : {
@@ -4490,6 +5253,12 @@
             "value" : "ファイルオブジェクトの読み取りエラー"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ошибка чтения объекта файла"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4524,6 +5293,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ファイル操作に失敗しました"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Операция с файлом провалена"
           }
         },
         "zh-Hans" : {
@@ -4562,6 +5337,12 @@
             "value" : "ファイルまたはフォルダが見つかりません"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Файл или папка не найден(-ы)"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4596,6 +5377,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ファイル転送エラー"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ошибка передачи файла"
           }
         },
         "zh-Hans" : {
@@ -4633,6 +5420,12 @@
             "value" : "自然な言葉でファイルを探せます。「先週の写真」や「2024年の仕事の書類」のように入力するだけです。"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Находите свои файлы обычным языком. Просто введите то, что ищете, например: “Фотографии за прошлую неделю” или “Рабочие документы за 2024 год”."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4666,6 +5459,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "フォルダー"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Папка"
           }
         },
         "zh-Hans" : {
@@ -4703,6 +5502,12 @@
             "value" : "フォルダー名"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Название папки"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4736,6 +5541,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "フォルダーが見つかりません"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Папка не найдена"
           }
         },
         "zh-Hans" : {
@@ -4773,6 +5584,12 @@
             "value" : "リストのフォントサイズ"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Размер шрифта"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4806,6 +5623,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "空き容量"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Свободное место"
           }
         },
         "zh-Hans" : {
@@ -4844,6 +5667,12 @@
             "value" : "一般"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Общее"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4877,6 +5706,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "デバイスのハードウェア、接続ステータス、および潜在的なパフォーマンスの最適化に関するスマートな洞察を得ることができます。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Получайте умную аналитику о аппаратном обеспечении устройства, состоянии подключения и возможных способах оптимизации производительности."
           }
         },
         "zh-Hans" : {
@@ -4914,6 +5749,12 @@
             "value" : "はじめる"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Начать"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4947,6 +5788,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "移動"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вперед"
           }
         },
         "zh-Hans" : {
@@ -4984,6 +5831,12 @@
             "value" : "フォルダへ移動"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Зайти в папку"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5017,6 +5870,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "フォルダへ移動..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Зайти в папку…"
           }
         },
         "zh-Hans" : {
@@ -5054,6 +5913,12 @@
             "value" : "イメージ"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Изображение"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5087,6 +5952,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "インポート"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Импортировать"
           }
         },
         "zh-Hans" : {
@@ -5125,6 +5996,12 @@
             "value" : "インポートに失敗しました"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось импортировать"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5158,6 +6035,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac からデバイスへファイルをインポート"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Импортировать файлы с Mac на устройство"
           }
         },
         "zh-Hans" : {
@@ -5195,6 +6078,12 @@
             "value" : "APIモードでは、AIプロバイダーからの使用コストはユーザーの責任となります。"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "В режиме API, вы оплачиваете стоимость доступа к ИИ, установленную вашим провайдером."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5230,6 +6119,12 @@
             "value" : "APIモードでは、名前、種類、サイズなどのアイテム의メタデータがプロバイダーに送信されます。ファイルの内容がアップロードされたり共有されたりすることはありません。"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "В режиме API метаданные о ваших файлах такие как имена,  типы, размеры, будут отправлены ИИ провайдеру. Содержимое ваших файлов никогда не будет отправлено, выгружено или показано третьим лицам."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5263,6 +6158,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "情報とアップデート"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Информация и обновления"
           }
         },
         "zh-Hans" : {
@@ -5301,6 +6202,12 @@
             "value" : "初期化に失敗しました"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сбой инициализации"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5334,6 +6241,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "無効なAPIキーです。設定を確認してください。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неверный ключ API. Пожалуйста, сверьте настройки."
           }
         },
         "zh-Hans" : {
@@ -5372,6 +6285,12 @@
             "value" : "無効なパスです"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неверный путь"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5405,6 +6324,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "無効なサーバー応答。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ответ сервера неприемлим."
           }
         },
         "zh-Hans" : {
@@ -5443,6 +6368,12 @@
             "value" : "無効なストレージデータ"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неверная информация о хранилище"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5476,6 +6407,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "項目が既に存在します"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Объект существует"
           }
         },
         "zh-Hans" : {
@@ -5513,6 +6450,12 @@
             "value" : "輸入する項目："
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Объекты подлежащие импортированию:"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5546,6 +6489,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "タイプ"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вид"
           }
         },
         "zh-Hans" : {
@@ -5583,6 +6532,12 @@
             "value" : "リストのアクション"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Список действий"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5616,6 +6571,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "プレビューを読み込む"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Предпросмотр"
           }
         },
         "zh-Hans" : {
@@ -5653,6 +6614,12 @@
             "value" : "大きなファイルのプレビューの読み込みには時間がかかる場合があり、キャンセルできません。"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Загрузка предпросмотра для большого файла занимает некоторое время и не может быть отменена."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5688,6 +6655,12 @@
             "value" : "ファイルを読み込んでいます…"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Загрузка файлов…"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5721,6 +6694,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "読み込み中…"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Загрузка…"
           }
         },
         "zh-Hans" : {
@@ -5759,6 +6738,12 @@
             "value" : "ローカルファイルの読み取りエラー"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Чтение локального файла завершилось ошибкой"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5792,6 +6777,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "低"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Низкий"
           }
         },
         "zh-Hans" : {
@@ -5829,6 +6820,12 @@
             "value" : "メーカー"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Производитель"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5862,6 +6859,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "最大出力トークン"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Лимит output токенов"
           }
         },
         "zh-Hans" : {
@@ -5899,6 +6902,12 @@
             "value" : "中"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Средний"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5932,6 +6941,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "AI機能のご紹介"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Встречайте ИИ функции!"
           }
         },
         "zh-Hans" : {
@@ -5969,6 +6984,12 @@
             "value" : "モデルはまだ準備ができていません。後でもう一度お試しください。"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Модель не готова. Повторите попытку позднее."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6004,6 +7025,12 @@
             "value" : "モデル名"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Имя модели"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6037,6 +7064,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "変更済み"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Изменено"
           }
         },
         "zh-Hans" : {
@@ -6075,6 +7108,12 @@
             "value" : "MTPデバイスが検出されませんでした"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ошибка определения MTP"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6109,6 +7148,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "MTP操作が進行中です"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MTP операция уже идет"
           }
         },
         "zh-Hans" : {
@@ -6147,6 +7192,12 @@
             "value" : "複数のデバイスの接続はサポートされていません"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подключение нескольких устройств не поддерживается"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6180,6 +7231,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "名前"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Имя"
           }
         },
         "zh-Hans" : {
@@ -6217,6 +7274,12 @@
             "value" : "自然言語検索"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поиск естественным языком"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6250,6 +7313,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ネットワークエラー:"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сетевая ошибка:"
           }
         },
         "zh-Hans" : {
@@ -6287,6 +7356,12 @@
             "value" : "新しいフォルダー"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Новая папка"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6320,6 +7395,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "新しい名前"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Новое имя"
           }
         },
         "zh-Hans" : {
@@ -6357,6 +7438,12 @@
             "value" : "デバイス未接続"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не подключено ни одного устройства"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6390,6 +7477,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ディレクトリのコンテキストがありません。ファイルリストが読み込まれたことを確認してからAI機能をご利用ください。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Контекст папки недоступен. Пожалуйста, убедитесь, что список файлов загружен, прежде чем использовать ИИ."
           }
         },
         "zh-Hans" : {
@@ -6427,6 +7520,12 @@
             "value" : "インターネット接続が検出されませんでした。"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отсутствует подключение к интернету."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6460,6 +7559,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "クエリが指定されていません。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запрос не представлен."
           }
         },
         "zh-Hans" : {
@@ -6498,6 +7603,12 @@
             "value" : "ストレージが見つかりません"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не обнаружено хранилище, разрешите доступ к хранилищу на устройстве"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6532,6 +7643,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ストレージが見つかりません"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Хранилищ не найдено"
           }
         },
         "zh-Hans" : {
@@ -6569,6 +7686,12 @@
             "value" : "なし"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Никаких"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6602,6 +7725,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "不明な理由により利用できません。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Недоступно по неизвестной причине."
           }
         },
         "zh-Hans" : {
@@ -6639,6 +7768,12 @@
             "value" : "OK"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Окей"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6672,6 +7807,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "開く"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Открыть"
           }
         },
         "zh-Hans" : {
@@ -6709,6 +7850,12 @@
             "value" : "貼り付け"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вставить"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6739,6 +7886,12 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PDF"
+          }
+        },
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "PDF"
@@ -6780,6 +7933,12 @@
             "value" : "アクセスが拒否されました"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Разрешение не получено"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6814,6 +7973,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "写真"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Фотографии"
           }
         },
         "zh-Hans" : {
@@ -6851,6 +8016,12 @@
             "value" : "プレビューを準備中..."
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Готовим предпросмотр..."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6884,6 +8055,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "転送を準備中…"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Готовимся к передаче данных…"
           }
         },
         "zh-Hans" : {
@@ -6921,6 +8098,12 @@
             "value" : "進捗:"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Прогресс:"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6954,6 +8137,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "プロパティ"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Свойства"
           }
         },
         "zh-Hans" : {
@@ -6991,6 +8180,12 @@
             "value" : "プロトコル"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Протокол"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7024,6 +8219,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "クイックルック"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Взглянуть"
           }
         },
         "zh-Hans" : {
@@ -7061,6 +8262,12 @@
             "value" : "レート制限を超過しました。後でもう一度お試しください。"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " Превышен лимит запросов. Повторите попытку позже."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7094,6 +8301,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "推理レベル"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Уровень размышления:"
           }
         },
         "zh-Hans" : {
@@ -7131,6 +8344,12 @@
             "value" : "残り時間:"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отметка:"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7164,6 +8383,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "お気に入りから削除"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить из Избранного"
           }
         },
         "zh-Hans" : {
@@ -7201,6 +8426,12 @@
             "value" : "名前を変更"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Переименовать"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7234,6 +8465,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "置き換える"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заменить"
           }
         },
         "zh-Hans" : {
@@ -7271,6 +8508,12 @@
             "value" : "既存の項目を置き換えますか？"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заменить существующие объекты?"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7304,6 +8547,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "リクエストがタイムアウトしました。サーバーの応答に時間がかかりすぎました。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Время ожидания запроса истекло. Сервер слишком долго не отвечал."
           }
         },
         "zh-Hans" : {
@@ -7342,6 +8591,12 @@
             "value" : "スクリーンショット"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скриншоты"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7375,6 +8630,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "検索"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поиск"
           }
         },
         "zh-Hans" : {
@@ -7412,6 +8673,12 @@
             "value" : "AIで検索"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поиск с ИИ"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7445,6 +8712,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "サーバーエラー"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ошибка сервера"
           }
         },
         "zh-Hans" : {
@@ -7482,6 +8755,12 @@
             "value" : "サーバーからエラーが返されました"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сервер  сообщил об ошибке"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7515,6 +8794,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "設定"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Настройки"
           }
         },
         "zh-Hans" : {
@@ -7552,6 +8837,12 @@
             "value" : "デバイス情報を表示"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Показывать информацию об устройстве"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7585,6 +8876,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "サイズ"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Размер"
           }
         },
         "zh-Hans" : {
@@ -7622,6 +8919,12 @@
             "value" : "SSL/TLS接続に失敗しました。"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подключение по SSL/TLS  не удалось."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7655,6 +8958,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ストレージ"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Хранилище"
           }
         },
         "zh-Hans" : {
@@ -7693,6 +9002,12 @@
             "value" : "ストレージエラー"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ошибка хранилища"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7727,6 +9042,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ストレージ容量が満杯です"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Хранилище заполнено"
           }
         },
         "zh-Hans" : {
@@ -7765,6 +9086,12 @@
             "value" : "システムメモリエラー"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ошибка ОЗУ"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7798,6 +9125,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "このフォルダーはデバイスに存在しません。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Папка не существует на устройстве."
           }
         },
         "zh-Hans" : {
@@ -7835,6 +9168,12 @@
             "value" : "これらの機能はまだ開発中であり、将来のアップデートで変更される可能性があります。"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Эти функции всё ещё находятся на этапе разработки и могут быть переработаны в грядущих обновлениях."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7868,6 +9207,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "思考モード"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Режим мышления"
           }
         },
         "zh-Hans" : {
@@ -7905,6 +9250,12 @@
             "value" : "思考中…"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Думаю..."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7938,6 +9289,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "この操作は元に戻せません。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Данное действие необратимо."
           }
         },
         "zh-Hans" : {
@@ -7975,6 +9332,12 @@
             "value" : "この機能は現在APIモードでのみ利用可能です。Apple Foundation Modelsはまだサポートされていません。"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Эта функция в настоящее время доступна только в режиме API. Модели Apple Foundation пока не поддерживаются."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8008,6 +9371,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "このフォルダーは空です"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Папка пуста"
           }
         },
         "zh-Hans" : {
@@ -8045,6 +9414,12 @@
             "value" : "合計容量"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Всего места"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8078,6 +9453,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "転送がキャンセルされました"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Передача отменена"
           }
         },
         "zh-Hans" : {
@@ -8115,6 +9496,12 @@
             "value" : "転送速度:"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скорость передачи:"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8148,6 +9535,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "転送中…"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Передаю..."
           }
         },
         "zh-Hans" : {
@@ -8185,6 +9578,12 @@
             "value" : "タイプ"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тип"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8218,6 +9617,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "予期しないエラー:"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ох ты, неожиданная ошибка:"
           }
         },
         "zh-Hans" : {
@@ -8256,6 +9661,12 @@
             "value" : "不明なエラー"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неизвестная ошибка"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8289,6 +9700,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "デバイスを管理する強力な新しい方法を解放します。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Получите доступ к мощным способам управления устройством."
           }
         },
         "zh-Hans" : {
@@ -8327,6 +9744,12 @@
             "value" : "アップデートあり"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Доступно обновление"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8361,6 +9784,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "USB通信エラー"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ошибка коммуникации по USB"
           }
         },
         "zh-Hans" : {
@@ -8398,6 +9827,12 @@
             "value" : "ビデオ"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Видео"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8431,6 +9866,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ウェブサイト"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сайт"
           }
         },
         "zh-Hans" : {
@@ -8469,6 +9910,12 @@
             "value" : "有効にすると、ファイルをダブルクリックしたときにローカルキャッシュにエクスポートし（キャッシュされていない場合）、デフォルトのアプリケーションで開きます。"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "При включении этой функции двойной щелчок по файлу экспортирует его в локальный кэш (если он ещё не закэширован) и открывает в приложении, назначенном по умолчанию."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8502,6 +9949,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "このMacはApple Intelligenceの対象ではありません。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваш Mac не подходит для использования Apple Intellegence"
           }
         },
         "zh-Hans" : {
