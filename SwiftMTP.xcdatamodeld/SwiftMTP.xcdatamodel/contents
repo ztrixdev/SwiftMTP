@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="25201" systemVersion="26A5368g" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier=""/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="25201" systemVersion="26A5368g" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="SyncMirror" representedClassName="SyncMirror" syncable="YES">
+        <attribute name="device_id" optional="YES" attributeType="String"/>
+        <attribute name="device_path" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="mac_path" optional="YES" attributeType="String"/>
+        <attribute name="truth_source" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+    </entity>
+</model>

@@ -1,10 +1,3 @@
-//
-//  MirrorManager.swift
-//  SwiftMTP
-//
-//  Created by Owlexander on 1.7.2026.
-//
-
 import Foundation
 import Combine
 
@@ -30,6 +23,12 @@ class MirrorVM: ObservableObject
         }
     }
 
+    
+    // for debugging purposes may add new like:
+    /*
+     * mockMirrorVM.addMirror(deviceID: "VID|PID|S/N", devicePath: "/path/to/folder", macPath: "/Users/userhome/Documents/MirrorTest")
+     */
+     
     func addMirror(deviceId: String, devicePath: String, macPath: String)
     {
         let newMirror = SyncMirror(context: db.context)
@@ -43,11 +42,25 @@ class MirrorVM: ObservableObject
         fetchMirrors()
     }
     
-    func switchTruthSource(by ID: UUID)
+    func getMirrors(for device: String) -> [SyncMirror]
+    {
+        var deviceRelatedMirrors: [SyncMirror] = []
+        for mirror in mirrors
+        {
+            if (mirror.device_id == device)
+            {
+                deviceRelatedMirrors.append(mirror)
+            }
+        }
+        
+        return deviceRelatedMirrors
+    }
+    
+    func switchTruthSource(by id: UUID)
     {
         for mirror in mirrors
         {
-            if mirror.id != ID { continue }
+            if mirror.id != id { continue }
             mirror.truth_source.toggle()
         }
         

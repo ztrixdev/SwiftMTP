@@ -29,7 +29,7 @@ struct MainView: View {
     // AI Analysis State (Persists until app exit)
     @State private var aiHelpResult: String?
     @State private var isAIProcessing = false
-
+    
     var selectedFiles: [MTPFile] {
         manager.sortedFiles.filter { selection.contains($0.id) }
     }
@@ -238,7 +238,9 @@ struct MainView: View {
         .focusedSceneValue(\.quickLookAction, {
             NotificationCenter.default.post(name: NSNotification.Name("SwiftMTPToggleQuickLook"), object: nil)
         })
+        
     }
+
 
     private var contentView: some View {
         Group {

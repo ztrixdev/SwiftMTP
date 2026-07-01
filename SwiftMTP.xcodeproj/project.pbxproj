@@ -37,6 +37,13 @@
 		C7C839F62FADC6F700A40C35 /* AINLSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C839F52FADC6F700A40C35 /* AINLSearch.swift */; };
 		C7E5F65E2F78FF56004B6939 /* MTPIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = C7A475DB2F78E957005EDC2E /* MTPIcon.icon */; };
 		C7FB2E5E2F7A6F6C0036FE3B /* TransferStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FB2E5D2F7A6F6C0036FE3B /* TransferStatistics.swift */; };
+		EE5C5A252FF50F690088FF1E /* SwiftMTP.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EE5C5A232FF50F690088FF1E /* SwiftMTP.xcdatamodeld */; };
+		EE5C5A302FF511720088FF1E /* SyncMirror+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5C5A2F2FF511720088FF1E /* SyncMirror+CoreDataProperties.swift */; };
+		EE5C5A312FF511720088FF1E /* SyncMirror+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5C5A2E2FF511720088FF1E /* SyncMirror+CoreDataClass.swift */; };
+		EE5C5A352FF513420088FF1E /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5C5A332FF5133E0088FF1E /* CoreDataManager.swift */; };
+		EE5C5A3D2FF541F20088FF1E /* MirrorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5C5A3C2FF541F20088FF1E /* MirrorManager.swift */; };
+		EE5C5A3F2FF541FC0088FF1E /* MirrorVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5C5A3E2FF541FC0088FF1E /* MirrorVM.swift */; };
+		EE5C5A412FF542110088FF1E /* MirrorDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5C5A402FF542110088FF1E /* MirrorDiff.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -113,6 +120,13 @@
 		C7C4AFF22F83B37E0047364C /* MTPDeviceInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MTPDeviceInfo.swift; path = SwiftMTP/Models/MTPDeviceInfo.swift; sourceTree = "<group>"; };
 		C7C839F52FADC6F700A40C35 /* AINLSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AINLSearch.swift; path = SwiftMTP/Services/AINLSearch.swift; sourceTree = "<group>"; };
 		C7FB2E5D2F7A6F6C0036FE3B /* TransferStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TransferStatistics.swift; path = SwiftMTP/Models/TransferStatistics.swift; sourceTree = "<group>"; };
+		EE5C5A242FF50F690088FF1E /* SwiftMTP.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SwiftMTP.xcdatamodel; sourceTree = "<group>"; };
+		EE5C5A2E2FF511720088FF1E /* SyncMirror+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SyncMirror+CoreDataClass.swift"; path = "SwiftMTP/Models/SyncMirror+CoreDataClass.swift"; sourceTree = "<group>"; };
+		EE5C5A2F2FF511720088FF1E /* SyncMirror+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SyncMirror+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		EE5C5A332FF5133E0088FF1E /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		EE5C5A3C2FF541F20088FF1E /* MirrorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MirrorManager.swift; path = SwiftMTP/Services/MirrorManager.swift; sourceTree = "<group>"; };
+		EE5C5A3E2FF541FC0088FF1E /* MirrorVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MirrorVM.swift; path = SwiftMTP/Services/MirrorVM.swift; sourceTree = "<group>"; };
+		EE5C5A402FF542110088FF1E /* MirrorDiff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MirrorDiff.swift; path = SwiftMTP/Models/MirrorDiff.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -173,6 +187,7 @@
 				1A2B3C4D5E6F7A8000000330 /* Services */,
 				1A2B3C4D5E6F7A8000000340 /* Models */,
 				C7A475DB2F78E957005EDC2E /* MTPIcon.icon */,
+				EE5C5A232FF50F690088FF1E /* SwiftMTP.xcdatamodeld */,
 			);
 			name = SwiftMTP;
 			sourceTree = "<group>";
@@ -209,6 +224,9 @@
 				C7516A712F8008D9006B1603 /* USBMonitor.swift */,
 				C725E65A2F7CCDD0007937AB /* ErrorStringLocalizer.swift */,
 				C7AC00192F9A00010055C8BE /* UpdateChecker.swift */,
+				EE5C5A332FF5133E0088FF1E /* CoreDataManager.swift */,
+				EE5C5A3C2FF541F20088FF1E /* MirrorManager.swift */,
+				EE5C5A3E2FF541FC0088FF1E /* MirrorVM.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -222,6 +240,9 @@
 				C7516A6D2F8008A5006B1603 /* MTPFile.swift */,
 				C7516A6A2F800866006B1603 /* USBProtocol.swift */,
 				C7FB2E5D2F7A6F6C0036FE3B /* TransferStatistics.swift */,
+				EE5C5A2E2FF511720088FF1E /* SyncMirror+CoreDataClass.swift */,
+				EE5C5A2F2FF511720088FF1E /* SyncMirror+CoreDataProperties.swift */,
+				EE5C5A402FF542110088FF1E /* MirrorDiff.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -366,8 +387,12 @@
 				1A2B3C4D5E6F7A8000000001 /* SwiftMTP/SwiftMTPApp.swift in Sources */,
 				C7516A6B2F800866006B1603 /* USBProtocol.swift in Sources */,
 				C7516A762F800911006B1603 /* MainView.swift in Sources */,
+				EE5C5A3F2FF541FC0088FF1E /* MirrorVM.swift in Sources */,
+				EE5C5A252FF50F690088FF1E /* SwiftMTP.xcdatamodeld in Sources */,
+				EE5C5A412FF542110088FF1E /* MirrorDiff.swift in Sources */,
 				C7516A772F800911006B1603 /* FileListView.swift in Sources */,
 				C7FB2E5E2F7A6F6C0036FE3B /* TransferStatistics.swift in Sources */,
+				EE5C5A3D2FF541F20088FF1E /* MirrorManager.swift in Sources */,
 				C72F6C242F87DFF10015604B /* QuickLookOverlayView.swift in Sources */,
 				C7887B922FD52B81005B5BDD /* GomtpShim.c in Sources */,
 				C7516A7A2F800928006B1603 /* SidebarView.swift in Sources */,
@@ -376,10 +401,13 @@
 				C7C839F62FADC6F700A40C35 /* AINLSearch.swift in Sources */,
 				C75229252FACFB330044B6AB /* AIManager.swift in Sources */,
 				C7516A732F8008D9006B1603 /* USBMonitor.swift in Sources */,
+				EE5C5A302FF511720088FF1E /* SyncMirror+CoreDataProperties.swift in Sources */,
+				EE5C5A312FF511720088FF1E /* SyncMirror+CoreDataClass.swift in Sources */,
 				1A2B3C4D5E6F7A8000000012 /* Localizable.xcstrings in Sources */,
 				C705622E2F875E6E0055C8BE /* FavoritesManager.swift in Sources */,
 				C7516A6E2F8008A5006B1603 /* MTPFile.swift in Sources */,
 				C705622C2F875E5F0055C8BE /* FavoriteItem.swift in Sources */,
+				EE5C5A352FF513420088FF1E /* CoreDataManager.swift in Sources */,
 				C7516A6F2F8008A5006B1603 /* MTPDevice.swift in Sources */,
 				C7C4AFF32F83B37E0047364C /* MTPDeviceInfo.swift in Sources */,
 				C725E65B2F7CCDD0007937AB /* ErrorStringLocalizer.swift in Sources */,
@@ -425,6 +453,15 @@
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = NO;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
 				ENABLE_RESOURCE_ACCESS_USB = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SELECTED_FILES = readwrite;
@@ -474,6 +511,15 @@
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = NO;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
 				ENABLE_RESOURCE_ACCESS_USB = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SELECTED_FILES = readwrite;
@@ -713,6 +759,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		EE5C5A232FF50F690088FF1E /* SwiftMTP.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				EE5C5A242FF50F690088FF1E /* SwiftMTP.xcdatamodel */,
+			);
+			currentVersion = EE5C5A242FF50F690088FF1E /* SwiftMTP.xcdatamodel */;
+			path = SwiftMTP.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 1A2B3C4D5E6F7A8000000800 /* Project object */;
 }

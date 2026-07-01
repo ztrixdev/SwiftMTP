@@ -6,10 +6,12 @@ struct SidebarView: View {
     @Binding var selectedFavoriteID: UUID?
     @ObservedObject var favoritesManager: FavoritesManager
     var onFavoriteSelected: (FavoriteItem) -> Void
-
+    
     @State private var showFolderNotFoundAlert = false
     @State private var draggingItem: FavoriteItem?
-
+    
+    @State private var mirrorVM = MirrorVM()
+    
     var body: some View {
         List {
             if manager.availableDevices.isEmpty {
@@ -30,7 +32,7 @@ struct SidebarView: View {
                             ))
                     }
                 }
-
+                
                 // MARK: – Devices Section
                 Section(String(localized: "Devices")) {
                     ForEach(manager.availableDevices) { device in
@@ -46,8 +48,26 @@ struct SidebarView: View {
         } message: {
             Text("The folder does not exist on this device.")
         }
+        
+        Button(action: {
+            mockMVM()
+                }) {
+                    Text("Try sync")
+                }
     }
-
+    
+    private func mockMVM()  {
+        if (manager.connectionState.isConnected)
+        {
+            // these two work (kinda) as expected
+            let x = MirrorManager().isMirrorValid(for: mirrorVM.mirrors.first!, with: manager)
+            let s = MirrorManager().compareFolders(for: mirrorVM.mirrors.first!, with: manager)
+            // this one doesnt
+            MirrorManager().sync(for: mirrorVM.mirrors.first!, with: manager, with: s)
+            
+        }
+    }
+    
     private func favoriteRow(_ item: FavoriteItem) -> some View {
         let currentPath = manager.currentPath
         let isActiveLocation = (item.path == currentPath)
