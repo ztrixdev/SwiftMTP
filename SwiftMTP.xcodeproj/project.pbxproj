@@ -38,12 +38,12 @@
 		C7E5F65E2F78FF56004B6939 /* MTPIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = C7A475DB2F78E957005EDC2E /* MTPIcon.icon */; };
 		C7FB2E5E2F7A6F6C0036FE3B /* TransferStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FB2E5D2F7A6F6C0036FE3B /* TransferStatistics.swift */; };
 		EE5C5A252FF50F690088FF1E /* SwiftMTP.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EE5C5A232FF50F690088FF1E /* SwiftMTP.xcdatamodeld */; };
-		EE5C5A302FF511720088FF1E /* SyncMirror+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5C5A2F2FF511720088FF1E /* SyncMirror+CoreDataProperties.swift */; };
 		EE5C5A312FF511720088FF1E /* SyncMirror+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5C5A2E2FF511720088FF1E /* SyncMirror+CoreDataClass.swift */; };
 		EE5C5A352FF513420088FF1E /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5C5A332FF5133E0088FF1E /* CoreDataManager.swift */; };
 		EE5C5A3D2FF541F20088FF1E /* MirrorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5C5A3C2FF541F20088FF1E /* MirrorManager.swift */; };
 		EE5C5A3F2FF541FC0088FF1E /* MirrorVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5C5A3E2FF541FC0088FF1E /* MirrorVM.swift */; };
 		EE5C5A412FF542110088FF1E /* MirrorDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5C5A402FF542110088FF1E /* MirrorDiff.swift */; };
+		EE6A0C1D2FF548DF00BDBC95 /* SyncMirror+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6A0C1C2FF548DF00BDBC95 /* SyncMirror+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,11 +122,11 @@
 		C7FB2E5D2F7A6F6C0036FE3B /* TransferStatistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TransferStatistics.swift; path = SwiftMTP/Models/TransferStatistics.swift; sourceTree = "<group>"; };
 		EE5C5A242FF50F690088FF1E /* SwiftMTP.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SwiftMTP.xcdatamodel; sourceTree = "<group>"; };
 		EE5C5A2E2FF511720088FF1E /* SyncMirror+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SyncMirror+CoreDataClass.swift"; path = "SwiftMTP/Models/SyncMirror+CoreDataClass.swift"; sourceTree = "<group>"; };
-		EE5C5A2F2FF511720088FF1E /* SyncMirror+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SyncMirror+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		EE5C5A332FF5133E0088FF1E /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		EE5C5A3C2FF541F20088FF1E /* MirrorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MirrorManager.swift; path = SwiftMTP/Services/MirrorManager.swift; sourceTree = "<group>"; };
 		EE5C5A3E2FF541FC0088FF1E /* MirrorVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MirrorVM.swift; path = SwiftMTP/Services/MirrorVM.swift; sourceTree = "<group>"; };
 		EE5C5A402FF542110088FF1E /* MirrorDiff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MirrorDiff.swift; path = SwiftMTP/Models/MirrorDiff.swift; sourceTree = "<group>"; };
+		EE6A0C1C2FF548DF00BDBC95 /* SyncMirror+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SyncMirror+CoreDataProperties.swift"; path = "SwiftMTP/Models/SyncMirror+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -241,8 +241,8 @@
 				C7516A6A2F800866006B1603 /* USBProtocol.swift */,
 				C7FB2E5D2F7A6F6C0036FE3B /* TransferStatistics.swift */,
 				EE5C5A2E2FF511720088FF1E /* SyncMirror+CoreDataClass.swift */,
-				EE5C5A2F2FF511720088FF1E /* SyncMirror+CoreDataProperties.swift */,
 				EE5C5A402FF542110088FF1E /* MirrorDiff.swift */,
+				EE6A0C1C2FF548DF00BDBC95 /* SyncMirror+CoreDataProperties.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -401,7 +401,6 @@
 				C7C839F62FADC6F700A40C35 /* AINLSearch.swift in Sources */,
 				C75229252FACFB330044B6AB /* AIManager.swift in Sources */,
 				C7516A732F8008D9006B1603 /* USBMonitor.swift in Sources */,
-				EE5C5A302FF511720088FF1E /* SyncMirror+CoreDataProperties.swift in Sources */,
 				EE5C5A312FF511720088FF1E /* SyncMirror+CoreDataClass.swift in Sources */,
 				1A2B3C4D5E6F7A8000000012 /* Localizable.xcstrings in Sources */,
 				C705622E2F875E6E0055C8BE /* FavoritesManager.swift in Sources */,
@@ -412,6 +411,7 @@
 				C7C4AFF32F83B37E0047364C /* MTPDeviceInfo.swift in Sources */,
 				C725E65B2F7CCDD0007937AB /* ErrorStringLocalizer.swift in Sources */,
 				C7B754552F8A219B0075406B /* SettingsView.swift in Sources */,
+				EE6A0C1D2FF548DF00BDBC95 /* SyncMirror+CoreDataProperties.swift in Sources */,
 				C7AC001A2F9A00010055C8BE /* UpdateChecker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
